@@ -649,8 +649,8 @@ onBeforeUnmount(() => {
 }
 
 .caption {
-  flex: 0 0 auto;
-  height: 12.75rem;
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -662,7 +662,12 @@ onBeforeUnmount(() => {
   font-size: clamp(1.45rem, 2.8vw, 1.9rem);
   margin: 0.15rem 0 0.35rem;
   line-height: 1.2;
-  min-height: 2.2rem;
+  flex: 0 0 auto;
+}
+.caption .kicker {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 0.88rem;
 }
 .caption .body {
   font-size: 1.12rem;
@@ -670,27 +675,21 @@ onBeforeUnmount(() => {
   max-width: 48rem;
   margin: 0;
   flex: 1 1 auto;
-  min-height: 4.8rem;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .caption .foot {
   flex: 0 0 auto;
-  height: 2.9rem;
+  min-height: 2.9rem;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.55rem;
   margin-top: 0.4rem;
-  overflow: hidden;
 }
 .caption .foot .btn { padding: 10px 16px; font-size: 1rem; }
-.caption .kicker {
-  margin: 0;
-  font-size: 0.88rem;
-}
 
 .word-chip {
   display: inline-block;
@@ -852,10 +851,9 @@ onBeforeUnmount(() => {
   }
   .what-head h1 { font-size: clamp(1.55rem, 6vw, 1.9rem); }
   .scene-frame { height: 220px; }
-  .caption { height: 13.5rem; }
-  .caption h2 { font-size: clamp(1.3rem, 5vw, 1.55rem); min-height: 2rem; }
-  .caption .body { -webkit-line-clamp: 4; font-size: 1.05rem; min-height: 5.5rem; }
-  .caption .foot { height: 3rem; }
+  .caption h2 { font-size: clamp(1.3rem, 5vw, 1.55rem); }
+  .caption .body { font-size: 1.05rem; }
+  .caption .foot { min-height: 3rem; }
   .dots { margin-left: 0; width: 100%; }
   .controls { min-height: 5.5rem; align-content: center; }
   .controls .btn { flex: 1 1 auto; font-size: 1rem; }

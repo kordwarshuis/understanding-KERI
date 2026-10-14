@@ -1,8 +1,30 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   color: { type: String, default: '#c4623a' },
   label: { type: String, default: '' },
 })
+
+const lines = computed(() => wrapWords(props.label, 16))
+
+function wrapWords(text, max) {
+  const words = String(text || '').trim().split(/\s+/).filter(Boolean)
+  if (!words.length) return []
+  const out = []
+  let line = ''
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word
+    if (line && next.length > max) {
+      out.push(line)
+      line = word
+    } else {
+      line = next
+    }
+  }
+  if (line) out.push(line)
+  return out.slice(0, 2)
+}
 </script>
 
 <template>
@@ -12,7 +34,9 @@ defineProps({
     <circle cx="0" cy="-58" r="17" :fill="color" />
     <circle cx="-6" cy="-60" r="2.2" class="eye" />
     <circle cx="6" cy="-60" r="2.2" class="eye" />
-    <text v-if="label" x="0" y="30" text-anchor="middle" class="label">{{ label }}</text>
+    <text v-if="lines.length" text-anchor="middle" class="label">
+      <tspan v-for="(line, i) in lines" :key="i" x="0" :y="30 + i * 28">{{ line }}</tspan>
+    </text>
   </g>
 </template>
 

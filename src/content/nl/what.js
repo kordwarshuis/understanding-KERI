@@ -13,7 +13,7 @@ export const scenes = [
     },
   },
   {
-    id: 'eigen',
+    id: 'own',
     kicker: 'Met KERI',
     title: 'Je krijgt een naam die echt van jou is',
     body: 'Deze is gemaakt op basis van geheime sleutels die alleen jij bezit. Niemand heeft hem uitgegeven, dus niemand kan hem terugnemen, verkopen of uitschakelen.',
@@ -32,10 +32,10 @@ export const scenes = [
     word: { id: 'end', label: 'end - verifiability' },
     dur: 8500,
     art: {
-      you: 'you',
-      bank: 'a bank',
-      clinic: 'a clinic',
-      stranger: 'a stranger',
+      you: 'jij',
+      bank: 'een bank',
+      clinic: 'een kliniek',
+      stranger: 'een vreemde',
     },
   },
   {
@@ -56,12 +56,12 @@ export const scenes = [
     kicker: 'Met KERI',
     title: 'Verhalen met twee gezichten worden ontmaskerd',
     body: 'Wat onder een naam wordt gezegd, blijft vastgelegd. Als iemand twee verschillende versies vertelt, is de tegenstrijdigheid zelf het bewijs, voor iedereen die ernaar kijkt.',
-    word: { id: 'dubbelhartigheid', label: 'dubbelhartigheid' },
+    word: { id: 'duplicity', label: 'dubbelhartigheid' },
     dur: 9500,
     art: {
       someone: 'iemand',
       claimA: '“Verkocht aan Ann.”',
-      claimB: '“ Verkocht aan Ben.”',
+      claimB: '“Verkocht aan Ben.”',
       signed: 'ondertekend E7f…q2',
       checker: 'iedereen die het controleert',
       flag: 'Twee verhalen, één naam: betrapt',

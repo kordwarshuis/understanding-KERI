@@ -29,30 +29,123 @@ const art = computed(() => scene.value.art || {})
 const sceneKey = computed(() => `${locale.value}-${scene.value.id}-${run.value}`)
 const isLast = computed(() => index.value === scenes.value.length - 1)
 
-const verifiers = computed(() => [
-  { x: 470, label: art.value.bank, color: '#3d6e8a' },
-  { x: 600, label: art.value.clinic, color: '#3f6f62' },
-  { x: 730, label: art.value.stranger, color: '#6d5a7a' },
-])
+function wrapWords(text, max) {
+  const words = String(text || '').trim().split(/\s+/).filter(Boolean)
+  if (!words.length) return ['']
+  const out = []
+  let line = ''
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word
+    if (line && next.length > max) {
+      out.push(line)
+      line = word
+    } else {
+      line = next
+    }
+  }
+  if (line) out.push(line)
+  return out.slice(0, 3)
+}
+
+function labelHalf(text) {
+  const lines = wrapWords(text, 16)
+  return Math.max(46, Math.max(...lines.map((line) => line.length)) * 7)
+}
+
+const verifiers = computed(() => {
+  const specs = [
+    { label: art.value.bank, color: '#3d6e8a' },
+    { label: art.value.clinic, color: '#3f6f62' },
+    { label: art.value.stranger, color: '#6d5a7a' },
+  ]
+  let edge = 786
+  const placed = []
+  for (let i = specs.length - 1; i >= 0; i--) {
+    const half = labelHalf(specs[i].label)
+    const x = edge - half
+    placed[i] = { ...specs[i], x }
+    edge = x - half - 36
+  }
+  return placed
+})
 const claims = computed(() => [
   { y: 150, text: art.value.claimA },
   { y: 270, text: art.value.claimB },
 ])
-const idRows = computed(() => [
-  { k: art.value.nameK, v: art.value.nameV, y: 152 },
-  { k: art.value.bornK, v: art.value.bornV, y: 194 },
-  { k: art.value.livesK, v: art.value.livesV, y: 236 },
-  { k: art.value.overK, v: art.value.overV, y: 278, keep: true },
-])
+const claimWidth = (text) => {
+  const n = Math.max(String(text || '').length, String(art.value.signed || '').length)
+  return Math.min(280, Math.max(210, n * 11 + 32))
+}
+const claimX = (text) => 324 + claimWidth(text) / 2
+const idRows = computed(() => {
+  const rows = [
+    { k: art.value.nameK, v: art.value.nameV, y: 152 },
+    { k: art.value.bornK, v: art.value.bornV, y: 194 },
+    { k: art.value.livesK, v: art.value.livesV, y: 236 },
+    { k: art.value.overK, v: art.value.overV, y: 278, keep: true },
+  ]
+  const keyW = Math.min(168, Math.max(...rows.map((row) => String(row.k || '').length)) * 11)
+  const vx = 88 + keyW + 16
+  return rows.map((row) => ({ ...row, vx, redactW: Math.max(64, 400 - vx) }))
+})
 const tiles = computed(() => [
   { x: 150, label: art.value.tile1, lit: 0.8 },
   { x: 400, label: art.value.tile2, lit: 4 },
   { x: 650, label: art.value.tile3, lit: 6 },
 ])
 
-const pillWidth = (text) => Math.max(120, String(text || '').length * 11 + 36)
-const flagWidth = computed(() => Math.max(280, pillWidth(art.value.flag) + 16))
-const proofWidth = computed(() => Math.max(132, pillWidth(art.value.proof)))
+function pillMetrics(text) {
+  const lines = wrapWords(text, 18)
+  const longest = Math.max(...lines.map((line) => line.length))
+  const w = Math.max(120, longest * 11 + 36)
+  const h = lines.length === 1 ? 36 : 16 + lines.length * 24
+  return { lines, w, h }
+}
+
+const placedPills = computed(() =>
+  (scene.value.pills || []).map((pill) => {
+    const box = pillMetrics(pill.text)
+    const half = box.w / 2
+    let x = Math.max(14 + half, Math.min(786 - half, pill.x))
+    if (pill.y > 155 && pill.y < 230) {
+      if (x <= 400 && x + half > 284) x = 284 - half
+      if (x > 400 && x - half < 516) x = 516 + half
+      x = Math.max(14 + half, Math.min(786 - half, x))
+    }
+    return { ...pill, ...box, x }
+  }),
+)
+
+const flagLines = computed(() => wrapWords(art.value.flag, 18))
+const flagWidth = computed(() => {
+  const longest = Math.max(...flagLines.value.map((line) => line.length), 1)
+  return Math.max(200, longest * 11 + 40)
+})
+const flagHeight = computed(() => (flagLines.value.length > 1 ? 16 + flagLines.value.length * 24 : 36))
+const checkerX = computed(() => Math.min(748, 786 - labelHalf(art.value.checker)))
+const flagX = computed(() => {
+  const half = flagWidth.value / 2
+  const room = checkerX.value - labelHalf(art.value.checker) - 24
+  return Math.max(half + 20, Math.min(420, room - half))
+})
+const proofWidth = computed(() => Math.max(132, pillMetrics(art.value.proof).w))
+const proofX = computed(() => Math.min(620, 690 - proofWidth.value / 2))
+
+function stackedY(count, index, step = 24) {
+  if (count <= 1) return 6
+  return -((count - 1) * step) / 2 + 6 + index * step
+}
+function flagLineY(index) {
+  return stackedY(flagLines.value.length, index)
+}
+function pillLineY(pill, index) {
+  return stackedY(pill.lines.length, index)
+}
+function tileLineY(label, index) {
+  const count = wrapWords(label, 16).length
+  if (count <= 1) return 294
+  return 272 + index * 28
+}
 
 function go(i) {
   index.value = Math.max(0, Math.min(scenes.value.length - 1, i))
@@ -253,56 +346,58 @@ onBeforeUnmount(() => {
           <template v-else-if="scene.id === 'lies'">
             <g transform="translate(130 330)"><Figure :label="art.someone" color="#4a3f38" /></g>
             <g transform="translate(130 212)"><NameTag text="E7f…q2" /></g>
-            <path class="draw thin" style="--d: 3.4s" pathLength="1" d="M 522 150 Q 660 160 710 248" />
-            <path class="draw thin" style="--d: 3.6s" pathLength="1" d="M 522 270 Q 640 272 700 264" />
+            <path class="draw thin" style="--d: 3.4s" pathLength="1" :d="`M 522 150 Q ${(522 + checkerX) / 2} 160 ${checkerX - 36} 248`" />
+            <path class="draw thin" style="--d: 3.6s" pathLength="1" :d="`M 522 270 Q ${(522 + checkerX) / 2} 272 ${checkerX - 46} 264`" />
             <g
               v-for="(c, i) in claims"
               :key="c.text"
               class="slide"
               :style="{ '--d': 1 + i * 1.3 + 's', '--fx': '-120px', '--fy': '0px' }"
             >
-              <g :transform="`translate(420 ${c.y})`">
-                <rect x="-108" y="-34" width="216" height="68" rx="16" class="claim" style="--d: 5s" />
+              <g :transform="`translate(${claimX(c.text)} ${c.y})`">
+                <rect :x="-claimWidth(c.text) / 2" y="-34" :width="claimWidth(c.text)" height="68" rx="16" class="claim" style="--d: 5s" />
                 <text y="-4" text-anchor="middle" class="claim-text">{{ c.text }}</text>
                 <text y="20" text-anchor="middle" class="claim-sign">{{ art.signed }}</text>
               </g>
             </g>
-            <path class="draw red-line" style="--d: 4.6s" pathLength="1" d="M 312 150 H 298 V 270 H 312" />
+            <path class="draw red-line" style="--d: 4.6s" pathLength="1" d="M 316 150 H 302 V 270 H 316" />
             <g class="rise" style="--d: 0.4s">
-              <g transform="translate(730 330)"><Figure :label="art.checker" color="#3f6f62" /></g>
+              <g :transform="`translate(${checkerX} 330)`"><Figure :label="art.checker" color="#3f6f62" /></g>
             </g>
             <g class="pop" style="--d: 5.4s">
-              <g transform="translate(420 352)">
-                <rect :x="-flagWidth / 2" y="-18" :width="flagWidth" height="36" rx="18" class="flag" />
-                <text y="6" text-anchor="middle" class="flag-text">{{ art.flag }}</text>
+              <g :transform="`translate(${flagX} 352)`">
+                <rect :x="-flagWidth / 2" :y="-flagHeight / 2" :width="flagWidth" :height="flagHeight" :rx="flagHeight / 2" class="flag" />
+                <text text-anchor="middle" class="flag-text">
+                  <tspan v-for="(line, li) in flagLines" :key="line" x="0" :y="flagLineY(li)">{{ line }}</tspan>
+                </text>
               </g>
             </g>
           </template>
 
           <template v-else-if="scene.id === 'minimal'">
             <g class="rise" style="--d: 0.1s">
-              <rect x="80" y="70" width="300" height="250" rx="22" class="id-card" />
-              <text x="104" y="112" class="id-title">{{ art.idTitle }}</text>
+              <rect x="52" y="70" width="370" height="250" rx="22" class="id-card" />
+              <text x="72" y="112" class="id-title">{{ art.idTitle }}</text>
               <g v-for="(row, i) in idRows" :key="row.k">
                 <rect
                   v-if="row.keep"
                   class="keep-bg"
                   style="--d: 2.6s"
-                  x="96"
+                  x="68"
                   :y="row.y - 22"
-                  width="268"
+                  width="338"
                   height="36"
                   rx="10"
                 />
-                <text x="108" :y="row.y" class="row-k">{{ row.k }}</text>
-                <text x="200" :y="row.y" class="row-v">{{ row.v }}</text>
+                <text x="80" :y="row.y" class="row-k">{{ row.k }}</text>
+                <text :x="row.vx" :y="row.y" class="row-v">{{ row.v }}</text>
                 <rect
                   v-if="!row.keep"
                   class="redact"
                   :style="{ '--d': 1.2 + i * 0.3 + 's' }"
-                  x="194"
+                  :x="row.vx - 6"
                   :y="row.y - 16"
-                  width="160"
+                  :width="row.redactW"
                   height="22"
                   rx="6"
                 />
@@ -311,14 +406,14 @@ onBeforeUnmount(() => {
             <g class="rise" style="--d: 0.3s">
               <g transform="translate(660 330)"><Figure :label="art.shop" color="#3d6e8a" /></g>
             </g>
-            <g transform="translate(640 212)">
-              <g class="slide" style="--d: 3.4s; --fx: -372px; --fy: 66px">
+            <g :transform="`translate(${proofX} 212)`">
+              <g class="slide" style="--d: 3.4s; --fx: -280px; --fy: 66px">
                 <rect :x="-proofWidth / 2" y="-18" :width="proofWidth" height="36" rx="18" class="proof" />
                 <text y="6" text-anchor="middle" class="proof-text">{{ art.proof }}</text>
               </g>
             </g>
             <g class="pop" style="--d: 4.8s">
-              <g transform="translate(722 200)">
+              <g :transform="`translate(${proofX + proofWidth / 2 + 24} 200)`">
                 <circle r="14" class="ok" />
                 <path d="M -6 0 L -2 5 L 7 -5" class="ok-mark" />
               </g>
@@ -350,8 +445,10 @@ onBeforeUnmount(() => {
           <template v-else-if="scene.id === 'portable'">
             <path class="road" d="M 150 180 H 650" />
             <g v-for="(tile, i) in tiles" :key="tile.label" class="rise" :style="{ '--d': 0.1 + i * 0.15 + 's' }">
-              <rect :x="tile.x - 92" y="230" width="184" height="110" rx="20" class="tile" :style="{ '--d': tile.lit + 's' }" />
-              <text :x="tile.x" y="294" text-anchor="middle" class="tile-text">{{ tile.label }}</text>
+              <rect :x="tile.x - 100" y="228" width="200" height="118" rx="20" class="tile" :style="{ '--d': tile.lit + 's' }" />
+              <text :x="tile.x" text-anchor="middle" class="tile-text">
+                <tspan v-for="(line, li) in wrapWords(tile.label, 16)" :key="line" :x="tile.x" :y="tileLineY(tile.label, li)">{{ line }}</tspan>
+              </text>
             </g>
             <g transform="translate(650 180)">
               <g class="travel" style="--d: 0.8s"><NameTag text="E7f…q2" /></g>
@@ -366,10 +463,12 @@ onBeforeUnmount(() => {
             <g class="pop" style="--d: 0.2s">
               <g transform="translate(400 190) scale(1.25)"><NameTag text="E7f…q2" /></g>
             </g>
-            <g v-for="(p, i) in scene.pills" :key="p.text" class="pop" :style="{ '--d': 0.9 + i * 0.45 + 's' }">
+            <g v-for="(p, i) in placedPills" :key="p.text" class="pop" :style="{ '--d': 0.9 + i * 0.45 + 's' }">
               <g :transform="`translate(${p.x} ${p.y})`">
-                <rect :x="-pillWidth(p.text) / 2" y="-18" :width="pillWidth(p.text)" height="36" rx="18" class="pill" />
-                <text y="6" text-anchor="middle" class="pill-text">{{ p.text }}</text>
+                <rect :x="-p.w / 2" :y="-p.h / 2" :width="p.w" :height="p.h" :rx="p.h / 2" class="pill" />
+                <text text-anchor="middle" class="pill-text">
+                  <tspan v-for="(line, li) in p.lines" :key="line" x="0" :y="pillLineY(p, li)">{{ line }}</tspan>
+                </text>
               </g>
             </g>
           </template>
@@ -645,7 +744,7 @@ onBeforeUnmount(() => {
 .flag { fill: #fbe3da; }
 .flag-text { font-weight: 800; font-size: 20px; fill: #9a3a22; }
 .id-card { fill: #fff; stroke: #eadfd2; stroke-width: 2; }
-.id-title { font-family: var(--serif) !important; font-weight: 600; font-size: 28px; fill: #2b241c; }
+.id-title { font-family: var(--serif) !important; font-weight: 600; font-size: 26px; fill: #2b241c; }
 .row-k { font-weight: 700; font-size: 20px; fill: #7a6a5c; }
 .row-v { font-weight: 600; font-size: 21px; fill: #2b241c; }
 .keep-bg { fill: #fbe9cf; }

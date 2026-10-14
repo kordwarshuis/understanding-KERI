@@ -1,21 +1,28 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useI18n } from '../i18n'
 import Figure from '../components/scene/Figure.vue'
 import NameTag from '../components/scene/NameTag.vue'
 import KeyIcon from '../components/scene/KeyIcon.vue'
 import Building from '../components/scene/Building.vue'
 
+const route = useRoute()
+const router = useRouter()
 const { t, tf, scenes, locale } = useI18n()
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const panel = ref(null)
 
 const index = ref(0)
 const run = ref(0)
 const playing = ref(!reduced)
 const settled = ref(reduced)
 const ended = ref(false)
+
+function close() {
+  router.replace({ path: '/', query: { ...route.query } })
+}
 
 const scene = computed(() => scenes.value[index.value])
 const art = computed(() => scene.value.art || {})
@@ -77,6 +84,10 @@ function toggle() {
 }
 
 function onKey(e) {
+  if (e.key === 'Escape') {
+    close()
+    return
+  }
   if (e.key === 'ArrowRight') go(index.value + 1)
   if (e.key === 'ArrowLeft') go(index.value - 1)
 }
@@ -86,17 +97,39 @@ watch(locale, () => {
   run.value++
 })
 
-onMounted(() => window.addEventListener('keydown', onKey))
-onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
+onMounted(() => {
+  document.body.classList.add('modal-open')
+  window.addEventListener('keydown', onKey)
+  panel.value?.focus()
+})
+onBeforeUnmount(() => {
+  document.body.classList.remove('modal-open')
+  window.removeEventListener('keydown', onKey)
+})
 </script>
 
 <template>
-  <section class="what">
-    <p class="kicker">{{ t.whatKicker }}</p>
-    <h1 class="serif">{{ t.whatTitle }}</h1>
-    <p class="lede">{{ t.whatLede }}</p>
+  <Teleport to="body">
+    <div class="what-backdrop" @click.self="close">
+      <div
+        ref="panel"
+        class="what-modal"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="t.whatTitle"
+        tabindex="-1"
+      >
+        <header class="what-head">
+          <div>
+            <p class="kicker">{{ t.whatKicker }}</p>
+            <h1 class="serif">{{ t.whatTitle }}</h1>
+          </div>
+          <button class="what-close" type="button" :aria-label="t.whatClose" @click="close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </header>
 
-    <div class="stage paper" :class="{ paused: !playing, settled }">
+        <div class="stage" :class="{ paused: !playing, settled }">
       <svg class="scene" viewBox="0 0 800 400" role="img" :aria-label="scene.title">
         <g :key="sceneKey">
           <template v-if="scene.id === 'borrowed'">
@@ -339,34 +372,107 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
         </div>
       </div>
 
-      <div class="controls">
-        <button class="btn ghost" :disabled="index === 0" @click="go(index - 1)">{{ t.whatBack }}</button>
-        <button v-if="!reduced" class="btn" @click="toggle">
-          {{ playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay }}
-        </button>
-        <button class="btn ghost" :disabled="isLast" @click="go(index + 1)">{{ t.whatNext }}</button>
-        <div class="dots">
-          <button
-            v-for="(s, i) in scenes"
-            :key="s.id"
-            :class="{ on: i === index }"
-            :aria-label="tf('whatScene', { n: i + 1, title: s.title })"
-            @click="go(i)"
-          ></button>
+          <div class="controls">
+            <button class="btn ghost" :disabled="index === 0" @click="go(index - 1)">{{ t.whatBack }}</button>
+            <button v-if="!reduced" class="btn" @click="toggle">
+              {{ playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay }}
+            </button>
+            <button class="btn ghost" :disabled="isLast" @click="go(index + 1)">{{ t.whatNext }}</button>
+            <div class="dots">
+              <button
+                v-for="(s, i) in scenes"
+                :key="s.id"
+                :class="{ on: i === index }"
+                :aria-label="tf('whatScene', { n: i + 1, title: s.title })"
+                @click="go(i)"
+              ></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </Teleport>
 </template>
 
 <style scoped>
-.what h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0.2rem 0 0.4rem; }
-.stage { margin-top: 1.6rem; }
+.what-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: rgba(43, 36, 28, 0.42);
+  backdrop-filter: blur(4px);
+}
 
-.scene { display: block; width: 100%; height: auto; color: #c4623a; overflow: visible; }
+.what-modal {
+  width: min(920px, 100%);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem 0.8rem;
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  outline: none;
+  overflow: hidden;
+}
+
+.what-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+.what-head h1 {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  margin: 0.05rem 0 0;
+  line-height: 1.15;
+}
+.what-head .kicker { margin: 0; }
+
+.what-close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #f3e7db;
+  color: var(--ink);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.what-close:hover { background: #ead9c8; }
+
+.stage {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(38vh, 280px);
+  color: #c4623a;
+  overflow: visible;
+}
 .scene text { font-family: var(--sans); }
 
-.bar { height: 4px; margin: 0.4rem 0 1.2rem; border-radius: 4px; background: #f1e6da; overflow: hidden; }
+.bar {
+  height: 3px;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  background: #f1e6da;
+  overflow: hidden;
+}
 .bar span {
   display: block;
   height: 100%;
@@ -375,28 +481,58 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
   animation: grow var(--dur) linear both;
 }
 
-.caption { min-height: 11rem; animation: rise 0.6s ease both; }
-.caption h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 0.2rem 0 0.5rem; }
-.caption .body { font-size: 1.1rem; line-height: 1.6; max-width: 46rem; margin: 0 0 0.8rem; }
-.caption .actions { margin-top: 1rem; }
+.caption {
+  flex: 0 0 auto;
+  animation: rise 0.6s ease both;
+}
+.caption h2 {
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  margin: 0.1rem 0 0.25rem;
+  line-height: 1.2;
+}
+.caption .body {
+  font-size: 0.98rem;
+  line-height: 1.4;
+  max-width: 46rem;
+  margin: 0 0 0.45rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.caption .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.45rem;
+}
+.caption .kicker { margin: 0; }
 
 .word-chip {
   display: inline-block;
-  padding: 0.3rem 0.8rem;
+  padding: 0.22rem 0.7rem;
   border-radius: 999px;
   background: #f6eadc;
   color: var(--terracotta-deep);
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 700;
   text-decoration: none;
 }
 .word-chip:hover { background: #f1dcc6; }
 
-.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 1.2rem; }
-.dots { display: flex; gap: 0.45rem; margin-left: auto; }
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+  padding-top: 0.15rem;
+}
+.controls .btn { padding: 9px 14px; }
+.dots { display: flex; gap: 0.4rem; margin-left: auto; }
 .dots button {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -524,6 +660,10 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 }
 
 @media (max-width: 720px) {
+  .what-modal { max-height: calc(100dvh - 16px); padding: 0.7rem 0.75rem 0.65rem; border-radius: 16px; }
+  .scene { max-height: min(30vh, 220px); }
+  .caption .body { -webkit-line-clamp: 4; font-size: 0.92rem; }
   .dots { margin-left: 0; width: 100%; }
+  .controls .btn { flex: 1 1 auto; }
 }
 </style>

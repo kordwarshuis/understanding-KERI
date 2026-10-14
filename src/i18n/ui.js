@@ -62,6 +62,7 @@ export const ui = {
     whatAgain: 'Play again',
     whatNext: 'Next',
     whatScene: 'Scene {n}: {title}',
+    whatClose: 'Close',
   },
   nl: {
     brand: 'De KERI-haard',
@@ -126,6 +127,7 @@ export const ui = {
     whatAgain: 'Opnieuw',
     whatNext: 'Volgende',
     whatScene: 'Scène {n}: {title}',
+    whatClose: 'Sluiten',
   },
 }
 

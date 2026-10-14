@@ -9,12 +9,20 @@ import WhatView from './views/WhatView.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior() {
+  scrollBehavior(to) {
+    if (to.name === 'what') return false
     return { top: 0 }
   },
   routes: [
     { path: '/', name: 'home', component: HomeView },
-    { path: '/what', name: 'what', component: WhatView },
+    {
+      path: '/what',
+      name: 'what',
+      components: {
+        default: HomeView,
+        modal: WhatView,
+      },
+    },
     { path: '/path/:persona/:lesson?', name: 'path', component: PathView },
     { path: '/words', name: 'words', component: GlossaryView },
     { path: '/words/:id', name: 'concept', component: ConceptView },

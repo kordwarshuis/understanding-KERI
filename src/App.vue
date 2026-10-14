@@ -44,4 +44,5 @@ const { t, locale, locales, setLocale } = useI18n()
       <p>{{ t.footer }}</p>
     </footer>
   </div>
+  <RouterView name="modal" />
 </template>

@@ -6,7 +6,7 @@ KERI is hard to adopt because it is hard to explain. This repo keeps an English 
 
 ## The KERI Hearth
 
-`hearth/` is a Vue app. You sit down as a parent, a lawyer, a policymaker, a developer, a business leader, or a clinician. Each path is a short sequence: why it matters, what KERI is, how it works, and what to do next.
+The app lives at the repository root. You sit down as a parent, a lawyer, a policymaker, a developer, a business leader, or a clinician. Each path is a short sequence: why it matters, what KERI is, how it works, and what to do next.
 
 There is also a shared story (“A name that can change its locks”), a glossary, and a sources page. Lesson progress is stored in the browser.
 
@@ -17,7 +17,6 @@ The writing is a reading of the English texts in `txt/`. It is not the specifica
 Requires Node.js and npm.
 
 ```bash
-cd hearth
 npm install
 npm run dev
 ```
@@ -29,7 +28,7 @@ npm run build
 npm run preview
 ```
 
-`npm run build` writes a static site to `hearth/dist/`.
+`npm run build` writes a static site to `dist/`.
 
 ### Seats
 
@@ -46,13 +45,15 @@ npm run preview
 
 `txt/` holds the English material the app is drawn from: the Hitchhiker’s Guide, the jargon series, foundation and conference notes, and related essays. Translations were left out on purpose.
 
-The app does not load those files at runtime. Edited explanations live in `hearth/src/content/`.
+The app does not load those files at runtime. Edited explanations live in `src/content/`.
 
 ## Layout
 
 ```
 txt/                 English source texts
-hearth/              Vue 3 + Vue Router + Vite app
-  src/content/       Personas, glossary, and the shared story
-  src/views/         Pages
+src/                 Vue 3 + Vue Router app
+  content/           Personas, glossary, and the shared story
+  views/             Pages
+index.html
+vite.config.js
 ```

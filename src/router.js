@@ -7,7 +7,7 @@ import StoryView from './views/StoryView.vue'
 import SourcesView from './views/SourcesView.vue'
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior() {
     return { top: 0 }
   },

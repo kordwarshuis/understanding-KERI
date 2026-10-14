@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { story } from '../content/story'
 import { personas } from '../content/personas'
@@ -7,6 +7,10 @@ import { personas } from '../content/personas'
 const step = ref(0)
 const beat = computed(() => story.beats[step.value])
 const rotated = ref(false)
+
+watch(step, () => {
+  rotated.value = false
+})
 </script>
 
 <template>
@@ -21,14 +25,14 @@ const rotated = ref(false)
       <div v-if="beat.interactive === 'locks'" class="locks">
         <div class="lock">
           <em>Current key</em>
-          Signs today’s messages. If this one leaks, you retire it. The name stays.
+          Signs today’s messages. A thief can use it only by publishing an event. Then you retire it. The name stays.
         </div>
         <div class="lock" :class="{ hidden: !rotated }">
-          <em>{{ rotated ? 'Spare, now revealed' : 'Spare key, still hidden' }}</em>
+          <em>{{ rotated ? 'Spare, now revealed' : 'Spare key, still a hash' }}</em>
           {{
             rotated
-              ? 'You used the spare to rotate. A new spare is committed as a hash. The AID did not change.'
-              : 'Only a hash is public. The spare itself stays in your keeping until you need it.'
+              ? 'The spare signed the rotation. It is now the current key. A new spare is committed as a hash, ideally kept somewhere else. The AID did not change.'
+              : 'The public log shows only a digest. The spare itself can live off the everyday device until you need it.'
           }}
         </div>
         <button class="btn" type="button" @click="rotated = !rotated">

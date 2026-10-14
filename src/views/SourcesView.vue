@@ -16,6 +16,9 @@
       <li>KERI Foundation notes — vLEI and GLEIF, erasure, ToIP approval of KERI, ACDC, and CESR v1.0 on 21 January 2026, the five Ws.</li>
       <li>Conference notes — SEDI, HealthKERI, FHIR and CMS, verifiable communications, public-sector privacy.</li>
       <li>Samuel Smith’s answers to the Five Eyes report — surveillance-shaped security versus verifiable authority.</li>
+      <li>Smith’s interview on self-certifying identifiers — protocol versus platform, end-verifiability, receipts, and proving one fact.</li>
+      <li>“You control, therefore you are” — identifier, attestation, and role are not the same thing.</li>
+      <li>Security in KERI/ACDC — KEL-backed, BADA, and KRAM are different guarantees.</li>
     </ul>
     <aside class="note">
       <strong>What this is not</strong>

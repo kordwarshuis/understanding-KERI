@@ -14,23 +14,23 @@ export const personas = [
         blocks: [
           {
             kind: 'lead',
-            text: 'Most family accounts are not really yours. A password reset, a school portal, or “Sign in with Google” means someone else can lock you out, look in, or disappear.',
+            text: 'A school portal, a health login, “Sign in with Google”: those are identifiers someone else issued. They point at your child. They are not your child. The provider can reset them, read them, or shut them off.',
           },
           {
             kind: 'p',
-            text: 'KERI starts from a different place. The person — or the parent acting for a child — holds the keys. The name is derived from those keys. There is no identity company that must stay honest forever for the name to remain yours.',
+            text: 'KERI separates three things the essays keep finding tangled. Identity is the person. An identifier is a name that points at them. An attestation is a statement — enrolled here, old enough for this trip — made about that name. The autonomic identifier is the name your family can keep. Schools and clinics can still attest. They do not have to own the name in order to do it.',
           },
           {
             kind: 'pair',
             leftTitle: 'What you have now',
-            left: 'A login rented from a platform. If they are breached, or they change the rules, your family’s trail of school, health, and payments is caught in the middle.',
+            left: 'Not your keys, not your identifier. A password reset is an administrator deciding the name still means your child. If that office is wrong, or sold the fact that something happened, you mostly cannot prove who talked.',
             rightTitle: 'What KERI changes',
-            right: 'A name you can keep while changing the keys. Proof that does not require a stranger’s database to be the source of truth.',
+            right: 'The name is derived from keys you hold. Changing the keys does not change the name. A later attestation can say “this name is this child” without the platform being the root of trust.',
           },
           {
             kind: 'note',
             title: 'A calm limit',
-            text: 'KERI does not raise your child, filter the internet, or stop a person from lying in a message. It makes the lie harder to hide behind a fake or stolen key, and it makes “we lost the only copy of who you are” less likely.',
+            text: 'KERI does not raise your child or stop a person from lying in a message. It makes a stolen key a published, recoverable event, and it makes “we are the only copy of who you are” unnecessary. Samuel Smith is blunt about a related limit: you can have strong authenticity and confidentiality against strangers, and still not have perfect privacy against someone you actually deal with. The goal is that the third party who was never in the room cannot reuse the relationship.',
           },
         ],
       },
@@ -41,19 +41,21 @@ export const personas = [
         blocks: [
           {
             kind: 'lead',
-            text: 'KERI means Key Event Receipt Infrastructure. People say it like the name Carrie. It is a protocol for long-lived digital names called autonomic identifiers — AIDs.',
+            text: 'KERI means Key Event Receipt Infrastructure. People say it like the name Carrie. It is a protocol, not an app and not a blockchain you join. The long-lived name is an autonomic identifier — an AID. Autonomic means self-governing.',
           },
           {
             kind: 'p',
-            text: '“Autonomic” means self-governing. Your AID is born from your keys. A diary, the key event log, records when those keys change. Others can sign a receipt that they saw a given page of that diary. Together, that is the infrastructure.',
+            text: 'The AID is born when you sign the first key event. A key event log records what happens after that. Someone who receives an event can sign a receipt: “I saw this version.” That receipt is why both sides have something to show later. Smith’s line is that it is not called receipt infrastructure for nothing.',
           },
           {
             kind: 'list',
-            title: 'Three pictures that are enough',
+            title: 'Five acts, in family language',
             items: [
-              'A name tag that is also a lock, not a username in someone else’s book.',
-              'A spare key whose shape is promised in advance, but not shown until you need it.',
-              'A notebook of lock changes that anyone can check, without a world meeting to approve each line.',
+              'Inception: the name is created from keys you hold.',
+              'Pre-rotation: the next key is promised as a hash, and can live somewhere other than the phone.',
+              'Rotation: today’s key is retired. The name stays.',
+              'Delegation: a parent or guardian gets a provable, limited authority — their own name, not a copy of the child’s keys.',
+              'Revocation: an authority ends as an event anyone can replay, including abandoning the name itself.',
             ],
           },
           {
@@ -69,19 +71,19 @@ export const personas = [
         blocks: [
           {
             kind: 'lead',
-            text: 'Imagine the house key on your child’s school bag is copied. With a normal digital account, you beg a help desk. With a basic cryptographic fingerprint, the name and the stolen key are the same thing — you abandon both.',
+            text: 'Imagine the key on the school bag is copied. A normal account means a help desk. A basic fingerprint-of-a-key means the name and the stolen key are the same object, so you abandon both.',
           },
           {
             kind: 'p',
-            text: 'KERI splits the job. Today’s key signs ordinary things: “yes, this is us.” Tomorrow’s key is hidden as a hash. When you rotate, you reveal the spare, retire the copied key, and hide a new spare. The AID — the name teachers, clinics, or clubs already know — stays put.',
+            text: 'KERI splits signing from recovery. Today’s key signs “yes, this is us.” The next key is only a hash in the log, and the private spare should not live on that same bag. A thief who uses the copied key has to publish an event. Witnesses you chose will hold that publication, so the damage lasts until you notice and rotate — not until a company believes you. You reveal the spare, retire the copied key, commit a new spare. Teachers still know the same AID.',
           },
           {
             kind: 'p',
-            text: 'You also do not have to publish your child’s whole story. Credentials built as ACDCs can be shown in pieces: old enough for a trip, enrolled at this school, without handing over a birth date, an address, and a photo in one dump.',
+            text: 'Showing the name is not showing the child. An ACDC can prove “old enough for this trip” or “enrolled here” and withhold the birth date, the address, and the photo. If a child cannot hold keys yet, delegation gives a parent a verifiable guardianship. The parent’s identifier and the child’s identifier stay distinct, and the link can be revoked.',
           },
           {
             kind: 'words',
-            ids: ['prerotation', 'acdc', 'ipex', 'gdpr'],
+            ids: ['prerotation', 'delegation', 'acdc', 'ipex', 'gdpr'],
           },
           {
             kind: 'check',
@@ -109,10 +111,11 @@ export const personas = [
             kind: 'list',
             title: 'Questions worth asking a school, clinic, or app',
             items: [
-              'Who can reset this identity if we lose a device — us, or only you?',
-              'Can a credential be checked without copying the whole record into your database?',
-              'If we leave, can our identifier’s data actually be erased?',
-              'If your vendor changes, does our name survive, or is it locked to their system?',
+              'If we lose a phone, who rotates the keys — us, or your help desk?',
+              'Where does the spare key live, if not on the everyday device?',
+              'Can you check “enrolled” or “old enough” without storing the rest of the record?',
+              'If a guardian changes, is that a revocable delegation, or a shared password?',
+              'If your vendor disappears, does the identifier survive, or was it locked to their system?',
             ],
           },
           {
@@ -139,19 +142,19 @@ export const personas = [
         blocks: [
           {
             kind: 'lead',
-            text: 'A signature is only as good as the story of who held the key, when, and whether a later story can quietly replace it.',
+            text: 'A signature is only as good as the story of which key was authoritative, when, and whether a second signed story can replace the first without detection.',
           },
           {
             kind: 'p',
-            text: 'Administrative identity — a certificate authority, a platform admin — binds a name to a key by procedure. Procedure fails: mis-issuance, insider access, a help desk reset. Algorithmic identity binds the name on a shared ledger, which is strong, but it also freezes history in a place that is awkward for erasure and for evidence that must stay with the parties.',
+            text: 'Phil Windley’s three architectures, as the jargon essays use them: administrative identity binds a name to a key by an office — a certificate authority, a platform admin. That binding fails when the office is wrong. Algorithmic identity binds the name on a shared ledger. The binding is strong, and the history is hard to erase, and the identifier is locked to that ledger. Autonomic identity, which is KERI, puts the primary root of trust in the controller. The key event log is secondary: hash-chained, and keepable by the parties themselves.',
           },
           {
             kind: 'p',
-            text: 'KERI is an autonomic architecture. The controller is the primary root of trust. The key event log is a secondary one: an ordered, hash-chained record the parties can keep. A signed receipt is a witness statement that a given event was seen. Two inconsistent signed histories are duplicity — affirmative evidence, not a gap in the logs.',
+            text: 'A receipt is the part lawyers should not skip. Smith’s reason for the word is practical: both sides of an agreement need a verifiable record of what was seen, so there is recourse. Duplicity — two inconsistent signed histories — is affirmative evidence. A shorter log that does not contradict the longer one is incomplete, not a second story. And a stale key cannot invent that second story: forging an alternate key event log shows up as duplicity. Compromise of the current key is different, and narrower. Using it means publishing an event onto infrastructure the controller designated, so the exposure is bounded by the time to notice and rotate.',
           },
           {
             kind: 'words',
-            ids: ['duplicity', 'receipt', 'kel'],
+            ids: ['duplicity', 'receipt', 'kel', 'end'],
           },
         ],
       },
@@ -189,12 +192,12 @@ export const personas = [
           },
           {
             kind: 'p',
-            text: 'KERI seals issuance to the key state at that moment in the log. Later rotation does not rewrite the past seal. A verifier replays the establishment events and checks that the key used then was authoritative then. Pre-rotation means the recovery key was committed as a hash before the incident, so “we invented a new key after the breach” is a different, visible event — not a silent swap.',
+            text: 'An ACDC is sealed to key state through a transaction event log anchored in the key event log. Later rotation does not rewrite that seal, and it does not auto-invalidate every earlier credential. A verifier replays the establishment events and checks the key that was authoritative then. The recovery key was committed as a hash before the incident, so “we invented a new key after the breach” cannot masquerade as the pre-committed rotation. Revocation is an explicit later event. Until it exists, the old seal still speaks to that day.',
           },
           {
             kind: 'note',
-            title: 'Erasure',
-            text: 'Because there is no single totally ordered global ledger of everyone’s events, an identifier’s data is not structurally doomed to live forever. The Hitchhiker’s Guide and the KERI Foundation both treat this as support for the right to be forgotten. Counsel should still read the actual retention design of a given deployment. The protocol permits erasure; a vendor’s copy policy might not.',
+            title: 'Erasure, and what it does not promise',
+            text: 'There is no single totally ordered ledger of everyone’s events, so an identifier’s data is not structurally doomed to live forever. The Hitchhiker’s Guide and the KERI Foundation both treat that as support for erasure. Counsel should still read the deployment: witnesses, counterparties, and vendors may keep copies. The protocol permits forgetting. A contract might not.',
           },
           {
             kind: 'check',
@@ -218,10 +221,10 @@ export const personas = [
             kind: 'list',
             title: 'Primary explanations behind this path',
             items: [
-              'Hitchhiker’s Guide to KERI, Parts 1 and 2 — why no global ledger, and the four pieces: AID, pre-rotation, key event, receipt.',
-              'KERI jargon, Parts 1–3 — AID, SAID, ACDC, OOBI, IPEX, in glossary form.',
-              'GLEIF’s vLEI program — the production legal-entity use.',
-              'ToIP specifications approved 21 January 2026: KERI, ACDC, and CESR v1.0.',
+              'Hitchhiker’s Guide to KERI, Parts 1 and 2 — why no global ledger, and AID, pre-rotation, key event, receipt.',
+              'KERI jargon, Parts 1–3 — including duplicity versus a merely incomplete log.',
+              'Security in KERI/ACDC — KEL-backed evidence, and why a stale key cannot forge an alternate history.',
+              'GLEIF vLEI, and the ToIP KERI, ACDC, and CESR v1.0 texts approved 21 January 2026.',
             ],
           },
           {
@@ -251,7 +254,7 @@ export const personas = [
           },
           {
             kind: 'p',
-            text: 'KERI’s answer is not “no identity.” It is identity whose root of trust is cryptographic and end-user controlled. Accountability comes from signatures, key-state history, and receipts — not from a permanent behavioral dossier. The minimum disclosure needed for a decision can be separated from the rest of a person’s file.',
+            text: 'KERI’s answer is not “no identity.” It is an identifier whose root of trust is the controller’s keys, plus attestations that can be checked without a permanent behavioral dossier. Smith is more specific than the slogan. He ranks authenticity and confidentiality above the attempt to keep privacy perfect forever: dealing with someone already reveals something to them. What must not happen is a third party, never in that relationship, mining it. He calls the workable pair authenticity plus confidentiality. Graduated disclosure is how little gets revealed. Receipts are how the act stays attributable.',
           },
           {
             kind: 'pair',
@@ -274,11 +277,11 @@ export const personas = [
         blocks: [
           {
             kind: 'lead',
-            text: 'Not a cryptocurrency. Not a national app with one vendor’s account system. A protocol suite: KERI for identifiers and key history, ACDC for credentials, CESR for encoding, with discovery that can use ordinary web addresses (OOBI) while refusing to treat those addresses as trust.',
+            text: 'Not a cryptocurrency and not a national login. A protocol suite: KERI for identifiers and key history, ACDC for credentials, CESR so the same proof can be text or binary. Discovery may use ordinary web addresses. Those addresses are not trust. Smith abandoned a trusted discovery network once he saw the worst failure of a lookup is that you find nothing — because anything you do find still has to verify on its own.',
           },
           {
             kind: 'p',
-            text: 'The blockchain trilemma — you cannot maximize decentralization, security, and scale together when every update needs global consensus — is about double-spending. Identity updates are mostly idempotent: repeating “these are my keys” does not mint a second person. KERI therefore does not run a worldwide consensus just to establish control. It can still use a blockchain as a witness if a deployment wants that availability. The identifier is not locked to that chain.',
+            text: 'The blockchain trilemma is about double-spending: one shared, totally ordered ledger cannot maximize decentralization, security, and scale together. Repeating “these are my keys” does not create a second person, so identity does not need that consensus. KERI can still use a chain as a witness. The identifier is not born there, and it is not locked there. The path from administrative names, to ledger-locked names, to autonomic names is the policy history in these texts. Endorsing “decentralized identity” without saying who holds rotation authority slides back to the first of those.',
           },
           {
             kind: 'list',
@@ -286,8 +289,8 @@ export const personas = [
             items: [
               'Portability: no ledger lock-in if a vendor or chain fails.',
               'Erasure: personal data is not required to live on one global ordered ledger.',
-              'Recovery: pre-rotation is designed so a stolen signing key is not the end of legal identity.',
-              'Attribution: duplicity is detectable evidence, which matters for fraud and for official records.',
+              'Recovery: a stolen signing key is published, visible, and rotatable. The spare was committed before the theft.',
+              'Attribution: duplicity is evidence. A stale key cannot silently replace the official history.',
               'Proportionality: graduated disclosure instead of all-or-nothing data sharing.',
             ],
           },
@@ -403,11 +406,20 @@ export const personas = [
         blocks: [
           {
             kind: 'lead',
-            text: 'An ACDC is a labeled data container with a version string, a SAID (“d”), an issuer AID (“i”), and an attributes block. There is no W3C-style proof section inside it; signatures ride in CESR. Compact field names exist so constrained devices can carry them. Schemas are JSON Schema whose $id is a SAID, so a swapped schema file fails verification.',
+            text: 'An ACDC is a labeled container: version string, SAID (“d”), issuer AID (“i”), attributes. There is no W3C proof block inside it. Signatures ride in CESR, which round-trips text and binary. Schemas are JSON Schema whose $id is a SAID, so a swapped schema fails. Issuance and revocation live in a TEL anchored to the issuer KEL. That anchor is why rotation does not force mass re-issuance, and why a stale key cannot backdate a credential without duplicity.',
+          },
+          {
+            kind: 'list',
+            title: 'Three security classes in the KERI/ACDC notes — do not mix them in one blob',
+            items: [
+              'High, KEL-backed: hash-chained, end-verifiable, duplicity is evidence. Use this for credentials and anything that must stay authentic after the key changes. ACDC via TEL counts.',
+              'Medium, BADA: “latest wins” by a (time, key-state) tuple. Enough for discovery, such as service endpoints, because a bad lookup is a failed lookup — the thing you find still has to verify. Not enough for credentials. A stolen current key is not guaranteed to be visible the way a KEL publication is. Rotation does not invalidate every prior BADA record.',
+              'Low, KRAM: replay protection on a query to a host, using the replier’s time and key state. It protects the host. It does not protect data at rest. Store the reply under BADA or, better, in an ACDC.',
+            ],
           },
           {
             kind: 'p',
-            text: 'CESR is the streaming encoding: text and binary round-trip. IPEX is a five-step disclosure dialogue (apply, offer or spurn, agree or spurn, grant or spurn, admit) that covers both issuance and presentation. TEL entries record issuance and revocation and are anchored to the issuer’s KEL, which is why rotation does not force mass re-issuance.',
+            text: 'IPEX is one five-step dialogue for both issuance and presentation: apply, offer or spurn, agree or spurn, grant or spurn, admit. OOBI and did:webs-style documents are discovery. Smith’s rule from the security notes: if an intermediary can inject data without a private key — JSON-LD @context is the example he rejects — that data is not a proof. End-verifiability means your verifier, at the edge, replays KEL-backed bytes. A trusted resolver is the mistake he says he already made once and dropped.',
           },
           {
             kind: 'list',
@@ -442,10 +454,11 @@ export const personas = [
             kind: 'list',
             title: 'Read in this order',
             items: [
-              'Hitchhiker’s Guide Part 2 — one sitting, the mental model.',
+              'Hitchhiker’s Guide Part 2 — the mental model in one sitting.',
               'Jargon Parts 1–3 — when the whitepaper’s vocabulary hits you.',
-              'KERI, ACDC, and CESR v1.0 at Trust Over IP — when you need normative text.',
-              'WebOfTrust repos (keripy, keria, signify) — when you want running code.',
+              'Security in KERI/ACDC — KEL-backed versus BADA versus KRAM, before you design an API.',
+              'KERI, ACDC, and CESR v1.0 at Trust Over IP — normative text.',
+              'WebOfTrust repos (keripy, keria, signify) — running code.',
             ],
           },
           {
@@ -476,14 +489,14 @@ export const personas = [
           },
           {
             kind: 'p',
-            text: 'vLEI, built by GLEIF on KERI and ACDCs, is aimed at that hole. The organization has an identifier. Officers and roles can hold credentials chained back to it. A call, a message, or a contract signature can be checked against that chain. RootsID, banks, and telecom work in these materials use the same idea: verifiable voice, verifiable counterparties.',
+            text: 'vLEI, GLEIF’s verifiable Legal Entity Identifier on KERI and ACDCs, is the production version of the fix. The firm has an identifier. Roles chain back to it. A call, a message, or a signature can be checked against that chain, and both sides can hold receipts. The same pattern shows up in these notes for verifiable voice and for vendor payments. GLEIF attests organizations, not natural persons. The legal name and the cryptographic name are linked by that attestation. They are not the same object.',
           },
           {
             kind: 'pair',
-            leftTitle: 'Ledger lock-in',
-            left: 'If your company’s identifier only exists inside one vendor’s blockchain or one cloud directory, leaving means re-issuing trust with every partner.',
-            rightTitle: 'A portable root',
-            right: 'A KERI AID can be witnessed on infrastructure you choose, including a chain if you want one, and moved. Partners verify the log. They do not rent the name from your vendor.',
+            leftTitle: 'How Smith got here',
+            left: 'He helped design Sovrin, a public-ledger identity system. One ledger meant everyone had to share it, and leaving it meant ledger wars. An identifier born on a vendor’s chain or cloud directory has the same trap.',
+            rightTitle: 'What he built instead',
+            right: 'A protocol. The AID is the root. Witnesses — a database, a file, or a chain — only keep the log findable. Partners verify the bytes. They do not rent the name from your vendor.',
           },
         ],
       },
@@ -517,7 +530,7 @@ export const personas = [
           },
           {
             kind: 'p',
-            text: 'Pre-rotation and multi-signature are the operational tools. Current keys can sit with a custodian for day-to-day signing. Rotation authority can stay with the organization, so the custodian can be fired without their cooperation. Partial pre-rotation lets you expose some keys and keep others in reserve. Every change is an event in the log, signed, and receivable — which is also what lets an auditor reconstruct who could commit the company on a given date.',
+            text: 'Pre-rotation and multi-signature are the operational tools. Current keys can sit with a custodian for day-to-day signing. Rotation authority can stay with the organization, so the custodian can be removed without their cooperation — custodial rotation, in the jargon. The spare should not live on the laptop that signs. Partial pre-rotation lets you expose some keys and keep others in reserve. Every change is an event, signed and receivable, which is what lets an auditor reconstruct who could bind the company on a given date. A stolen current key shows up as a published event. A stale key cannot quietly rewrite that date.',
           },
           {
             kind: 'p',
@@ -603,11 +616,11 @@ export const personas = [
           },
           {
             kind: 'p',
-            text: 'Patients get the same root-of-trust story as institutions. The essays are explicit that the user holds their own keys and can recover without a central help desk being the only path back. For a person who has changed clinics, names, or coverage, that is the difference between a portable identity and an account in one portal.',
+            text: 'The patient identifier and the clinic identifier are different names. A guardian, a proxy, or a covering clinician gets authority by delegation, which both sides seal, not by sharing a password. The essays are explicit that the holder of the keys can recover without a help desk being the only way back. For someone who changes clinics, names, or coverage, the identifier can stay while the attestations change. Smith’s non-clinical example is the pattern: prove one fact — old enough — and disclose nothing else. A coverage fact or a referral is the same shape.',
           },
           {
             kind: 'words',
-            ids: ['acdc', 'ipex', 'vlei', 'prerotation'],
+            ids: ['acdc', 'ipex', 'delegation', 'vlei', 'prerotation'],
           },
         ],
       },
@@ -622,11 +635,11 @@ export const personas = [
           },
           {
             kind: 'p',
-            text: 'If an integration engine is compromised, an attacker who lacks the rotation keys cannot silently replace the organization’s AID. If they sign something with a stolen current key, rotation retires it, and the log shows the window. Watchers on the verifier side — a payer, a health information network — look for a second, inconsistent history rather than trusting the sender’s word that “the directory is fine.”',
+            text: 'If an integration engine is compromised, an attacker who lacks the rotation keys cannot replace the organization’s history. A stale key cannot forge another log that verifies. A stolen current key can sign only by publishing, and that publication is what watchers — a payer, a network — look for, instead of trusting the sender’s word that the directory is fine. The window is the time until rotation, not the life of the record. Authorizations sealed before the incident remain checkable. They are not all silently void, and they are not all silently rewritten.',
           },
           {
             kind: 'p',
-            text: 'Privacy follows from not putting every patient’s events on one global ledger. Erasure stays possible. Minimum disclosure is a protocol step (IPEX), which is easier to govern than an honor-system API that returns the whole Patient resource.',
+            text: 'Do not put every patient’s events on one global ledger if erasure matters. Minimum disclosure is a protocol step, IPEX, rather than an honor-system API that returns the whole Patient resource. Smith’s priority, if you have to choose, is authenticity of who attested, and confidentiality against parties who were not in the exchange — not a promise that the specialist you just dealt with learned nothing.',
           },
           {
             kind: 'check',

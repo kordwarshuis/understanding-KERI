@@ -1,0 +1,930 @@
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy
+# of the License at:
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+# UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+# DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+# SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+# LIMITATIONS UNDER THE LICENSE.
+# Top-level config
+root = true
+# All files
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+# Makefiles
+[Makefile]
+indent_style = tab
+indent_size = 8 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
+name: build
+on:
+push:
+branches:
+- master
+- main
+env:
+PYTHON_VERSION: 3.x
+jobs:
+build:
+name: Build documentation
+runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v2
+- name: Set up Python runtime
+uses: actions/setup-python@v1
+with:
+python-version: ${{ env.PYTHON_VERSION }}
+- name: Install Python dependencies
+run: |
+pip install -r requirements.txt
+- name: Deploy documentation
+mkdocs gh-deploy --force
+mkdocs --version # Code of Conduct
+The membership of the [ToIP Foundation](http://trustoverip.org) pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
+The Steering Committee is committed to upholding the [ToIP Code of Conduct](https://lfprojects.org/policies/code-of-conduct/) and contributors agree to act according to a standard set of behaviors that contribute to a positive environment. # ToIP Deliverables
+Under our Linux Foundation Joint Development Foundation (JDF) charter, each ToIP Foundation Working Group (WG) can produce a variety of [deliverable types](./content/process/work_products.md). This repo covers the [lifecycle management process](./content/process/lifecycle_management.md) for the work products ("deliverables") of the ToIP Foundation.
+Figure 1: The five (5) primary types of ToIP Foundation deliverables
+![deliverables](https://github.com/trustoverip/deliverables/blob/main/docs/_images/process/toip-deliverables.png)
+Table 1 summarizes the primary differences between these five types:
+| Deliverable Type | Designed to be:|
+| --- | --- |
+| Specification | Implemented (in code)|
+| Glossary | Incorporated (in other documents) |
+| Recommendation | Followed (in practice) |
+| Guides | Executed (in operation) |
+| White Paper | Understood (to support decisions) |
+Table 1: The primary differences between the six types of deliverables
+## Purpose
+This repository serves several purposes:
+1. Document and maintain the process information for contributing to the ToIP Foundation.
+2. Storage and version control for a subset of the Foundation's deliverables.
+3. Publication process for our [Deliverables Portal](https://trustoverip.github.io/deliverables), an interactive GitHub Pages website.
+4. Manages a list of [industry adoption activity](./lists/adoption.md).
+## Contributor's Guide
+Contributors of content for the ToIP Deliverables Portal should familiarize themselves with the [Authoring Process](./DEV_README.md).
+## Related Resources
+1. [ToIP Deliverables Portal - Status](https://trustoverip.github.io/deliverables/results/proposed/)
+2. [ToIP Contributor's Workflow](https://trustoverip.github.io/deliverables/process/process_concepts/)
+### Management of Deliverables
+#### Publication Categories
+Each deliverable produced by the ToIP Foundation may be rendered for publication in a variety of formats. There are two categories:
+| Publication Category | Description | Format Options |
+| --- | --- | --- |
+| Basic | A work-product delivered in only one format. | Markdown |
+| Multi-Modal | A work-product delivered in multiple formats. | Markdown, PDF, HTML|
+>Note: Regardless of publication category, the authoring process may leverage more than one Markdown file to produce the final work-product.
+#### Publication Access
+This repo serves as the storage repository for work-products within the **Basic** publication category. These work-products can be found in the ```recommendations``` folder.
+Each work-product within the **Multi-Modal** publication category will have a dedicated repository within the [ToIP Github Organization](https://github.com/trustoverip/) with unique publication process details.
+### Portal Development
+This repo contains the content resources for the generation of documentation associated with the contribution process and state of our deliverables. It contains the tools necessary to generate this documentation in two rendering formats (printed, online). Please refer to our [Portal Build Process](./content/process/build_processs.md) for more details.
+## Getting Started with the ToIP Foundation
+The ToIP Foundation maintains a variety of active and inactive activities that adhere to a specific process for the maturation and publication of deliverables that are relevant to:
+* Work within the same working group
+* Work within another working group
+* Work within another community or [SDO](https://en.wikipedia.org/wiki/Standards_organization#Standards_developing_organizations_(SDOs))
+There are several ways in which you can get acquainted with our work.
+### Learn
+If you are here to explore the work products of the ToIP Foundation, we recommend you refer to the *Deliverables Results* section of our [Deliverables Portal](https://trustoverip.github.io/deliverables/results/proposed/) as it provides a current listing of all work product efforts and their statuses.
+### Contribute
+If you have an idea for a new instance of one of our types of deliverables, please consider making a contribution:
+* [Contribute a Specification](./content/process/contributing_specs.md)
+* [Contribute a Other Work-Products](./content/process/contributing_other.md)
+### Consume
+The goal of the ToIP Foundation is to help define a complete architecture for Internet-scale digital trust that combines both cryptographic trust at the machine layer and human trust at the business, legal, and social layers. Our work products with be positioned at various levels of such an architecture and will mature at disparate rates. Please familiar yourself with the [lifecycle management process](./content/process/lifecycle_management.md) for our deliverables and then when/where appropriate we welcome your feedback on how you plan or have consumed our work. Please keep us informed of your activities by submitted a `pull-request` against our [adoption matrix](./lists/adoption.md).
+## About
+#### License
+This repository is licensed under an [Apache 2 License](LICENSE). It is protected by a [Developer Certificate of Origin](https://developercertificate.org/) on every commit. This means that any contributions you make must be licensed in an Apache-2-compatible
+way, and must be free from patent encumbrances or additional terms and conditions. By raising a PR, you certify that this is the case for your contribution.
+#### Acknowledgement
+This repo was derived from the [ToIP Material for MkDocs Repo](https://github.com/trustoverip/mkdocs-material). It was inspired by the structure and successful experience of the [Hyperledger/Aries-RFC Repository](https://github.com/hyperledger/aries-rfcs), which was in part based on [Indy HIPEs](
+https://github.com/hyperledger/indy-hipe), which borrowed it from [Rust RFC](https://github.com/rust-lang/rfcs). # ToIP <TypeIndicator><4digitID>: <DeliverableName>
+```
+Update title. For example, BP000: Utility Selection Criteria
+DELETE THIS COMMENT
+- Authors: [your name](you@github-email) -- email is optional
+- Status: [PROPOSED](https://trustoverip.github.io/deliverables/process/lifecycle_management/#proposed)
+- Since: YYYY-MM-DD (date you submit your PR)
+- Status Note: (explanation of current status)
+- Supersedes: (link to anything this ToIP Deliverable supersedes)
+- Start Date: YYYY-MM-DD (date you started working on this idea)
+- Tags: (see [Tag Options](https://trustoverip.github.io/deliverables/process/tags)
+## Summary
+One paragraph explanation of the objective of the subject ToIP deliverable.
+This repo manages the development and maintenance of the subject ToIP deliverable. It contains the tools necessary to generate multiple renderings formats.
+1. Interactive Online Website: [GitHub Pages](https://<ORG_NAME>.github.io/<REPO_NAME>/)
+2. Printable Documents
+* [PDF Version](./publish/<DOC_NAME>.pdf)
+* [HTML Version](./publish/<DOC_NAME>.html)
+* [Standalone Markdown](./publish/<DOC_NAME>.md)
+Documentation and Specification contributors should familiarize themselves with the [Authoring Process](https://github.com/trustoverip/<REPO_NAME>/blob/main/DEV_README.md).
+Replace <REPO_NAME>
+2. [ToIP Contributor's Workflow](https://trustoverip.github.io/deliverables/process/process_concepts/) ## Requirements
+### Workflow
+ToIP contributors should be able to:
+1. Gather: Define, Organize and Assign work towards the development of a ToIP Deliverable based on project outline that aggregates a collection of discrete Markdown files.
+2. Author: Use any Markdown editor they desire.
+3. Produce: Configure the generation of one or two possible deliverables: General Document, Specification.
+### Styling
+1. Apply a Material style Theme that is ToIP specific
+2. Leverage a Color pallet derives from the [ToIP Logo Assets](https://github.com/trustoverip/logo-assets).
+3. Provide configurable navigator with numeric outlines level 1-3: See [Spec-Up](https://identity.foundation/sidetree/spec/) as an example style for the development of specifications.
+4. Build upon the Material Theme (not insiders) with Search Suggest and/or Highlight - void of Insider Token requirements.
+5. One ToIP Theme with config option for header generated numbering (with or without).
+### Versioning
+ToIP members should be able to prime to repos using this repo as a GitHub Template Repository.
+### Development and Processing
+1. Command line tools (make) for generating local test content.
+2. Github workflow (actions) for producing GitHub-Pages
+3. Layout (outline / organize) multiple markdown files (i.e.: mkdocs.yml)
+### Rendering Formats
+Minimally, this repo MUST allow for the configuration of generating these rendering formats:
+1. Single Markdown file (via pandoc or other plugins)
+2. Single PDF (via pdf-export or other plugins)
+3. Website/GitHub-Pages # Copyright (c) 2020 ToIP Foundation
+# Pull base image from official Material for MkDocs repo
+FROM squidfunk/mkdocs-material
+# Add bash as alternative to default ash shell env in Alpine
+RUN apk add --no-cache --upgrade bash python py-pip
+# Add make command utility
+RUN apk add --update --no-cache make=4.2.1-r2
+# Add MkDocs dependencies
+RUN pip install --upgrade pip
+RUN pip install --upgrade mkdocs-enumerate-headings-plugin
+# Set working directory to the name of a Docker Volume
+WORKDIR /host_mkdocs # Copyright (c) 2020 ToIP Foundation
+# Pull base image from official PanDocs Latex repo
+FROM pandoc/latex:2.6
+# Add PanDoc dependencies
+RUN pip install --upgrade pandocfilters
+WORKDIR /host_pandocs # Authentic Chained Data Containers
+## Abstract
+Authentic Chained Data Containers (ACDC) Standard Specification provides semantic of authentic provenance chaining of authentic data containers. This semantics include both source provenance and authorization provenance or delegation.
+## Status
+Version 1 Draft 01
+## Motivation
+We need a way to chain authentic data together, allowing its provenance to be traced. This is valuable in many use cases:
+* Supply chain, where a valid transfer of custody downstream depends on the validity of all upstream handoffs.
+* Delegation, where a delegate's privileges derive from a chain of authorizations that must extend back to a source that is empowered.
+* Citation of sources (in art, in journalism, in academia, or in credential issuance), where an author wants to clarify that a particular assertion originates elsewhere. This allows the assertion to acquire (or lose) gravitas independent of the reputation of the author who includes it. It also allows analysis of license compliance.
+The last of these examples deserves special comment. There is a tension between the decentralization that we want in a verifiable credential ecosystem, and the way that trust tends to centralize because knowledge and reputation are unevenly distributed. We want anyone to be able to attest to anything they like--but we know that verifiers care very much about the reputation of the parties that make those attestations.
+We could say that verifiers will choose which issuers they trust. This is exactly what most practioners of VCs recommend, and it works in early pilots. However, this places a heavy burden on verifiers, over the long haul--verifiers can't afford to vet every potential issuer of credentials they might encounter. The result will be a tendency to accept credentials only from a short list of issuers, which leads back to centralization.
+This tendency also creates problems with delegation. If all delegation has to be validated through a few authorities, a lot of the flexibility and power of delegation is frustrated.
+We'd like a landscape where a tiny startup can issue an employment credential with holder attributes taken as seriously as one from a massive global conglomerate--and with no special setup by verifiers to trust them equally. And we'd like parents to be able to delegate childcare decisions to a babysitter on the spur of the moment--and have the babysitter be able to prove it when she calls an ambulance.
+## Scope
+This document describes a mechanism whereby assertions about data can be provenanced in a provably authentic chain. Evaluating the integrity of the chain is in scope -- and because such chains leads to one or more root sources, the chain provides the raw material for making judgments about the data's utility or probable veracity. However, evaluating the data's utility or veracity is out of scope.
+In other words, this standard concerns itself with proving that party C got its data in a valid way from party B, who in turn got it from party A. The degree to which the origin party, A, is trustworthy in their assertions about reality is not our concern.
+## Terminology
+- `SAID` - Self-Addressing Identifier - any identifier which is deterministaclly generated out of the content, digest of the content
+## Specification
+### Overview
+An ACDC may be built up from an authentic data container (ADC) that contains an authentic provenance chain (APC). The term authentic data container (ADC) is an important abstract concept that hopefully may leverage a pre-existing open concrete
+implementation standard specification. The current targeted concrete implementation specification is the W3C Verifiable Credential (VC) standard. We believe that authentic data containers (ADCs) with authentic provenance chains (APCs) that together compose an authentic chained data container (ACDC) are essential components of verifiable or authentic data supply chains which in turn are essential to what may be called the authentic data economy
+TODO: mention about informative example used across whole spec
+### Security guaranties
+### Privacy guaranties
+### Informative Example
+{
+"v": "ACDC10JSON00011c_",
+"d": "EBdXt3gIXOf2BBWNHdSXCJnFJL5OuQPyM5K0neuniccM",
+"i": "did:keri:EmkPreYpZfFk66jpf3uFv7vklXKhzBrAqjsKAn2EDIPM",
+"s": "E46jrVPTzlSkUPqGGeIZ8a8FWS7a6s4reAXRZOkogZ2A",
+"a": {
+"d": "EgveY4-9XgOcLxUderzwLIr9Bf7V_NHwY1lkFrn9y2PY",
+"i": "did:keri:EQzFVaMasUf4cZZBKA0pUbRc9T8yUXRFLyM1JDASYqAA",
+"dt": "2021-06-09T17:35:54.169967+00:00",
+"ri": "did:keri:EymRy7xMwsxUelUauaXtMxTfPAMPAI6FkekwlOjkggt",
+"LEI": "254900OPPU84GM83MG36",
+},
+"p": [
+{
+"qualifiedvLEIIssuervLEICredential": {
+"d": "EIl3MORH3dCdoFOLe71iheqcywJcnjtJtQIYPvAu6DZA",
+"i": "Et2DOOu4ivLsjpv89vgv6auPntSLx4CvOhGUxMhxPS24"
+}
+}
+],
+"r": [
+"usageDisclaimer": "Usage of a valid Legal Entity vLEI Credential does not assert that the Legal Entity is trustworthy, honest, reputable in its business dealings, safe to do business with, or compliant with any laws."
+},
+"issuanceDisclaimer": "Issuance of a valid Legal Entity vLEI Credential only establishes that the information in the requirements in the Identity Verification section 6.3 of the Credential Governance Framework were met in accordance with the vLEI Ecosystem Governance Framework."
+]
+}
+- `v` version string of ACDC
+- `d` SAID of ACDC.
+- `i` Attributable Source Identifier (Issuer, Testator).
+- `s` Schema SAID
+- 'a' Attributes
+- `p` Provenance chain
+- `r` Rules rules/delegation/consent/license/data agreement under which data are shared.
+### ACDC as Verifiable Labeled Property Graph Fragment
+The structure of an ACDC may be modeled as a fragment of a Labeled Property Graph. The `p` block is an array of edges and the `a` block is the node. The remainder of the ACDC may be metadata about the node that may also be included as special node properties. Because, the edges in labeled property graphs may also have labeled properties, a more aligned representation would make each source entry a labeled block (or at least as an option). This is illustrated in the following example:
+d: "did:1209u091u9012d/attestation/1234", // SAID
+i: "did:1209u091u9012d",
+p:
+[
+{sourcEdgeLabel: {i: "did:kdjflkeje", tid: "did:jd892j108jd1029", ...}}, // attestation id not in namespace of testator
+{anotherSourceEdgeLabel: {i: "did:9d9j109j1d902dj19/attestation/3242", ...}}, // attestation id in namespace of testator
+{yetAnotherSourceEdgeLabel: {i: "did:h78h8d2h8d2h8hd28d/attestation/1234",...}} // attestation id in namespace of testator
+],
+s: {}, || SAID
+a:
+{
+i: "SAID",
+k: v,
+k1: SAID, // ref1
+}, || SAID
+r: {} || SAID
+}
+Because each ACDC thus composed is verifiable, a verifiable graph may be communicated via verifiable graph fragments. Given any starting node or root node in the graph, one may add onto the graph by communicating graph fragments where each fragment includes a new node and the edge or edges that connect it to one or more pre-existing nodes. The over-the-wire communication of the fragment is secured by the immutability of the ACDC contents (SAIDs) and the signature or committment proofs on the fragment. This drives the structure of any given ACDC to be a graph fragment not a graph in and of itself. The semantics of who issues or testates to a fragment and who the fragment is issued to (if any) may vary. With an issuer and isuee then the fragment may be an authorization or delegation. If the isuee is the node itself then the fragment is just provenanced data in a provenanced graph.
+### Normative model
+### OCA Model Version of Field Labels
+## References
+- [1] https://github.com/SmithSamuelM/Papers/blob/master/whitepapers/ACDC.web.pdf
+- [2] https://github.com/THCLab/keri-python-ffi/tree/supply_chain
+- [3] https://hackmd.io/rnY5xiXESWqWBlyDPHDorA?view
+- [4] https://github.com/THCLab/keri-python-ffi/tree/supply_chain
+- [5] https://github.com/SmithSamuelM/Papers/blob/master/whitepapers/VC_Enhancement_Strategy.md
+## Apendix
+### Examples
+TODO: provide more examples
+#### Security considerations
+#### Privacy consideration
+### Benefits
+TODO:
+- focus on generic problem of authentic data
+- do not relay on any specific network nor implementation
+ACDC focus on the base semantic specification to address core properties of authentic data flows. ACDC provides semantic allowing to express:
+- authenticity for any data flow
+- self-describing mechanism to understand the context of data
+- chaining mechanism (including delegation)
+- increasing interoperability by not relaying on any specific use case and implementation
+### Motivation/Problem statement
+- Arguments why existing solutions are not good enough.
+- What is the problem
+### Example of similar construct
+- VC Data Model
+- ZCap-LD
+- ... <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0) -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+viewBox="0 0 260.6 107.4" style="enable-background:new 0 0 260.6 107.4;" xml:space="preserve">
+.st0{fill:#0031C0;}
+.st1{fill:#A3E8E8;}
+.st2{fill:#0B8BD7;}
+.st3{fill:#1445CA;}
+.st4{fill:#8FD4D4;}
+.st5{fill:#0077C3;}
+.st6{fill:#1A9AE6;}
+.st7{fill:#0031B6;}
+.st8{fill:none;stroke:#0031B6;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;}
+<path class="st0" d="M164.8,31.9h-2.8v7.8h-6.7V12.5c2.8-0.1,7.2-0.2,10.9-0.2c7,0,11.4,3.4,11.4,9.7c0,3.6-1.8,6.6-4.7,8.2
+l6.5,9.5h-8l-5-7.8H164.8z M166.2,26.2c2.8,0,4.6-1.7,4.6-4.2c0-2.7-1.8-4-4.9-4c-1.2,0-2.7,0-4,0v8.1H166.2z"/>
+<path class="st0" d="M206.9,27.4c0,8.1-4.9,12.9-12.8,12.9c-7.8,0-12.7-4.8-12.7-12.9V12.5h6.8v14.9c0,4.2,2.3,6.6,5.9,6.6
+c3.6,0,6-2.4,6-6.6V12.5h6.8V27.4z"/>
+<path class="st0" d="M231.8,19.7c-3.8-1.2-7.2-1.8-9.5-1.8c-2.4,0-3.8,0.7-3.8,2.4c0,1.8,2.2,2.2,6,3c5.6,1.2,9.3,3,9.3,8.2
+c0,5.8-4.5,8.8-11.4,8.8c-3.5,0-7.9-0.8-12.1-2.4l1.5-6c4.4,1.6,7.9,2.3,10.3,2.3c2.9,0,4.4-0.8,4.4-2.3c0-2.2-3.1-2.6-6.5-3.3
+c-6.1-1.3-8.9-3.2-8.9-8c0-5.4,4.3-8.6,11.1-8.6c3.8,0,8.2,0.8,11,1.8L231.8,19.7z"/>
+<path class="st0" d="M155.8,62.1c0,8.5-5.8,14.2-14.3,14.2s-14.3-5.7-14.3-14.2c0-8.5,5.8-14.2,14.3-14.2S155.8,53.6,155.8,62.1z
+M152.8,62.1c0-6.9-4.6-11.5-11.4-11.5c-6.7,0-11.3,4.6-11.3,11.5s4.6,11.6,11.3,11.6C148.2,73.7,152.8,69,152.8,62.1z"/>
+<path class="st0" d="M198.7,65.4c0,0.9,0,1.2-0.2,2.1h-15.4c0.4,3.8,3.1,6.3,7.2,6.3c2.4,0,4.3-0.4,6.8-1l0.4,2.2
+c-2.4,0.7-4.5,1.3-7.3,1.3c-6.3,0-10-4.1-10-9.9c0-5.9,4-9.8,9.6-9.8C195.1,56.6,198.7,60,198.7,65.4z M183.1,65.4h13.1
+c0-4-2.6-6.5-6.3-6.5C186,58.9,183.4,61.4,183.1,65.4z"/>
+<path class="st0" d="M260.6,58.2c0,6.2-4.6,10.1-11.8,10.1H245v7.4h-6.7V48.5c3.2-0.2,6.8-0.3,10.5-0.3
+C256,48.2,260.6,51.9,260.6,58.2z M249.2,62.5c2.8,0,4.7-1.6,4.7-4.2c0-2.7-2-4.2-4.7-4.2c-1.4,0-2.8,0-4.2,0.1v8.3H249.2z"/>
+<path class="st0" d="M152.9,91.1c0,4.3-3,7.1-7.3,7.1c-4.3,0-7.3-2.8-7.3-7.1s3-7.1,7.3-7.1C149.9,84,152.9,86.8,152.9,91.1z
+M149.5,91.1c0-2.4-1.6-4-3.8-4c-2.2,0-3.8,1.6-3.8,4s1.6,4,3.8,4C147.9,95.1,149.5,93.5,149.5,91.1z"/>
+<path class="st0" d="M167.5,91.7c0,4-2.5,6.4-6.4,6.4c-3.9,0-6.3-2.4-6.3-6.4v-7.5h3.4v7.5c0,2.1,1.1,3.3,2.9,3.3s3-1.2,3-3.3v-7.5
+h3.4V91.7z"/>
+<path class="st0" d="M197.8,91c0,4.3-3,7-7.1,7c-2,0-3.9-0.1-5.4-0.2V84.3c1.5-0.1,3.2-0.2,5.1-0.2C194.8,84.1,197.8,86.8,197.8,91
+z M194.3,91c0-2.4-1.6-3.9-3.8-3.9c-0.6,0-1.2,0-1.8,0V95c0.7,0,1.4,0,2.1,0C192.7,95,194.3,93.4,194.3,91z"/>
+<path class="st0" d="M245.7,91.1c0,4.3-3,7.1-7.3,7.1c-4.3,0-7.3-2.8-7.3-7.1s3-7.1,7.3-7.1C242.7,84,245.7,86.8,245.7,91.1z
+M242.2,91.1c0-2.4-1.6-4-3.8-4c-2.2,0-3.8,1.6-3.8,4s1.6,4,3.8,4C240.6,95.1,242.2,93.5,242.2,91.1z"/>
+<path class="st1" d="M72,2.7c3.6-2.1,6.8-2.2,9.2-0.8l26.1,15.2c0,0,0.1,0.1,0.1,0.1c-2.3-1.4-5.6-1.2-9.1,0.8L51.4,45l-46-26.7
+c-7.2-4.2-7.2-10.9,0-15.1s18.9-4.2,26.1,0l20,11.4L72,2.7"/>
+<path class="st3" d="M78.1,82.6c0,4.2-1.4,7.1-3.8,8.5l-26.7,15.3c0,0,0,0,0,0c2.3-1.4,3.8-4.3,3.8-8.5l0-53l46.8-27
+c7.1-4.1,12.9-0.7,12.9,7.7c0,8.4-5.8,18.5-12.9,22.6L78.1,59.9L78.1,82.6z"/>
+<path class="st2" d="M25.5,83c0,8.4,5.8,18.5,12.9,22.6c7.1,4.1,12.9,0.7,12.9-7.7l0-53l-46-26.7C1.8,16.1,0,13.4,0,10.7v30.6
+c0,2.7,1.8,5.5,5.4,7.5l20.1,11.6L25.5,83z"/>
+<path class="st5" d="M10.6,6.1C8.5,7.4,7.4,9,7.4,10.7c0,1.6,1.1,3.3,3.3,4.5c1.4,0.8,3,1.3,4.7,1.6V4.5C13.7,4.8,12,5.4,10.6,6.1z"
+/>
+<path class="st7" d="M47.6,106.5C47.6,106.4,47.6,106.4,47.6,106.5l26.7-15.3c2-1.2,3.4-3.6,3.7-6.9L51.3,99.6
+C51,102.9,49.7,105.2,47.6,106.5z"/>
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy
+* of the License at:
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+* UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+* DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+* SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+* LIMITATIONS UNDER THE LICENSE.
+*/
+/* ----------------------------------------------------------------------------
+* Subscriptions
+* ------------------------------------------------------------------------- */
+/* Ensure Mermaid is initialized on document switch */
+app.document$.subscribe(() => {
+mermaid.init()
+}) {#
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy
+of the License at:
+http://www.apache.org/licenses/LICENSE-2.0
+UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+LIMITATIONS UNDER THE LICENSE.
+#}
+{% extends "base.html" %}
+{# Link to Linux Foundation #}
+{% block announce %}
+{% endblock %} {#
+{% set site_url = config.site_url | default(nav.homepage.url, true) | url %}
+{% if not config.use_directory_urls and site_url[0] == site_url[-1] == "." %}
+{% set site_url = site_url ~ "/index.html" %}
+{% endif %}
+{% include "partials/logo.html" %}
+{% include ".icons/material/menu" ~ ".svg" %}
+{% if config.site_name == page.title %}
+{{ config.extra.title | default(config.site_name) }}
+{% else %}
+{{ config.extra.title | default(config.site_name) }}
+{% if page and page.meta and page.meta.title %}
+{{ page.meta.title }}
+{% else %}
+{{ page.title }}
+{% endif %}
+{% endif %}
+{% if "search" in config["plugins"] %}
+{% include ".icons/material/magnify.svg" %}
+{% include "partials/search.html" %}
+{% endif %}
+{% if config.repo_url %}
+{% include "partials/source.html" %}
+{{ config.extra.toc_title | default(config.site_name) }}
+{% if config.repo_url %}
+{% include "partials/source.html" %}
+{% endif %}
+{% for nav_item in nav %}
+{% set path = "nav-" ~ loop.index %}
+{% set level = 1 %}
+{% include "partials/nav-item.html" %}
+{% endfor %}
+* Colors
+/* Set brand colors */
+:root > * {
+--md-typeset-a-color: rgba(37, 137, 202, 1);
+--md-accent-fg-color: rgba(19, 70, 201, 1);
+--md-accent-fg-color--transparent: rgba(19, 70, 201, 0.1);
+* Overrides
+/* Ensure that header shadow is always shown */
+.md-header {
+height: auto;
+box-shadow:
+0 0 0.2rem rgba(0, 0, 0, .1),
+0 0.2rem 0.4rem rgba(0, 0, 0, .2);
+/* Adjust for higher header */
+.md-header-nav {
+align-items: center;
+.md-header-nav__title {
+height: 2.4rem;
+/* Make logo bigger */
+.md-header-nav__button.md-logo img,
+.md-header-nav__button.md-logo svg {
+width: 4.8rem;
+/* Underline text links */
+.md-content .md-typeset a:not([class]) {
+border-bottom: .05rem solid currentColor;
+/* Align Linux Foundation banner */
+.md-announce img {
+vertical-align: text-bottom;
+max-width: 13.5rem;
+/* Remove vertical spacing */
+.md-announce__inner {
+margin-top: 0;
+margin-bottom: 0;
+/* Ensure link to terms of service is readable */
+.md-footer-copyright__highlight {
+display: contents;
+color: var(--md-footer-fg-color--lighter);
+/* Limit width of copyright information */
+@media screen and (min-width: 45em) {
+.md-footer-copyright {
+width: 50%
+}
+} /**
+* Keyframes
+/* Activate scroll snapping with delay */
+@keyframes md-sidebar__scrollwrap--hack {
+0%, 99%, 100% {
+scroll-snap-type: none;
+/* Induce a new stacking context, so we can use absolute positioning which
+appears to be the only consistent way of moving the permalink to the
+beginning of the headline without tampering with the HTML */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+position: relative;
+padding-left: 1.6rem;
+/* Remove the anchor offset hack in favor of scroll margin */
+.md-typeset h1[id]::before,
+.md-typeset h2[id]::before,
+.md-typeset h3[id]::before,
+.md-typeset h4[id]::before,
+.md-typeset h5[id]::before,
+.md-typeset h6[id]::before {
+display: none;
+/* Add default scroll margins */
+.md-typeset [id]:target {
+scroll-margin-top: 3.6rem;
+/* Adjust scroll margins for some headlines */
+.md-typeset h1[id]:target,
+.md-typeset h2[id]:target,
+.md-typeset h3[id]:target,
+.md-typeset h4[id]:target {
+scroll-margin-top: 3.4rem;
+/* Move headerlink to the beginning */
+.md-typeset .headerlink {
+position: absolute;
+left: 0;
+top: 0;
+margin-left: 0;
+opacity: 1;
+visibility: visible;
+transform: translateY(-0.1rem)
+/* Fix layer position of buttons */
+.md-content__button {
+z-index: 1;
+/* Ensure alignment when title has line break */
+.md-nav--primary .md-nav__link {
+display: flex;
+/* Define section counter */
+.md-nav--primary .md-nav__list {
+counter-reset: section;
+/* Increment counter for each section */
+.md-nav--primary .md-nav__link::before {
+margin-right: .2rem;
+counter-increment: section;
+content: counter(section) ".";
+/* Navigation title for drawer */
+.md-nav--primary .md-nav__title[for="__drawer"] {
+height: 3.175rem;
+background: var(--md-accent-fg-color);
+color: var(--md-accent-bg-color);
+padding: 0 1rem;
+font-size: 0.9rem;
+font-weight: 400;
+line-height: 3.5;
+0 0 0.2rem rgba(0,0,0,.1),
+0 0.2rem 0.4rem rgba(0,0,0,.2)
+/* Hide logo */
+.md-nav--primary .md-nav__title[for="__drawer"] img {
+/* Remove table of contents */
+.md-sidebar--secondary {
+/* Adjust tablet styles */
+@media screen and (min-width: 60em) and (max-width: 76.1875em) {
+/* Stretch content to whole width after removing table of contents */
+.md-content {
+max-width: 100%;
+/* Adjust mobile/tablet styles */
+@media screen and (max-width: 76.1875em) {
+.md-nav--primary .md-nav__title ~ .md-nav__list {
+background: #EEE;
+/* Adjust screen styles */
+@media screen and (min-width: 76.25em) {
+/* Left-align grid */
+.md-grid {
+margin-left: 1rem;
+/* Make space for sidebar */
+.md-announce__inner {
+padding-left: 0rem;
+.md-header,
+.md-footer,
+margin-left: 16.25rem;
+max-width: calc(100% - 12.1rem);
+/* Primary sidebar */
+.md-sidebar--primary {
+position: absolute;
+top: 1.1rem !important;
+left: 0;
+z-index: 1;
+display: flex;
+flex-direction: column;
+width: 16.25rem;
+height: 100%;
+padding-top: 0;
+box-shadow:
+inset 0 0 0.2rem rgba(0,0,0,.1),
+inset 0 0.2rem 0.4rem rgba(0,0,0,.2)
+/* Remove spacing on scrol wrapper */
+.md-sidebar__scrollwrap {
+margin: 0;
+height: auto !important;
+overflow: hidden;
+/* Snap primary sidebar to the left */
+.md-header[data-md-state="shadow"] ~ .md-container .md-sidebar--primary {
+position: fixed;
+top: 0 !important;
+/* Navigation lists */
+.md-nav--primary > .md-nav__list {
+flex: 1;
+padding: 1rem 0;
+max-height: calc(100vh - 3.175rem);
+overflow: auto;
+/* Navigation titles */
+.md-nav--primary .md-nav__title {
+flex-shrink: 0;
+/* Navigation items */
+.md-nav--primary .md-nav__item {
+padding: 0 1rem;
+font-size: 0.8rem;
+line-height: 1.5;
+/* Render table of contents as part of navigation */
+.md-nav--primary .md-nav__link[for="__toc"] ~ .md-nav {
+display: block;
+margin-bottom: 1em;
+border-left: px2rem(1px) solid var(--md-primary-fg-color);
+/* Reset counter */
+.md-nav--primary .md-nav__link[for="__toc"] ~ .md-nav .md-nav__link::before {
+content: ""
+.md-nav--primary .md-nav__link[for="__toc"] ~ .md-nav > .md-nav__title {
+display: none;
+/* Adjust print styles */
+@media print {
+/* Remove padding */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+position: initial;
+padding-left: initial;
+} # Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# Project information
+site_name: Trust over IP – Specification Template
+site_url: https://trustoverip.github.io/mkdocs-material/
+site_author: Trust over IP Foundation
+site_description: >-
+Trust over IP Foundation template for general documentation
+and technical specification using Material for MkDocs
+# Repository information
+repo_name: trustoverip/mkdocs-material
+repo_url: https://github.com/trustoverip/mkdocs-material
+# Content Generator Settings
+docs_dir: 'docs'
+site_dir: 'html'
+# Copyright information
+copyright: >-
+Copyright &copy; 2020 Joint Development Foundation Projects, LLC, Trust over
+IP Foundation Series <a href="https://jdfprojects.org/toip/">Terms of Use,
+Privacy Policy and Cookie Policy</a>. The Joint Development Foundation
+Projects, LLC is an affiliate of the Linux Foundation.
+# Navigation structure
+# nav:
+# - Page 1: page-1.md
+# - Page 2: page-2.md
+# Theme configuration
+theme:
+name: material
+custom_dir: docs/theme/overrides
+features:
+- navigation.instant
+# - navigation.tabs
+favicon: theme/images/favicon.png
+logo: theme/images/logo.svg
+palette:
+primary: white
+accent: indigo
+# Plugin configuration
+plugins:
+- search
+- enumerate-headings:
+strict: true
+toc_depth: 3
+# Extensions configuration
+markdown_extensions:
+- admonition
+- abbr
+- attr_list
+- def_list
+- footnotes
+- meta
+- toc:
+permalink: "§"
+- pymdownx.arithmatex:
+generic: true
+- pymdownx.betterem:
+smart_enable: all
+- pymdownx.caret
+- pymdownx.critic
+- pymdownx.details
+- pymdownx.emoji:
+emoji_index: !!python/name:materialx.emoji.twemoji
+emoji_generator: !!python/name:materialx.emoji.to_svg
+- pymdownx.highlight
+- pymdownx.inlinehilite
+- pymdownx.keys
+- pymdownx.magiclink:
+repo_url_shorthand: true
+user: trustoverip
+repo: mkdocs-material
+- pymdownx.mark
+- pymdownx.smartsymbols
+- pymdownx.snippets:
+check_paths: true
+- pymdownx.superfences:
+custom_fences:
+- name: mermaid
+class: mermaid
+format: !!python/name:pymdownx.superfences.fence_div_format
+- pymdownx.tabbed
+- pymdownx.tasklist:
+custom_checkbox: true
+- pymdownx.tilde
+# Additional content
+extra:
+title: 'TSS0000: Spec Name'
+lf_url: https://www.linuxfoundation.org/projects
+toip_url: https://trustoverip.org/
+toc_title: Table of contents
+social:
+- icon: fontawesome/brands/github
+link: https://github.com/trustoverip
+- icon: fontawesome/brands/twitter
+link: https://twitter.com/trustoverip
+- icon: fontawesome/brands/linkedin
+link: https://www.linkedin.com/company/trust-over-ip-foundation
+# Additional stylesheets
+extra_css:
+- theme/stylesheets/main.css
+- theme/stylesheets/spec.css
+# Additional JavaScript
+extra_javascript:
+- https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
+- theme/javascripts/main.js # Licensed under the Apache License, Version 2.0 (the "License"); you may not
+site_name: "TSS0033"
+nav:
+- Authentic Chained Data Container: index.md
+permalink: true
+title: 'TSS0033: Technology Stack Authentic Chained Data Container'
+- theme/javascripts/main.js #!/bin/sh
+# -----------------------------------------------------------------------------
+PWD=$(pwd)
+# Due to the possibility that !!python references are contained in mkdocs.yml,
+# and we'd have to properly load all necessary stuff, but we're only interested
+# in the order of entries in the nav section, we're just using grep to extract
+# the relevant data. First, we remove all commented out lines, to make sure that
+# we don't include commented out navigation entries. Then, we use grep to
+# extract all filenames
+files=$( \
+grep -Ev "^ *#" mkdocs.yml | \
+grep -oE "[^ ]+\.md" | \
+tr -d '"' | \
+tr -d "'" \
+)
+# Preprocess each file with Pandoc and output the result to standard out
+for f in $files; do
+pandoc \
+--filter $PWD/scripts/combine/preprocess.py \
+--metadata file:$f \
+--to gfm \
+docs/$f
+# Add a new line at the end for readability
+echo ""
+done #!/usr/bin/env python
+from pandocfilters import toJSONFilter, Header, Link, RawInline
+import os
+import re
+"""
+A pandoc filter to preprocess cross-references (i.e. internal links) in multi-
+file documents, in order to create a combined Markdown document.
+--filter scripts/preprocess.py <full/path/basename.md> \
+--metadata file:<basename.md> \
+> tmp/<basename>.md
+This script is heavily inspired by:
+https://gist.github.com/ba-tno/b00e07abe25ebc2702629ec91074b1c0
+def preprocess(key, value, format, meta):
+prefix = normalize(meta["file"]["c"])
+# Header - set anchor name explicitly
+if key == "Header":
+[level, [anchor, t1, t2], header] = value
+anchor = prefix + "-" + anchor
+# Append attribute list with prefixed anchor
+header.append(RawInline("html", " {{ #{} }}".format(anchor)))
+return Header(level, [anchor, t1, t2], header)
+# Link - correct links
+if key == "Link":
+[t1, text, [link, t4]] = value
+# This document
+if link[0] == "#":
+ref = prefix + "-" + link[1:]
+return Link(t1, text, [ref, t4])
+# That document
+elif "#" in link:
+anchor = "#" + normalize(link)
+return Link(t1, text, [anchor, t4])
+Normalize anchor link
+def normalize(link):
+# Replace .md file endings and numbers at the beginning
+link = re.sub(r'^\d+-|\.md', r'', link)
+# Replace #-, & and /-symbol in the middle
+link = re.sub(r'#|&|\/', r'-', link)
+# Prepend the #-symbol
+return link.lower()
+if __name__ == "__main__":
+toJSONFilter(preprocess) Sources linked cryptographically
+State: open
+Author: mitfik
+Progressing on the implementation and research in the scope of microledger we realize to gain full security of ACDC we need to use SAI for linking sources as well otherwise we are pointing to sources which are not stable. Currently attestation id is defined as:
+i - identifier, which can be designated by Testator to uniquely track specific attestation. ADID is always within namespace of the Testator Identifier making it always globally unique.
+and to assure about secure linking mechanism it should be simply defined as SAI. Having human readable/meaningful identifier is still desire so we could keep it as addition attribute which could be introduce `ai - attestation identifier` which would be define same as currently `i`
+So the proposition is to use it in a way:
+s: {
+i: SAI, ti: DID_of_testator, ai: ATTESTATION_ID
+}
+where:
+- `i` - SAI which cryptographically binds to the content of the ACDC,
+- `ti` - testator identifier [optional if `ai` would be within the namespace of testator]
+- `ai` - identifier, which can be designated by Testator to uniquely track specific attestation. ADID is always within namespace of the Testator Identifier making it always globally unique. Signature attribute
+Currently in specification we are missing `proof` or `signature` on the data structure so it should be something like:
+i: "did:1209u091u9012d/attestation/1234", // SAI
+ti: "did:1209u091u9012d",
+s:
+[
+id: "attestationID1234", tid: "did:jd892j108jd1029", // attestation id not in namespace of testator
+id: "did:9d9j109j1d902dj19/attestation/3242", // attestation id in namespace of testator
+id: "did:h78h8d2h8d2h8hd28d/attestation/1234" // attestation id in namespace of testator
+],
+x: {}, || SAI
+d:
+k: v,
+k1: SAI, // ref1
+}, || SAI
+r: {} || SAI
+},
+signature: "d91j20dj129jd19-j2d-912jd912jd9-1j2-d901j2-0dj120jd120jd0"
+Comment by SmithSamuelM:
+We are looking at the proof format and how to attach it. So yes we need a proof/signature but it shouldn’t be part of the AC/DC but an attachment the new Waci JWT effort is informative. We will have some more detail at our next meeting Multiparty attestation
+Current structure assume that there is only one testator. Does it make sens to allow for multiparty attestation?
+I could imagine that multiple parties would like to attest to one specific datum in a way that they are bound together (that they are doing that together, e.g. commitment to contract). So instead of using `sources` as a linking mechanism (each would need to link to all and we have chicken and egg problem).
+Example:
+i: [did:1234/attestation/1, did:abcd/attestation/1]
+...
+A threshold multisig is a form of multi-party.
+The problem with other forms of multi-party is that it is not an single issuer and that gets complicated really quickly. We are not restating to contracts. We are issuing data.
+So if multiple parties want to issue identical data its just mutiple containers == VCs.
+If one wants to have multiparty for security then its multi-sig.
+We can always define a different type of container for non-single issuers. But that will be much more complex. I want to avoid too much complexity to start with. This is the bane of the VC world, over generalizing specs.
+Sent from my iPad
+> On Jun 15, 2021, at 12:49, Robert Mitwicki ***@***.***> wrote:
+>
+> ﻿
+> Current structure assume that there is only one testator. Does it make sens to allow for multiparty attestation?
+> I could imagine that multiple parties would like to attest to one specific datum in a way that they are bound together (that they are doing that together, e.g. commitment to contract). So instead of using sources as a linking mechanism (each would need to link to all and we have chicken and egg problem).
+> Example:
+> {
+> i: [did:1234/attestation/1, did:abcd/attestation/1]
+> ...
+> }
+> —
+> You are receiving this because you are subscribed to this thread.
+> Reply to this email directly, view it on GitHub, or unsubscribe.
+Comment by davebryson:
+But how do you represent multiple containers (VCs) in an ideal, self-contained, VC provenance chain of delegation as described [here](https://github.com/hyperledger/aries-rfcs/tree/master/concepts/0104-chained-credentials) ? For example, using an *abbreviated* version of the Edge co use-case in the paper: Delegation to the director of procurement requires 2 managing directors: This results in a (rough) graph like this:
+```text
+The credential issued to the director of procurement should contain the credentials of the 2 managing directors, providing provenance as you go up the chain to the root. But, *who* is the issuer of the credential to the director of procurement? A VC can currently have only 1 issuer.
+there are two ways to split this baby. One is to use single key issuer credentials and then layer on business logic for workflows with multiple single issuer credentials. The other is to just leverage thresholded multisig in KERI. With the later approach only one credential is issued and the multi-party is just hidden behind the multi-sig. Recall that in an earlier discussion (or maybe your were not on that discussion) we can use a group of KERI identifiers and KERI's async signature collection mechanism to easily support multi-party signatures.
+## Group Formation
+Each member of the group creates an identifier with one or more signatures (to keep it simple we just use one for now). The set of identifiers now forms a group. The group members agree out of band that they will use the key sequences for each of these identifiers to form a multi-party issuance policy for a new group identifier. The group identifier is just a standard KERI identifier that is self-addressing and is derived from a thresholded kt for the set of keys that are the same set of keys from each of the individual identifiers. So one issuer identifier but controlled by the multi-party set of identifiers via their corresponding keys. The threshold may be a weighted multi-sig threshold as per standard KERI.
+The group may be private or public. In the case of public VCs one may choose to include the set of group identifiers in the VC or in a group source document that establishes the group set. Because each member of the group has its own unique identifier with its own unique KEL. One can individually communicate to the members of the group and address them individually. The keys are dual use. The same set of public keys, one for each individual identifier are the same set of keys for the multiple-sig group identifier. Say there are N members of the group. There will be N+1 KELs, one single key KEL for each individual and one group must-sig KEL but only N keys.
+## Inception
+Any one of the members of the set may propose the inception event for the new "group" identifier and sign it with their key. The inception event is not valid until a threshold as defined in the inception event of signatures is attached. The proposer just distributes their signed inception to each of the other members of the group for them to attach their signature and redistribute. Eventually each member of the group will have a fully signed inception event and a copy of the KEL for that group identifier as well as a copy of the N keys for each individual identifier.
+### Group XoR Next Digest Formation
+This works because the next key digest is the xor of all the next public key digests plus the xor of the threshold. Because each of the individual member identifiers is using only one key, The threshold is known and my be removed from the that single member next digest to leave the digest of the next public key. Given that now the next key digest is known for each key in the group set the group must also agree out of band what the group kt should be so that all know it. Give a the group kt any member of the group can compose the group current keys set and the group next key digest once they know the KELs of each of the group member single key identifiers. This XoR property was why we changed the algorithm for computing the next digest from a digest of the concatenation of next public keys to an XoR of the digests so that we could use this protocol for generating group key agreement for multi-party issuance. If we let X represent XoR then A X B X A = B so if A is the threshold digest then we can extract the public key digest by XoRing the threshold digest.
+## Rotation
+To rotate the group key state , the group decides out of band to rotate. Any one of the group at any time can propose a rotation. A threshold number of the group must then individually rotate their single key identifiers to produce a new current key and a new next key for each member. Once that is done then any member of that threshold group may propose a group key rotation event by extracting and XoRing the next key digests from those individual KELs and then signing it with their key and then disseminating it to the other members just like they did with the inception.
+## Interaction
+Interaction events do not require a rotation but the process is similar any member can propose an interaction event by creating it and signing it and disseminating it. It won't be valid until the threshold signs it. Indeed multiple members could simultaneously propose conflicting interaction events and the first one to meet the threshold wins the rest will be discarded.
+## VC Issuance
+Any one of the group can issue a credential against that group identifier by creating an interaction (or rotation) event with an anchor seal of that VC and then publishing it to the other members of the group. but that credential will not validate until a threshold number of the group also sign. The escrow mechanism of KERI means that each member of the group will keep in escrow a partially signed event that includes the Seal or anchor for that issued credential. Likewise the TEL will put that VC issuance event in escrow until a threshold number of members of the group have signed. Using this approach there is no need to have additional business logic for multi-party issuance or issue a VC per party. Just issue one VC that is signed by the group as a multi-sig. This is one of the prime use cases for weighted multi-sig, to enabled complex multi-party threshold logic for such an example.
+## Witness Considerations
+Witnesses are oblivious to how a given multi-sig identifier is composed as they just see themselves as witnesses in the witness list for any given set of events and their logic for receipting does not change.
+## Multi-sig of Multi-sigs
+Now to complicate things, given we have weighted multisig we can leverage the fact that XoR is associative. So some or all the members of the group could use multi-sig for their individual identifiers. The group identifier is then composed from multiple sets of multisig identifiers but the KERI protocol works the same under the hood. So very complex multi-party logic is enabled without changing anything in the existing KERI protocol. The same logic can be applied to delegated identifiers etc.
+So in general KERI solves the multi-party issuance problem simply using its build in properties of: async, escrow, weighted multi-sig, and XoR next key digest commitments. The only additional thing required is the out-of-band agreement to form the multi-party multi-sig group. But this does not require any unique crypto and any secure protocol for this out-of-band agreement. It just requires that the group members recognize that the individual group member single key identifier KELs as belonging to that group. Its a UX issue.
+To restate the only new thing required is some out-of-band group agreement to form a group identifier from a set of identifiers, one identifier in the set for each member of the group. Any verifier of a VC issued by the group identifier is verified as a standard multi-sig.
+As this exposition hopefully illustrates, KERI multi-sig first approach solves in a natural way, a host of what would be for other identity systems, very complex use cases.
+@SmithSamuelM thanks for the response, this is all very interesting. But when you say
+> Using this approach there is no need to have additional business logic for multi-party issuance or issue a VC per party.
+How would this approach deal with more complex logic, say for example:
+`Granting "purchaser" requires any of 2 "managers" or 1 "director"`? I ask this because most of my focus lately relates to the work on chained credentials from Danial Hardman.
+These are the kind of realistic rules I see in real-world delegation schemes. Would that require at least 2 groups in a KERI environment? And I assume validating the provenance of all this requires walking different KELs in a potentially large hierarchical setting?
+@davebryson Weighted multisig. The two managers each have half the weight of the 1 director. So the threshold is met if two managers sign or one director signs. Weighted multisig thresholds are an ordered list of weights. So fo the order is M1, M2, S1 the weighted threshold would be [1/2/1/2,1] Any combination of signatures that adds to >=1 meets the threshold.
+KERI are supports Ored clauses of weights. like [[1/2,1/2,1], [1/3, 1/3,1/3, 1/2, 1/2]] so one can have different sub groups in a one level hierarchy. We did not see any reason to support more that one level of hierarchy as the vast majority of use cases are supported by one level and multiple levels is way more complicated.
+Signatures may be used as authorizations (endorsements) without needing a VC. Its reinventing the wheel to use VCs in lieu of multi-sig when multi-sig will do. But @mitfik we could precisely model your example by stating that each source VC for each mangaing director is required to be signed by the managing director. And then form a multi-sig group from the managing director keys with a multi-sig threshold. The resultant group identifier then issues the director VC with a multi-sig. Each managing director would then sign two VCs, their own manage VC with a single signature and the the director VC as a a member of the multi-sig group. The VCs source tree serves to publicize the business model behind the formation of the multi-sig group.
+We could do it another way using delegated identifiers. There are several ways to skin this cat using standard KERI.
+@SmithSamuelM
+> Signatures may be used as authorizations (endorsements) without needing a VC
+But wouldn't a VC be needed to at least specify *what* the endorsement is for?
+the VC being signed may provide that information. There is no reason to have a tree of VCs in that case.
+@SmithSamuelM Thanks. I see you have some potential examples related to this discussion here https://github.com/decentralized-identity/keripy/blob/master/tests/core/test_delegating.py.
+I need to dig into this more.
+So is it fair to say that the direction of this group is with KERI versus some of the earlier work such as chained credentials here: https://github.com/hyperledger/aries-rfcs/tree/master/concepts/0104-chained-credentials
+Any document or contract may include in it its list of signers and the roles the play. If the signers need to be authorized themselves then they may have VCs that authorize them as signers of yet another VC But we are not talking about that use case we are talking about the use case of how to have a multiple issuer VC and I am saying that we just use multi-sig with a group identifier. This means that in all cases all VCs need only have single issuer IDs. But some of those single issuer identifiers may be composed from a group of other identifiers via their keys. To restate there is no need to layer on the complexity of having multiple issuers of a given VC. We just leverage multi-sig.
+We need KELs for rotation. I have been assuming we need rotatable multi-issuer identifier keys. Otherwise we can simplify the logic to use non-transferable (non-rotatable identifiers) that need no KEL.
+To clarify in any chain or (tree) of trust there will be root entities that are self-authorizing due to their reputation. they form a root-of-trust. GLEIF for example or a government. There will be other entities that have insufficient reputation to be roots-of-trust. They may therefore require an authorizing VC from a root-of-trust or multiple roots-of-trust to imbue them with enough trust that they in turn may issue a VC. In the former case were a multi-sig group is formed from multiple roots-of-trust there would be no "tree" of VCs as the roots-of-trust are self-authorizing by definition. But for derived (imbued) trust entities their may be a chain or VCs that goes back to the roots. One has to analyze the ecosystem and understand the role that roots-of-trust (also called a trust anchors) play in the web-of-trust KERI makes practical the long outdated and largely abandoned concept of a web-of-trust. It solves the problem that the original web of trust punted and that was key rotation as well as not having self-certifying self addressing identifiers for crypto graphic roots-of-trust to bootstrap the whole thing.
+This concept of roots-of-trust is fractal in nature. One can have a corporation that has well known identifiers for its founders that are self-authorizing and every other employee is imbued with authority via VCs issued by those founders but the founders themselves have no authorizing VCs. Or they self-issue but that is just book keeping, self issuance provides no additional trust. A root of trust is trusted because of its reputation or role it plays. It has authority assumed as endowed to it independent of VCs. Any one can form a root-of-trust with KERI. But if the entity forming that root is not sufficiently trustworthy it will be a weak root and not very useful. One can build trust over time by consistent good behavior that occurred either pre-root formation or post root formation. The latter is verifiable cryptographically so it allows any entity to prove or provenance their bootstrap of their reputation through a verifiable log of good behavior. The best kind of proof-of-work.
+We are generalizing provenance of authentic data. Chained authorization is a special case of authentic data provenance. What you are seeing is that KERI’s design obviates the need for layered on protocols for many use cases. So one either adopts KERI or copies KERI but calls it something else or one does back flips. For some they may have to do back flips. The reason KERI made multi-sig a first class citizen is because it is a best practice for security. Given you have multi-sig then other use cases just fall out naturally. In general most VC DID methods do not support multi-sig in any way so they have to do back flips. I strongly suggest that this is the wrong approach. They need to go back to their did method and add thresholded multi-sig as a first class citizen. then they can model the KERI logic with out exactly using KERI. The same applies to key rotation. Most do not support key rotation in any secure way. KERI does using pre-rotation and now others have started copying that concept without necessarily calling is KERI-like pre-rotation. Too much of the VC community is to bolt on mechanism that defeat the “verifiability” security basis that VCs were meant to provide. AKA JSON-LD with mutable schema, DID methods that rotate keys badly. Etc Etc. So once you use best practices the list of options narrows considerably and you either look like KERI in large part or you are not secure. KERI is simple best practices key management for portable identifiers. Once you tackle portability, your choices go down to one mechanism, that is a VDS (verifiable data structure) which will look suspiciously like a KEL. Once you realize that, then KERI becomes a no-brainer. If on the other hand you do not care at all about portability then you can use a shared distributed ledger as your primary root-of-trust instead of a VDS (KEL). But then you have locked your identifiers to that ledger, but it you support key rotation and multi-sig you can be secure just not portable. Its the combination of portability and security that drives the design of KERI.
+Comment by cjbuchanan:
+> KERI are supports Ored clauses of weights. like [[1/2,1/2,1], [1/3, 1/3,1/3, 1/2, 1/2]] so one can have different sub groups in a one level hierarchy. We did not see any reason to support more that one level of hierarchy as the vast majority of use cases are supported by one level and multiple levels is way more complicated.
+@SmithSamuelM -- It's not often true that [Manger + Manager == Director] or [Child + Child == Parent] or [Citizen + Citizen ... == Government]. Multisig without context is ok for consensus based algorithms with a single scope of work, but when it comes to applying multisig to reality, weighted algorithms work laterally (peer to peer), but not vertically (when spanning levels of authority). What is needed to solve the vertical problem may not be easily represented in a decision tree of any depth or complexity. I am concerned that when applied, the required context of the signatures will have to be solved by business logic -- and that once that happens, portability will be lost. Maybe that's ok.
+@chbuchanan I think that delegated identifiers may adequately solve most vertical problems you describe. So the delegator can be a multisig that then cooperatively authorizes a delegated identifier that itself is multisig. That delegated identifier then may further delegate identifiers to form a tree of delegation each node in the tree may have weighted multi-sig but the hierarchical organization is modeled by the tree of delegated identifiers. The multi-sig group at a delegated leaf, only gets an identifier if all the branches have delegated down to that leaf. This is not that same as having a single decision tree where all nodes may contribute to the tree of signers for each issuance but delegation trees do represent the major use case for vertically (hierarchical organizations) where decisions happen at divisional or group layers that have delegated responsibility. This is how most distributed organizations function. The CEO does not participate in issuing invoices but does participate in delegating the authority to issue invoices. The CEO may revoke that delegation but does not ever sign an invoice although theoretically the CEO could sign an invoice. That a CEO may actually be able to sign an invoice is a corner case we do not need to support as the CEO can just create a new delegation to itself to participate in a group that may sign invoices without making the CEO part of every invoice signing group.
+That said weighted multi-sig with multiple clauses can model quite complex decision trees without delegation. For example, we had a practical requirement in an ecosystem governance framework for a 10 signer multi-sig consisting of 5 employee signers and 5 contracted Escrow agents. Any 3 of 5 of employees may sign or 1 employee and 4 Escrow agents or some other combination of Employees and Escrow agents. The requirement is that no combination of only Escrow agents is valid, i.e. at least 1 employee MUST sign but we only want to have at most one designated survivor employee because we don't want to have a case where a single bomb can kill all the employee signer and that means the designated surviver may never ever be in the same building with the other employee signers. This is achieved with a single weighted clause. [1/3,/1/3,1/3,1/3,1/3,1/6,1/6,1/6,1/6,1/6] where the employees each have a weight of 1/3 and the escrow agents each have a weight of 1/6.
+With KERI more complex logic can be expressed with multiple clauses And'ed together and each Weighted clause acting as a weighted ORs (WOR) of the keys making the threshold. A weighted OR clause threshold is satisfied when some combination of the weights in that clause sums to >= 1. With that you have a very rich rule expression set as follows:
+IF (x WOR Y WOR Z wor ...) AND (a wor b wor ...) AND (m WOR n WOR ....) AND .... THEN issue
+The limitation is each variable representing a key may only appear once in the rule. The rule threshold is only met if every AND ed clause meets its threshold. So each AND acts a layer in a multi-sig hierarchy. For example
+[[1,1],[1/2,1/2,1/2]] means that any one of the first group AND any two of the second group must sign to meet the threshold.
+So any one of two directors AND any two of three managers must sign to be approved.
+For example a proposal submission rule I had to comply with as an academic was
+The PI MUSt sign, The department MUST sign which could be the Chairman or Assistant Chairman. The College Must sign which could be any one of the Dean and three associate Deans. The division of sponsored research must sign which could be the Director or assistant director and the Presidents office must sign which could be the president or the VP. The resulting weighted threshold is as follows: [[1],[1,1],[1,1,1,1],[1,1],[1,1]]
+In my survey of real world applications ANDed signing tree logic appeared be much more common that layered WOR tree logic. Nonetheless, letting an authority have multiple keys in an ANDED WOR rule allows us to approximate many layered thresholded WOR trees. I find layered WOR trees to be poor attempts a modeling an ANDed WOR rule not the other way around.
+Indeed WOR layered trees may have corner conditions that are undesirable where some coalition of signers may subvert the true intent of the signing tree logic by virtue of not having rigid AND logic but just normalized weighted summation logic..
+If we relaxed that constraint that each key may appear only once then more complex combinatorial expressions would be possible but that would mean using something more complex than a list or list of lists. And weight position would no longer correspond to a given key in a key list. But we can achieve the same end by letting any entity or role player have more than one key in the key list so effectively their authority participates in multiple clauses. This elegantly allows us be performance optimal and simple but support odd corner cases.
+A single weighted OR can be used to approximate hierarchical weighted ORs by flattening the weights in the hierarchy. So for example if I have two sub groups each with [1/2, 1/2, 1/2] that are then combined at the next layer up with a weighted OR of [1,1/2] then that may be approximated by a single layer WOR with the first group having weights of 1/2 and the second group having weights of 1/4. The difference is that in a layered system you could renormalize at each layer which is not exactly the same at collapsing the layers by multiplying the unnormalized weights. When I looked at the example that BitShares uses (see https://how.bitshares.works/en/master/user_guide/accounts/bts_multi-sign.html) which did a multi-layer weighted OR that is renormalized at each layer I realized that I could better represent real world use cases with ANDed clauses which they cannot represent. I.e. ANDed WOR logic in my opinion is a more realistic more needed use case than renormalized layered WOR logic. It seemed that their example was unrealistic. ANDing across hierarchy seemed to me to be more realistic. It was a design tradeoff.
+Moreover, with delegation trees we may model logic that allows the same key to appear multiple times in the logic tree or to model renormalization. For example a given multi-sig group may delegate to an identifier who multisig group includes some of the keys from the delegating multisig group. The two groups may then form a layered AND/OR expression where the same key appears more than once. Although as I stated above the same entity can control multiple keys so its authority may appear multiple times but with a different key. With delegation, I believe, we may model arbitrarily complex real world signing hierarchies that better match real world corporate distributed authority delegation trees without over complicating the core multi-sig logic. One mistake we want to avoid is creeping elegance by over designing what needs to be performant thereby making it so non-performant that it is no longer utile for the majority case.
+We have yet to see any real world use cases that justify such additional complexity which comes at a cost in performance and security risk costs. Its easy to hypothesize complex use cases but our experience, real world use cases are never that complex because they become too complex for the humans that will be involved. Thus human involvement practically constrains the system. This shows up as delegation which is why we support delegation not complex signing tree logic. Hypothetical complexity is an anti-pattern for security system design. I like to avoid it.
+Whereas the simple weighted multi-sig that KERI uses is almost always required for any enterprise application. Consequently we want to support it natively and conveniently. And simple cooperative delegation trees enable horizontal scalability which we want to enable. These design choices follow the KERI design aesthetic of minimally sufficient means.
+However all that said if there arises a strong use case for layered renormalized weighted OR logic we could support it in KERI with a configuration trait that uses a different combination logic on a list of lists expression for the weighted threshold
+So instead of [[1/2,1/2,/1/2], [1,1]] as ANDed WOR clauses we could have something like [ 2/3, 1/3, 1/3, [1/2,1/2,1/2], [1,1], [1/2,1/2,1/2]] to model a weighted OR Tree. This would require code and adding a configuration trait that would indicate using different serialization code and threshold computation code for the multi-sig of that identifier.
+Here is the python snippet for the weighted threshold satisfaction
+```python
+try:
+if not indices: # empty indices
+return False
+# remove duplicates with set, sort low to high
+indices = sorted(set(indices))
+sats = [False] * self.size # default all satifactions to False
+for idx in indices:
+sats[idx] = True # set verified signature index to True
+wio = 0 # weight index offset
+for clause in self.thold:
+cw = 0 # init clause weight
+for w in clause:
+if sats[wio]: # verified signature so weight applies
+cw += w
+wio += 1
+if cw < 1: # each clause must sum to at least 1
+return False
+return True # all clauses including final one cw >= 1
+except Exception as ex:
+return False
+return False
+This has been a long discussion but one more clarification is worth making.
+The original question was do we want to support an new protocol in the ACDC spec that provides support for a new type of ACDC that has multi-party issuers. This means at the very least multiple entries in an issuer array instead an issuer field.
+The short answer IMHO is no. We instead can have single issuers, but those single issuer identifiers represent a multi-party authorization via a multi-signature scheme like KERI provides.
+This does not obviate or preclude multi-VC authorization mechanisms. A Multi-VC mechanism is where a verifier requires some threshold of of set of single issuer VCs be met before authorizing some activity. The difference here is that the existing ACDC spec supports any multi-VC authorization mechanisms without change. So its not a constraint on the ACDC spec. All of the discussions about support for hierarchical discission making infrastructure above, could be just as well be supported by a multi-VC policy where each VC has a single issuer (multi-sig or not). But this functionality would then reside at a layer above ACDC. So it would be up to the eco-system to decide where to place the hierarchical multi-threshold authorization logic. Either in the ACDC layer, in a Multi-VC layer above the ACDC layer or split between the two. I suggest that most complex work flows should reside in a layer above the ACDC layer and that there is no need to add a new type of VC that is a multi-party issuer VC. Multi-VC logic with single issuer VCs can handle that, or in many cases multi-sig can handle that, or some of both depending on the actual decision making workflow. We can always layer on additional threshold structures which better fits the many thin layer stack architecture of the HourGlass theorem that informs KERI. A multi-party VC is thickening the ACDC layer whereas a multi-VC layer leaves the ACDC layer thinner. Aligned SAI with DRI
+In the first draft we used DRI as a place holder for digest which serve as reference. We agreed to use SAI (Self-Addressing Identifier) instead to better reflect naming what it is.
+Task: replace all DRI references with SAI
+Comment by mitfik:
+Fixed by #12 Schema Scope
+Author: SmithSamuelM
+Discussion 2021-06-07
+One schema (self referential) for the complete VC or Two schema One for the payload included and a non included schema for the Meta Data of the VC (everything but the payload)
+Issues:
+If rules block is metadata then does the schema block include it or is it in the meta data schema which requires another schema
+If schema no explicit then must be fixed which may be problematic if special cases want to add custom vendor specification fields
+if schema not specific to payload than data can't live outside VC which defeats some use cases
+Solution:
+Nester schema where nested schema blocks have own SAI for that nested block. This allows one to extract the nested schema block for the data payload while still have one schema for the whole VC
+Nested Schema:
+Main Schema
+metadata
+rules block
+data block
+Vendor Specific Metadata
+issuerid is the block field name for Vendor actually Issuer specific meta data block Change name of spec.
+Author: vinomaster
+`technology-stack-acdc` is not very clear...
+Suggestion:
+`TSS0033-authentic-chaining-data-containers`
+Good Suggestion. "Prime pump for new deliverable TSS0033"
+State: closed
+Author: VictorSyntez
+Prime pump of the TSS for ACDC TF

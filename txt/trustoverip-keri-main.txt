@@ -1,0 +1,640 @@
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy
+# of the License at:
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+# UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+# DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+# SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+# LIMITATIONS UNDER THE LICENSE.
+# Top-level config
+root = true
+# All files
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+# Makefiles
+[Makefile]
+indent_style = tab
+indent_size = 8 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
+name: build
+on:
+push:
+branches:
+- master
+- main
+env:
+PYTHON_VERSION: 3.x
+jobs:
+build:
+name: Build documentation
+runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v2
+- name: Set up Python runtime
+uses: actions/setup-python@v1
+with:
+python-version: ${{ env.PYTHON_VERSION }}
+- name: Install Python dependencies
+run: |
+pip install -r requirements.txt
+- name: Deploy documentation
+mkdocs gh-deploy --force
+mkdocs --version # Code of Conduct
+The Steering Committee is committed to upholding the [ToIP Code of Conduct](https://lfprojects.org/policies/code-of-conduct/) and contributors agree to act according to a standard set of behaviors that contribute to a positive environment. # Contributor's Guide
+This document provides instructions for developing documentation and specifications using the **ToIP MkDocs Material Theme**.
+## Audience
+These instructions are pertinent to all ToIP contributors that seek to provide content towards the objective of this ToIP deliverable. Contributors may fall into one of the following categories:
+| Role | Activities |
+| --- | --- |
+| Content Author | Use an editor of choice to write sections of the target deliverable using Markdown files as fragments of the ultimate deliverable document or specification. |
+| GitHub skilled developer | Github savvy contributor that collects Markdown files from other contributors and manages commits and pull-requests as a representative of the team of contributors/ |
+| Both | Provider of content and manager of Github interactions. |
+## Preparation
+### Education
+* [Markdown Tutorial](https://www.markdowntutorial.com/)
+* Markdown Documentation
+* [Getting Started with Markdown](https://www.markdownguide.org/getting-started/)
+* [Markdwon Basics](https://www.markdownguide.org/basic-syntax/)
+* [Mastering the Markdown Language](https://guides.github.com/features/mastering-markdown/)
+### Authoring Tools
+* Markdown Converters for Word Processors
+* MS-Word to Markdown
+* [Word-to-Markdown](https://word2md.com/)
+* [Writage](https://www.writage.com/)
+* [How to convert Word Docs to Markdown](https://medium.com/@ravinduk369/convert-a-ms-word-document-to-markdown-e0e99c41cfab)
+* Google Docs to Markdown
+* [G-Suite Plugins](https://gsuite.google.com/marketplace/app/docs_to_markdown/700168918607)
+* [How to convert Google Docs to Markdown](https://unslush.substack.com/p/how-to-convert-a-google-doc-to-markdown)
+* Integrated development environment (IDE)
+* [Visual Studio](https://code.visualstudio.com/)
+* [Atom](https://atom.io)
+## Setup Authoring Environment
+If you are a _Content Author_ and **will not** work with `git` or do local testing of the content you are contributing, you can IGNORE these setup instructions. However, you will need to coordinate with a fellow contributor who will incorporate your work for you.
+### Install Dependencies
+| Required Software | MacOS Installation Instructions | Windows Installation Instructions |
+| --- | --- | --- |
+| Docker | [Docker Desktop][1]| [Docker Desktop][1]|
+| `make` | Type `xcode-select --install` in a terminal window.|[Install Chocolatey Package Installer](https://chocolatey.org/install), then install [make via choco](https://chocolatey.org/packages/make)|
+| `git` | Type `xcode-select --install` in a terminal window OR [Git Installer][2] | [Git Installer][2]|
+[1]: https://www.docker.com/products/docker-desktop
+[2]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+### Understanding Development Process
+This repo leverages standard *pull-request* code collaboration processing. Contributors to this repo should create a `fork` and then use that `fork` as the `origin `for their `local machine` based development environment.
+![remote-upstream](https://i.stack.imgur.com/cEJjT.png)
+Learn more about [GitHub Forks](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo).
+### Deployment
+This repository contains a GitHub Action workflow that will automatically deploy your generated content when you commit your changes to:
+```
+https://trustoverip.github.io/<repository_name>
+When you're forking this repository, you may need to activate GitHub Actions for your fork, as GitHub disables them by default. This is as easy as clicking on __Actions__ in the top bar of your repository and clicking the button that is shown. If no button is shown, you're good to go.
+### Local Development Process
+This repository uses simple `make` commands to manage the building and testing of content for this repo.
+Open a Terminal Window and enter this command:
+$ make
+#### Prepare Development Environment
+1. Clone repository
+```
+git clone REPO_LINK
+git remote
+2. Setup Environment
+Now we will establish your upstream connections and build the necessary Docker containers for our development environment.
+$ make setup
+#### Develop content
+_Optional_: You can skip these steps and jump to iterative development and testing.
+1. Launch the development environment
+$ make devenv
+$bash$
+Your terminal prompt will now be within the docker container environment.
+2. Iteratively develop documentation content by editing the markdown files and repeating the following command which will generate static HTML content and show any errors/warnings you may want to resolve.
+$bash$ make dev
+3. Exit the development environment (container)
+$bash$ exit
+$
+#### Iterative development and testing
+2. Launch the Test Server
+$bash$ make test
+3. Iteratively develop documentation content by editing the markdown files. Each time you save a file, the test server will automatically refresh content for your review using your web browser pointed at: [localhost](localhoat:8800). See your `Makefile` for actual PORT number.
+3. Exit the Develop and Test environment (container)
+Enter <control-c> to halt the test server
+#### Generate HTML and PDF Docs
+This repo will combine all contributed content into a single Markdown file which is then used to produce standalone HTML and PDF files. Internal scripts will preprocess and concatenate all Markdown files in the order specified in `mkdocs.yml`. The scripts will ensure that internal links to pages and anchors are correct.
+1. Launch the Publish Environment
+$ make pubenv
+2. Run the publishing process which will generate various versions of the contnet in the `./publish` folder.
+$bash$ make publish
+3. Exit the publishing environment (container)
+#### Commit Code
+To complete the development process, follow normal **git commit** and **git push** processing. The ```.gitignore``` file will prevent the pushing of the static HTML content.
+#### Resync with Upstream
+Before each coding session, ensure your ```fork``` and ```local-machine``` are in sync with changes made to the ```upstream``` repo.
+$ make rebase
+Update title. For example, BP000: Utility Selection Criteria
+DELETE THIS COMMENT
+- Authors: [your name](you@github-email) -- email is optional
+- Since: YYYY-MM-DD (date you submit your PR)
+- Status Note: (explanation of current status)
+- Supersedes: (link to anything this ToIP Deliverable supersedes)
+- Start Date: YYYY-MM-DD (date you started working on this idea)
+- Tags: (see [Tag Options](https://trustoverip.github.io/deliverables/process/tags)
+## Summary
+One paragraph explanation of the objective of the subject ToIP deliverable.
+## Purpose
+1. Interactive Online Website: [GitHub Pages](https://<ORG_NAME>.github.io/<REPO_NAME>/)
+2. Printable Documents
+* [PDF Version](./publish/<DOC_NAME>.pdf)
+* [HTML Version](./publish/<DOC_NAME>.html)
+* [Standalone Markdown](./publish/<DOC_NAME>.md)
+## Contributor's Guide
+Replace <REPO_NAME>
+## Related Resources
+### Workflow
+ToIP contributors should be able to:
+2. Author: Use any Markdown editor they desire.
+### Styling
+1. Apply a Material style Theme that is ToIP specific
+5. One ToIP Theme with config option for header generated numbering (with or without).
+### Versioning
+ToIP members should be able to prime to repos using this repo as a GitHub Template Repository.
+### Development and Processing
+1. Command line tools (make) for generating local test content.
+2. Github workflow (actions) for producing GitHub-Pages
+3. Layout (outline / organize) multiple markdown files (i.e.: mkdocs.yml)
+### Rendering Formats
+Minimally, this repo MUST allow for the configuration of generating these rendering formats:
+1. Single Markdown file (via pandoc or other plugins)
+2. Single PDF (via pdf-export or other plugins)
+3. Website/GitHub-Pages # Copyright (c) 2020 ToIP Foundation
+# Pull base image from official Material for MkDocs repo
+FROM squidfunk/mkdocs-material
+# Add bash as alternative to default ash shell env in Alpine
+RUN apk add --no-cache --upgrade bash python py-pip
+# Add make command utility
+RUN apk add --update --no-cache make=4.2.1-r2
+# Add MkDocs dependencies
+RUN pip install --upgrade pip
+RUN pip install --upgrade mkdocs-enumerate-headings-plugin
+# Set working directory to the name of a Docker Volume
+WORKDIR /host_mkdocs # Copyright (c) 2020 ToIP Foundation
+# Pull base image from official PanDocs Latex repo
+FROM pandoc/latex:2.6
+# Add PanDoc dependencies
+RUN pip install --upgrade pandocfilters
+WORKDIR /host_pandocs <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0) -->
+viewBox="0 0 260.6 107.4" style="enable-background:new 0 0 260.6 107.4;" xml:space="preserve">
+.st0{fill:#0031C0;}
+.st1{fill:#A3E8E8;}
+.st2{fill:#0B8BD7;}
+.st3{fill:#1445CA;}
+.st4{fill:#8FD4D4;}
+.st5{fill:#0077C3;}
+.st6{fill:#1A9AE6;}
+.st7{fill:#0031B6;}
+.st8{fill:none;stroke:#0031B6;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;}
+c3.6,0,6-2.4,6-6.6V12.5h6.8V27.4z"/>
+c-6.1-1.3-8.9-3.2-8.9-8c0-5.4,4.3-8.6,11.1-8.6c3.8,0,8.2,0.8,11,1.8L231.8,19.7z"/>
+c0-4-2.6-6.5-6.3-6.5C186,58.9,183.4,61.4,183.1,65.4z"/>
+h3.4V91.7z"/>
+c-7.2-4.2-7.2-10.9,0-15.1s18.9-4.2,26.1,0l20,11.4L72,2.7"/>
+c7.1-4.1,12.9-0.7,12.9,7.7c0,8.4-5.8,18.5-12.9,22.6L78.1,59.9L78.1,82.6z"/>
+c0,2.7,1.8,5.5,5.4,7.5l20.1,11.6L25.5,83z"/>
+/>
+C51,102.9,49.7,105.2,47.6,106.5z"/>
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy
+* of the License at:
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+* UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+* DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+* SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+* LIMITATIONS UNDER THE LICENSE.
+*/
+/* ----------------------------------------------------------------------------
+* Subscriptions
+* ------------------------------------------------------------------------- */
+/* Ensure Mermaid is initialized on document switch */
+app.document$.subscribe(() => {
+mermaid.init()
+}) {#
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy
+of the License at:
+http://www.apache.org/licenses/LICENSE-2.0
+UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+LIMITATIONS UNDER THE LICENSE.
+#}
+{% extends "base.html" %}
+{# Link to Linux Foundation #}
+{% block announce %}
+{% endblock %} {#
+{% set site_url = config.site_url | default(nav.homepage.url, true) | url %}
+{% if not config.use_directory_urls and site_url[0] == site_url[-1] == "." %}
+{% set site_url = site_url ~ "/index.html" %}
+{% endif %}
+{% include "partials/logo.html" %}
+{% include ".icons/material/menu" ~ ".svg" %}
+{% if config.site_name == page.title %}
+{{ config.extra.title | default(config.site_name) }}
+{% else %}
+{{ config.extra.title | default(config.site_name) }}
+{% if page and page.meta and page.meta.title %}
+{{ page.meta.title }}
+{% else %}
+{{ page.title }}
+{% endif %}
+{% endif %}
+{% if "search" in config["plugins"] %}
+{% include ".icons/material/magnify.svg" %}
+{% include "partials/search.html" %}
+{% endif %}
+{% if config.repo_url %}
+{% include "partials/source.html" %}
+{{ config.extra.toc_title | default(config.site_name) }}
+{% if config.repo_url %}
+{% include "partials/source.html" %}
+{% endif %}
+{% for nav_item in nav %}
+{% set path = "nav-" ~ loop.index %}
+{% set level = 1 %}
+{% include "partials/nav-item.html" %}
+{% endfor %}
+* Colors
+/* Set brand colors */
+:root > * {
+--md-typeset-a-color: rgba(37, 137, 202, 1);
+--md-accent-fg-color: rgba(19, 70, 201, 1);
+--md-accent-fg-color--transparent: rgba(19, 70, 201, 0.1);
+}
+* Overrides
+/* Ensure that header shadow is always shown */
+.md-header {
+height: auto;
+box-shadow:
+0 0 0.2rem rgba(0, 0, 0, .1),
+0 0.2rem 0.4rem rgba(0, 0, 0, .2);
+/* Adjust for higher header */
+.md-header-nav {
+align-items: center;
+.md-header-nav__title {
+height: 2.4rem;
+/* Make logo bigger */
+.md-header-nav__button.md-logo img,
+.md-header-nav__button.md-logo svg {
+width: 4.8rem;
+/* Underline text links */
+.md-content .md-typeset a:not([class]) {
+border-bottom: .05rem solid currentColor;
+/* Align Linux Foundation banner */
+.md-announce img {
+vertical-align: text-bottom;
+max-width: 13.5rem;
+/* Remove vertical spacing */
+.md-announce__inner {
+margin-top: 0;
+margin-bottom: 0;
+/* Ensure link to terms of service is readable */
+.md-footer-copyright__highlight {
+display: contents;
+color: var(--md-footer-fg-color--lighter);
+/* Limit width of copyright information */
+@media screen and (min-width: 45em) {
+.md-footer-copyright {
+width: 50%
+}
+} /**
+* Keyframes
+/* Activate scroll snapping with delay */
+@keyframes md-sidebar__scrollwrap--hack {
+0%, 99%, 100% {
+scroll-snap-type: none;
+/* Induce a new stacking context, so we can use absolute positioning which
+appears to be the only consistent way of moving the permalink to the
+beginning of the headline without tampering with the HTML */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+position: relative;
+padding-left: 1.6rem;
+/* Remove the anchor offset hack in favor of scroll margin */
+.md-typeset h1[id]::before,
+.md-typeset h2[id]::before,
+.md-typeset h3[id]::before,
+.md-typeset h4[id]::before,
+.md-typeset h5[id]::before,
+.md-typeset h6[id]::before {
+display: none;
+/* Add default scroll margins */
+.md-typeset [id]:target {
+scroll-margin-top: 3.6rem;
+/* Adjust scroll margins for some headlines */
+.md-typeset h1[id]:target,
+.md-typeset h2[id]:target,
+.md-typeset h3[id]:target,
+.md-typeset h4[id]:target {
+scroll-margin-top: 3.4rem;
+/* Move headerlink to the beginning */
+.md-typeset .headerlink {
+position: absolute;
+left: 0;
+top: 0;
+margin-left: 0;
+opacity: 1;
+visibility: visible;
+transform: translateY(-0.1rem)
+/* Fix layer position of buttons */
+.md-content__button {
+z-index: 1;
+/* Ensure alignment when title has line break */
+.md-nav--primary .md-nav__link {
+display: flex;
+/* Define section counter */
+.md-nav--primary .md-nav__list {
+counter-reset: section;
+/* Increment counter for each section */
+.md-nav--primary .md-nav__link::before {
+margin-right: .2rem;
+counter-increment: section;
+content: counter(section) ".";
+/* Navigation title for drawer */
+.md-nav--primary .md-nav__title[for="__drawer"] {
+height: 3.175rem;
+background: var(--md-accent-fg-color);
+color: var(--md-accent-bg-color);
+padding: 0 1rem;
+font-size: 0.9rem;
+font-weight: 400;
+line-height: 3.5;
+0 0 0.2rem rgba(0,0,0,.1),
+0 0.2rem 0.4rem rgba(0,0,0,.2)
+/* Hide logo */
+.md-nav--primary .md-nav__title[for="__drawer"] img {
+/* Remove table of contents */
+.md-sidebar--secondary {
+/* Adjust tablet styles */
+@media screen and (min-width: 60em) and (max-width: 76.1875em) {
+/* Stretch content to whole width after removing table of contents */
+.md-content {
+max-width: 100%;
+/* Adjust mobile/tablet styles */
+@media screen and (max-width: 76.1875em) {
+.md-nav--primary .md-nav__title ~ .md-nav__list {
+background: #EEE;
+/* Adjust screen styles */
+@media screen and (min-width: 76.25em) {
+/* Left-align grid */
+.md-grid {
+margin-left: 1rem;
+/* Make space for sidebar */
+.md-announce__inner {
+padding-left: 0rem;
+.md-header,
+.md-footer,
+margin-left: 16.25rem;
+max-width: calc(100% - 12.1rem);
+/* Primary sidebar */
+.md-sidebar--primary {
+position: absolute;
+top: 1.1rem !important;
+left: 0;
+z-index: 1;
+display: flex;
+flex-direction: column;
+width: 16.25rem;
+height: 100%;
+padding-top: 0;
+box-shadow:
+inset 0 0 0.2rem rgba(0,0,0,.1),
+inset 0 0.2rem 0.4rem rgba(0,0,0,.2)
+/* Remove spacing on scrol wrapper */
+.md-sidebar__scrollwrap {
+margin: 0;
+height: auto !important;
+overflow: hidden;
+/* Snap primary sidebar to the left */
+.md-header[data-md-state="shadow"] ~ .md-container .md-sidebar--primary {
+position: fixed;
+top: 0 !important;
+/* Navigation lists */
+.md-nav--primary > .md-nav__list {
+flex: 1;
+padding: 1rem 0;
+max-height: calc(100vh - 3.175rem);
+overflow: auto;
+/* Navigation titles */
+.md-nav--primary .md-nav__title {
+flex-shrink: 0;
+/* Navigation items */
+.md-nav--primary .md-nav__item {
+padding: 0 1rem;
+font-size: 0.8rem;
+line-height: 1.5;
+/* Render table of contents as part of navigation */
+.md-nav--primary .md-nav__link[for="__toc"] ~ .md-nav {
+display: block;
+margin-bottom: 1em;
+border-left: px2rem(1px) solid var(--md-primary-fg-color);
+/* Reset counter */
+.md-nav--primary .md-nav__link[for="__toc"] ~ .md-nav .md-nav__link::before {
+content: ""
+.md-nav--primary .md-nav__link[for="__toc"] ~ .md-nav > .md-nav__title {
+display: none;
+/* Adjust print styles */
+@media print {
+/* Remove padding */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+position: initial;
+padding-left: initial;
+} # Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# Project information
+site_name: Trust over IP – Specification Template
+site_url: https://trustoverip.github.io/mkdocs-material/
+site_author: Trust over IP Foundation
+site_description: >-
+Trust over IP Foundation template for general documentation
+and technical specification using Material for MkDocs
+# Repository information
+repo_name: trustoverip/mkdocs-material
+repo_url: https://github.com/trustoverip/mkdocs-material
+# Content Generator Settings
+docs_dir: 'docs'
+site_dir: 'html'
+# Copyright information
+copyright: >-
+Copyright &copy; 2020 Joint Development Foundation Projects, LLC, Trust over
+IP Foundation Series <a href="https://jdfprojects.org/toip/">Terms of Use,
+Privacy Policy and Cookie Policy</a>. The Joint Development Foundation
+Projects, LLC is an affiliate of the Linux Foundation.
+# Navigation structure
+# nav:
+# - Page 1: page-1.md
+# - Page 2: page-2.md
+# Theme configuration
+theme:
+name: material
+custom_dir: docs/theme/overrides
+features:
+- navigation.instant
+# - navigation.tabs
+favicon: theme/images/favicon.png
+logo: theme/images/logo.svg
+palette:
+primary: white
+accent: indigo
+# Plugin configuration
+plugins:
+- search
+- enumerate-headings:
+strict: true
+toc_depth: 3
+# Extensions configuration
+markdown_extensions:
+- admonition
+- abbr
+- attr_list
+- def_list
+- footnotes
+- meta
+- toc:
+permalink: "§"
+- pymdownx.arithmatex:
+generic: true
+- pymdownx.betterem:
+smart_enable: all
+- pymdownx.caret
+- pymdownx.critic
+- pymdownx.details
+- pymdownx.emoji:
+emoji_index: !!python/name:materialx.emoji.twemoji
+emoji_generator: !!python/name:materialx.emoji.to_svg
+- pymdownx.highlight
+- pymdownx.inlinehilite
+- pymdownx.keys
+- pymdownx.magiclink:
+repo_url_shorthand: true
+user: trustoverip
+repo: mkdocs-material
+- pymdownx.mark
+- pymdownx.smartsymbols
+- pymdownx.snippets:
+check_paths: true
+- pymdownx.superfences:
+custom_fences:
+- name: mermaid
+class: mermaid
+format: !!python/name:pymdownx.superfences.fence_div_format
+- pymdownx.tabbed
+- pymdownx.tasklist:
+custom_checkbox: true
+- pymdownx.tilde
+# Additional content
+extra:
+title: 'TSS0000: Spec Name'
+lf_url: https://www.linuxfoundation.org/projects
+toip_url: https://trustoverip.org/
+toc_title: Table of contents
+social:
+- icon: fontawesome/brands/github
+link: https://github.com/trustoverip
+- icon: fontawesome/brands/twitter
+link: https://twitter.com/trustoverip
+- icon: fontawesome/brands/linkedin
+link: https://www.linkedin.com/company/trust-over-ip-foundation
+# Additional stylesheets
+extra_css:
+- theme/stylesheets/main.css
+- theme/stylesheets/spec.css
+# Additional JavaScript
+extra_javascript:
+- https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
+site_name: Trust over IP – General Template
+permalink: true
+title: 'XX0000: Deliverable Name'
+- theme/javascripts/main.js #!/bin/sh
+# -----------------------------------------------------------------------------
+PWD=$(pwd)
+# Due to the possibility that !!python references are contained in mkdocs.yml,
+# and we'd have to properly load all necessary stuff, but we're only interested
+# in the order of entries in the nav section, we're just using grep to extract
+# the relevant data. First, we remove all commented out lines, to make sure that
+# we don't include commented out navigation entries. Then, we use grep to
+# extract all filenames
+files=$( \
+grep -Ev "^ *#" mkdocs.yml | \
+grep -oE "[^ ]+\.md" | \
+tr -d '"' | \
+tr -d "'" \
+)
+# Preprocess each file with Pandoc and output the result to standard out
+for f in $files; do
+pandoc \
+--filter $PWD/scripts/combine/preprocess.py \
+--metadata file:$f \
+--to gfm \
+docs/$f
+# Add a new line at the end for readability
+echo ""
+done #!/usr/bin/env python
+from pandocfilters import toJSONFilter, Header, Link, RawInline
+import os
+import re
+"""
+A pandoc filter to preprocess cross-references (i.e. internal links) in multi-
+file documents, in order to create a combined Markdown document.
+--filter scripts/preprocess.py <full/path/basename.md> \
+--metadata file:<basename.md> \
+> tmp/<basename>.md
+This script is heavily inspired by:
+https://gist.github.com/ba-tno/b00e07abe25ebc2702629ec91074b1c0
+def preprocess(key, value, format, meta):
+prefix = normalize(meta["file"]["c"])
+# Header - set anchor name explicitly
+if key == "Header":
+[level, [anchor, t1, t2], header] = value
+anchor = prefix + "-" + anchor
+# Append attribute list with prefixed anchor
+header.append(RawInline("html", " {{ #{} }}".format(anchor)))
+return Header(level, [anchor, t1, t2], header)
+# Link - correct links
+if key == "Link":
+[t1, text, [link, t4]] = value
+# This document
+if link[0] == "#":
+ref = prefix + "-" + link[1:]
+return Link(t1, text, [ref, t4])
+# That document
+elif "#" in link:
+anchor = "#" + normalize(link)
+return Link(t1, text, [anchor, t4])
+Normalize anchor link
+def normalize(link):
+# Replace .md file endings and numbers at the beginning
+link = re.sub(r'^\d+-|\.md', r'', link)
+# Replace #-, & and /-symbol in the middle
+link = re.sub(r'#|&|\/', r'-', link)
+# Prepend the #-symbol
+return link.lower()
+if __name__ == "__main__":
+toJSONFilter(preprocess)

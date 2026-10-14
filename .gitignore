@@ -1,2 +1,4 @@
 .history/
 .DS_Store
+hearth/node_modules/
+hearth/dist/

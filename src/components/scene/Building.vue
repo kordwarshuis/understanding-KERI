@@ -21,7 +21,7 @@ const windows = [-48, -11, 26].flatMap((x) => [-132, -96].map((y) => [x, y]))
       class="win"
     />
     <rect x="-16" y="-50" width="32" height="50" rx="4" class="door" />
-    <text v-if="label" y="24" text-anchor="middle" class="label">{{ label }}</text>
+    <text v-if="label" y="28" text-anchor="middle" class="label">{{ label }}</text>
   </g>
 </template>
 
@@ -30,5 +30,5 @@ const windows = [-48, -11, 26].flatMap((x) => [-132, -96].map((y) => [x, y]))
 .wall { fill: #e2d7cb; }
 .win { fill: #c9bcae; }
 .door { fill: #a79583; }
-.label { font: 700 16px var(--sans); fill: var(--ink-soft); }
+.label { font: 700 22px var(--sans); fill: var(--ink-soft); }
 </style>

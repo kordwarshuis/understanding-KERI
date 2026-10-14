@@ -39,10 +39,10 @@ const claims = computed(() => [
   { y: 270, text: art.value.claimB },
 ])
 const idRows = computed(() => [
-  { k: art.value.nameK, v: art.value.nameV, y: 150 },
-  { k: art.value.bornK, v: art.value.bornV, y: 192 },
-  { k: art.value.livesK, v: art.value.livesV, y: 234 },
-  { k: art.value.overK, v: art.value.overV, y: 276, keep: true },
+  { k: art.value.nameK, v: art.value.nameV, y: 152 },
+  { k: art.value.bornK, v: art.value.bornV, y: 194 },
+  { k: art.value.livesK, v: art.value.livesV, y: 236 },
+  { k: art.value.overK, v: art.value.overV, y: 278, keep: true },
 ])
 const tiles = computed(() => [
   { x: 150, label: art.value.tile1, lit: 0.8 },
@@ -50,9 +50,9 @@ const tiles = computed(() => [
   { x: 650, label: art.value.tile3, lit: 6 },
 ])
 
-const pillWidth = (text) => Math.max(100, String(text || '').length * 8.2 + 34)
-const flagWidth = computed(() => Math.max(260, pillWidth(art.value.flag) + 20))
-const proofWidth = computed(() => Math.max(96, pillWidth(art.value.proof)))
+const pillWidth = (text) => Math.max(120, String(text || '').length * 11 + 36)
+const flagWidth = computed(() => Math.max(280, pillWidth(art.value.flag) + 16))
+const proofWidth = computed(() => Math.max(132, pillWidth(art.value.proof)))
 
 function go(i) {
   index.value = Math.max(0, Math.min(scenes.value.length - 1, i))
@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
             </g>
             <g class="pop" style="--d: 4.4s">
               <g transform="translate(400 266)">
-                <rect x="-50" y="-17" width="100" height="34" rx="17" class="closed" />
+                <rect x="-58" y="-18" width="116" height="36" rx="18" class="closed" />
                 <text y="6" text-anchor="middle" class="closed-text">{{ art.closed }}</text>
               </g>
             </g>
@@ -253,8 +253,8 @@ onBeforeUnmount(() => {
           <template v-else-if="scene.id === 'lies'">
             <g transform="translate(130 330)"><Figure :label="art.someone" color="#4a3f38" /></g>
             <g transform="translate(130 212)"><NameTag text="E7f…q2" /></g>
-            <path class="draw thin" style="--d: 3.4s" pathLength="1" d="M 522 150 Q 640 160 678 248" />
-            <path class="draw thin" style="--d: 3.6s" pathLength="1" d="M 522 270 Q 620 272 668 264" />
+            <path class="draw thin" style="--d: 3.4s" pathLength="1" d="M 522 150 Q 660 160 710 248" />
+            <path class="draw thin" style="--d: 3.6s" pathLength="1" d="M 522 270 Q 640 272 700 264" />
             <g
               v-for="(c, i) in claims"
               :key="c.text"
@@ -262,14 +262,14 @@ onBeforeUnmount(() => {
               :style="{ '--d': 1 + i * 1.3 + 's', '--fx': '-120px', '--fy': '0px' }"
             >
               <g :transform="`translate(420 ${c.y})`">
-                <rect x="-100" y="-32" width="200" height="64" rx="16" class="claim" style="--d: 5s" />
+                <rect x="-108" y="-34" width="216" height="68" rx="16" class="claim" style="--d: 5s" />
                 <text y="-4" text-anchor="middle" class="claim-text">{{ c.text }}</text>
-                <text y="18" text-anchor="middle" class="claim-sign">{{ art.signed }}</text>
+                <text y="20" text-anchor="middle" class="claim-sign">{{ art.signed }}</text>
               </g>
             </g>
             <path class="draw red-line" style="--d: 4.6s" pathLength="1" d="M 312 150 H 298 V 270 H 312" />
             <g class="rise" style="--d: 0.4s">
-              <g transform="translate(690 330)"><Figure :label="art.checker" color="#3f6f62" /></g>
+              <g transform="translate(730 330)"><Figure :label="art.checker" color="#3f6f62" /></g>
             </g>
             <g class="pop" style="--d: 5.4s">
               <g transform="translate(420 352)">
@@ -282,7 +282,7 @@ onBeforeUnmount(() => {
           <template v-else-if="scene.id === 'minimal'">
             <g class="rise" style="--d: 0.1s">
               <rect x="80" y="70" width="300" height="250" rx="22" class="id-card" />
-              <text x="104" y="110" class="id-title">{{ art.idTitle }}</text>
+              <text x="104" y="112" class="id-title">{{ art.idTitle }}</text>
               <g v-for="(row, i) in idRows" :key="row.k">
                 <rect
                   v-if="row.keep"
@@ -291,16 +291,16 @@ onBeforeUnmount(() => {
                   x="96"
                   :y="row.y - 22"
                   width="268"
-                  height="34"
+                  height="36"
                   rx="10"
                 />
                 <text x="108" :y="row.y" class="row-k">{{ row.k }}</text>
-                <text x="196" :y="row.y" class="row-v">{{ row.v }}</text>
+                <text x="200" :y="row.y" class="row-v">{{ row.v }}</text>
                 <rect
                   v-if="!row.keep"
                   class="redact"
                   :style="{ '--d': 1.2 + i * 0.3 + 's' }"
-                  x="190"
+                  x="194"
                   :y="row.y - 16"
                   width="160"
                   height="22"
@@ -313,7 +313,7 @@ onBeforeUnmount(() => {
             </g>
             <g transform="translate(640 212)">
               <g class="slide" style="--d: 3.4s; --fx: -372px; --fy: 66px">
-                <rect :x="-proofWidth / 2" y="-17" :width="proofWidth" height="34" rx="17" class="proof" />
+                <rect :x="-proofWidth / 2" y="-18" :width="proofWidth" height="36" rx="18" class="proof" />
                 <text y="6" text-anchor="middle" class="proof-text">{{ art.proof }}</text>
               </g>
             </g>
@@ -351,7 +351,7 @@ onBeforeUnmount(() => {
             <path class="road" d="M 150 180 H 650" />
             <g v-for="(tile, i) in tiles" :key="tile.label" class="rise" :style="{ '--d': 0.1 + i * 0.15 + 's' }">
               <rect :x="tile.x - 92" y="230" width="184" height="110" rx="20" class="tile" :style="{ '--d': tile.lit + 's' }" />
-              <text :x="tile.x" y="292" text-anchor="middle" class="tile-text">{{ tile.label }}</text>
+              <text :x="tile.x" y="294" text-anchor="middle" class="tile-text">{{ tile.label }}</text>
             </g>
             <g transform="translate(650 180)">
               <g class="travel" style="--d: 0.8s"><NameTag text="E7f…q2" /></g>
@@ -513,7 +513,7 @@ onBeforeUnmount(() => {
 .scene-frame {
   flex: 0 0 auto;
   width: 100%;
-  height: 270px;
+  height: 280px;
   position: relative;
   z-index: 0;
   flex-shrink: 0;
@@ -630,9 +630,9 @@ onBeforeUnmount(() => {
 }
 .dots button.on { background: var(--terracotta); transform: scale(1.25); }
 
-.note-text { font-weight: 800; font-size: 16px; fill: #9a4528; }
+.note-text { font-weight: 800; font-size: 22px; fill: #9a4528; }
 .closed { fill: #b4472f; }
-.closed-text { font-weight: 800; font-size: 16px; fill: #fff; }
+.closed-text { font-weight: 800; font-size: 20px; fill: #fff; }
 .thin { fill: none; stroke: #cdbfb1; stroke-width: 2; stroke-linecap: round; }
 .warm { fill: none; stroke: #e0a96b; stroke-width: 2.5; stroke-linecap: round; }
 .red-line { fill: none; stroke: #b4472f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
@@ -640,22 +640,22 @@ onBeforeUnmount(() => {
 .ok-mark { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .cross { fill: none; stroke: #b4472f; stroke-width: 4; stroke-linecap: round; }
 .glow { fill: #f6dcb8; }
-.claim-text { font-weight: 700; font-size: 18px; fill: #2b241c; }
-.claim-sign { font-size: 13px; fill: #7a6a5c; }
+.claim-text { font-weight: 700; font-size: 24px; fill: #2b241c; }
+.claim-sign { font-size: 16px; fill: #7a6a5c; }
 .flag { fill: #fbe3da; }
-.flag-text { font-weight: 800; font-size: 15px; fill: #9a3a22; }
+.flag-text { font-weight: 800; font-size: 20px; fill: #9a3a22; }
 .id-card { fill: #fff; stroke: #eadfd2; stroke-width: 2; }
-.id-title { font-family: var(--serif) !important; font-weight: 600; font-size: 22px; fill: #2b241c; }
-.row-k { font-weight: 700; font-size: 15px; fill: #7a6a5c; }
-.row-v { font-weight: 600; font-size: 16px; fill: #2b241c; }
+.id-title { font-family: var(--serif) !important; font-weight: 600; font-size: 28px; fill: #2b241c; }
+.row-k { font-weight: 700; font-size: 20px; fill: #7a6a5c; }
+.row-v { font-weight: 600; font-size: 21px; fill: #2b241c; }
 .keep-bg { fill: #fbe9cf; }
 .redact { fill: #3a312a; }
 .proof { fill: #fbe9cf; stroke: #e0b98a; stroke-width: 2; }
-.proof-text { font-weight: 800; font-size: 15px; fill: #7a4b1f; }
+.proof-text { font-weight: 800; font-size: 20px; fill: #7a4b1f; }
 .road { fill: none; stroke: #e0cbb4; stroke-width: 2; stroke-dasharray: 4 8; }
-.tile-text { font-weight: 700; font-size: 17px; fill: #5b4d40; }
+.tile-text { font-weight: 700; font-size: 22px; fill: #5b4d40; }
 .pill { fill: #fff; stroke: #e8d9c8; stroke-width: 1.5; }
-.pill-text { font-weight: 700; font-size: 15px; fill: #2b241c; }
+.pill-text { font-weight: 700; font-size: 20px; fill: #2b241c; }
 
 .rise { animation: rise 0.7s ease var(--d, 0s) both; }
 .pop {
@@ -752,7 +752,7 @@ onBeforeUnmount(() => {
     border-radius: 16px;
   }
   .what-head h1 { font-size: clamp(1.55rem, 6vw, 1.9rem); }
-  .scene-frame { height: 200px; }
+  .scene-frame { height: 220px; }
   .caption { height: 13.5rem; }
   .caption h2 { font-size: clamp(1.3rem, 5vw, 1.55rem); min-height: 2rem; }
   .caption .body { -webkit-line-clamp: 4; font-size: 1.05rem; min-height: 5.5rem; }

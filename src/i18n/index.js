@@ -12,6 +12,8 @@ import { sources as sourcesEn } from '../content/sources'
 import { sources as sourcesNl } from '../content/nl/sources'
 
 const STORAGE_KEY = 'keri-hearth-lang'
+export const LANG_PARAM = 'lang'
+
 const packs = {
   en: {
     ui: ui.en,
@@ -31,9 +33,23 @@ const packs = {
   },
 }
 
+export function isLocale(code) {
+  return Boolean(code && packs[code])
+}
+
+function queryLang() {
+  try {
+    return new URLSearchParams(window.location.search).get(LANG_PARAM)
+  } catch {
+    return null
+  }
+}
+
 function readLocale() {
+  const fromUrl = queryLang()
+  if (isLocale(fromUrl)) return fromUrl
   const saved = localStorage.getItem(STORAGE_KEY)
-  if (saved && packs[saved]) return saved
+  if (isLocale(saved)) return saved
   const nav = (navigator.language || '').toLowerCase()
   return nav.startsWith('nl') ? 'nl' : 'en'
 }
@@ -46,19 +62,57 @@ export const locales = [
 
 function applyDocumentLang(code) {
   document.documentElement.lang = code
-  const title = packs[code].ui.brand
-  document.title = title
+  document.title = packs[code].ui.brand
 }
 
 applyDocumentLang(locale.value)
 
-watch(locale, (code) => {
-  localStorage.setItem(STORAGE_KEY, code)
-  applyDocumentLang(code)
-})
-
 export function setLocale(code) {
-  if (packs[code]) locale.value = code
+  if (isLocale(code)) locale.value = code
+}
+
+/** Keep `?lang=` in sync with the active locale, and the locale in sync with the URL. */
+export function installLocaleRouting(router) {
+  let syncing = false
+
+  function writeQuery(code) {
+    const route = router.currentRoute.value
+    if (route.query[LANG_PARAM] === code) return
+    syncing = true
+    router
+      .replace({
+        path: route.path,
+        query: { ...route.query, [LANG_PARAM]: code },
+        hash: route.hash,
+      })
+      .finally(() => {
+        syncing = false
+      })
+  }
+
+  watch(
+    locale,
+    (code) => {
+      localStorage.setItem(STORAGE_KEY, code)
+      applyDocumentLang(code)
+      if (!syncing) writeQuery(code)
+    },
+    { immediate: true },
+  )
+
+  router.afterEach((to) => {
+    const raw = to.query[LANG_PARAM]
+    const code = Array.isArray(raw) ? raw[0] : raw
+    if (isLocale(code)) {
+      if (locale.value !== code) {
+        syncing = true
+        locale.value = code
+        syncing = false
+      }
+      return
+    }
+    writeQuery(locale.value)
+  })
 }
 
 export function useI18n() {

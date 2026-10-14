@@ -85,11 +85,24 @@ function toggle() {
 
 function onKey(e) {
   if (e.key === 'Escape') {
+    e.preventDefault()
     close()
     return
   }
-  if (e.key === 'ArrowRight') go(index.value + 1)
-  if (e.key === 'ArrowLeft') go(index.value - 1)
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault()
+    go(index.value - 1)
+    return
+  }
+  if (e.key === 'ArrowRight') {
+    e.preventDefault()
+    go(index.value + 1)
+    return
+  }
+  if ((e.key === ' ' || e.code === 'Space') && !reduced) {
+    e.preventDefault()
+    toggle()
+  }
 }
 
 watch(locale, () => {
@@ -373,11 +386,33 @@ onBeforeUnmount(() => {
       </div>
 
           <div class="controls">
-            <button class="btn ghost" :disabled="index === 0" @click="go(index - 1)">{{ t.whatBack }}</button>
-            <button v-if="!reduced" class="btn" @click="toggle">
+            <button
+              class="btn ghost"
+              type="button"
+              :disabled="index === 0"
+              :title="`${t.whatBack} (←)`"
+              @click="go(index - 1)"
+            >
+              {{ t.whatBack }}
+            </button>
+            <button
+              v-if="!reduced"
+              class="btn"
+              type="button"
+              :title="`${playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay} (Space)`"
+              @click="toggle"
+            >
               {{ playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay }}
             </button>
-            <button class="btn ghost" :disabled="isLast" @click="go(index + 1)">{{ t.whatNext }}</button>
+            <button
+              class="btn ghost"
+              type="button"
+              :disabled="isLast"
+              :title="`${t.whatNext} (→)`"
+              @click="go(index + 1)"
+            >
+              {{ t.whatNext }}
+            </button>
             <div class="dots">
               <button
                 v-for="(s, i) in scenes"

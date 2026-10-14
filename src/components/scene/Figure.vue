@@ -19,5 +19,5 @@ defineProps({
 <style scoped>
 .shadow { fill: rgba(80, 48, 28, 0.08); }
 .eye { fill: #2b241c; opacity: 0.7; }
-.label { font: 700 14px var(--sans); fill: var(--ink-soft); }
+.label { font: 700 16px var(--sans); fill: var(--ink-soft); }
 </style>

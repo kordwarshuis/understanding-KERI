@@ -30,5 +30,5 @@ const windows = [-48, -11, 26].flatMap((x) => [-132, -96].map((y) => [x, y]))
 .wall { fill: #e2d7cb; }
 .win { fill: #c9bcae; }
 .door { fill: #a79583; }
-.label { font: 700 14px var(--sans); fill: var(--ink-soft); }
+.label { font: 700 16px var(--sans); fill: var(--ink-soft); }
 </style>

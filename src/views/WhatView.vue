@@ -50,7 +50,7 @@ const tiles = computed(() => [
   { x: 650, label: art.value.tile3, lit: 6 },
 ])
 
-const pillWidth = (text) => Math.max(90, String(text || '').length * 7.4 + 30)
+const pillWidth = (text) => Math.max(100, String(text || '').length * 8.2 + 34)
 const flagWidth = computed(() => Math.max(260, pillWidth(art.value.flag) + 20))
 const proofWidth = computed(() => Math.max(96, pillWidth(art.value.proof)))
 
@@ -454,15 +454,15 @@ onBeforeUnmount(() => {
 }
 
 .what-modal {
-  --modal-h: min(620px, calc(100dvh - 24px));
-  width: min(920px, 100%);
+  --modal-h: min(680px, calc(100dvh - 24px));
+  width: min(960px, 100%);
   height: var(--modal-h);
   min-height: var(--modal-h);
   max-height: var(--modal-h);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.85rem 1rem 0.8rem;
+  gap: 0.55rem;
+  padding: 1rem 1.15rem 0.95rem;
   border-radius: 22px;
   background: var(--paper);
   box-shadow: var(--shadow);
@@ -479,11 +479,14 @@ onBeforeUnmount(() => {
   flex: 0 0 auto;
 }
 .what-head h1 {
-  font-size: clamp(1.35rem, 3vw, 1.85rem);
-  margin: 0.05rem 0 0;
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  margin: 0.1rem 0 0;
   line-height: 1.15;
 }
-.what-head .kicker { margin: 0; }
+.what-head .kicker {
+  margin: 0;
+  font-size: 0.88rem;
+}
 
 .what-close {
   width: 40px;
@@ -510,7 +513,7 @@ onBeforeUnmount(() => {
 .scene-frame {
   flex: 0 0 auto;
   width: 100%;
-  height: 260px;
+  height: 270px;
   position: relative;
   z-index: 0;
   flex-shrink: 0;
@@ -548,7 +551,7 @@ onBeforeUnmount(() => {
 
 .caption {
   flex: 0 0 auto;
-  height: 11.25rem;
+  height: 12.75rem;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -557,18 +560,18 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 .caption h2 {
-  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
-  margin: 0.1rem 0 0.25rem;
+  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+  margin: 0.15rem 0 0.35rem;
   line-height: 1.2;
-  min-height: 1.85rem;
+  min-height: 2.2rem;
 }
 .caption .body {
-  font-size: 0.98rem;
-  line-height: 1.4;
-  max-width: 46rem;
+  font-size: 1.12rem;
+  line-height: 1.45;
+  max-width: 48rem;
   margin: 0;
   flex: 1 1 auto;
-  min-height: 4.2rem;
+  min-height: 4.8rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -576,24 +579,27 @@ onBeforeUnmount(() => {
 }
 .caption .foot {
   flex: 0 0 auto;
-  height: 2.75rem;
+  height: 2.9rem;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.35rem;
+  gap: 0.55rem;
+  margin-top: 0.4rem;
   overflow: hidden;
 }
-.caption .foot .btn { padding: 8px 14px; }
-.caption .kicker { margin: 0; }
+.caption .foot .btn { padding: 10px 16px; font-size: 1rem; }
+.caption .kicker {
+  margin: 0;
+  font-size: 0.88rem;
+}
 
 .word-chip {
   display: inline-block;
-  padding: 0.22rem 0.7rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 999px;
   background: #f6eadc;
   color: var(--terracotta-deep);
-  font-size: 0.84rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -603,19 +609,19 @@ onBeforeUnmount(() => {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   flex: 0 0 auto;
-  min-height: 2.75rem;
-  padding-top: 0.15rem;
+  min-height: 3rem;
+  padding-top: 0.2rem;
   position: relative;
   z-index: 1;
   background: var(--paper);
 }
-.controls .btn { padding: 9px 14px; }
-.dots { display: flex; gap: 0.4rem; margin-left: auto; }
+.controls .btn { padding: 11px 18px; font-size: 1.02rem; }
+.dots { display: flex; gap: 0.45rem; margin-left: auto; }
 .dots button {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -624,9 +630,9 @@ onBeforeUnmount(() => {
 }
 .dots button.on { background: var(--terracotta); transform: scale(1.25); }
 
-.note-text { font-weight: 800; font-size: 15px; fill: #9a4528; }
+.note-text { font-weight: 800; font-size: 16px; fill: #9a4528; }
 .closed { fill: #b4472f; }
-.closed-text { font-weight: 800; font-size: 15px; fill: #fff; }
+.closed-text { font-weight: 800; font-size: 16px; fill: #fff; }
 .thin { fill: none; stroke: #cdbfb1; stroke-width: 2; stroke-linecap: round; }
 .warm { fill: none; stroke: #e0a96b; stroke-width: 2.5; stroke-linecap: round; }
 .red-line { fill: none; stroke: #b4472f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
@@ -634,22 +640,22 @@ onBeforeUnmount(() => {
 .ok-mark { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .cross { fill: none; stroke: #b4472f; stroke-width: 4; stroke-linecap: round; }
 .glow { fill: #f6dcb8; }
-.claim-text { font-weight: 700; font-size: 17px; fill: #2b241c; }
-.claim-sign { font-size: 12px; fill: #7a6a5c; }
+.claim-text { font-weight: 700; font-size: 18px; fill: #2b241c; }
+.claim-sign { font-size: 13px; fill: #7a6a5c; }
 .flag { fill: #fbe3da; }
-.flag-text { font-weight: 800; font-size: 14px; fill: #9a3a22; }
+.flag-text { font-weight: 800; font-size: 15px; fill: #9a3a22; }
 .id-card { fill: #fff; stroke: #eadfd2; stroke-width: 2; }
-.id-title { font-family: var(--serif) !important; font-weight: 600; font-size: 20px; fill: #2b241c; }
-.row-k { font-weight: 700; font-size: 14px; fill: #7a6a5c; }
-.row-v { font-weight: 600; font-size: 15px; fill: #2b241c; }
+.id-title { font-family: var(--serif) !important; font-weight: 600; font-size: 22px; fill: #2b241c; }
+.row-k { font-weight: 700; font-size: 15px; fill: #7a6a5c; }
+.row-v { font-weight: 600; font-size: 16px; fill: #2b241c; }
 .keep-bg { fill: #fbe9cf; }
 .redact { fill: #3a312a; }
 .proof { fill: #fbe9cf; stroke: #e0b98a; stroke-width: 2; }
-.proof-text { font-weight: 800; font-size: 14px; fill: #7a4b1f; }
+.proof-text { font-weight: 800; font-size: 15px; fill: #7a4b1f; }
 .road { fill: none; stroke: #e0cbb4; stroke-width: 2; stroke-dasharray: 4 8; }
-.tile-text { font-weight: 700; font-size: 16px; fill: #5b4d40; }
+.tile-text { font-weight: 700; font-size: 17px; fill: #5b4d40; }
 .pill { fill: #fff; stroke: #e8d9c8; stroke-width: 1.5; }
-.pill-text { font-weight: 700; font-size: 14px; fill: #2b241c; }
+.pill-text { font-weight: 700; font-size: 15px; fill: #2b241c; }
 
 .rise { animation: rise 0.7s ease var(--d, 0s) both; }
 .pop {
@@ -741,16 +747,18 @@ onBeforeUnmount(() => {
 
 @media (max-width: 720px) {
   .what-modal {
-    --modal-h: min(640px, calc(100dvh - 16px));
-    padding: 0.7rem 0.75rem 0.65rem;
+    --modal-h: min(700px, calc(100dvh - 16px));
+    padding: 0.85rem 0.9rem 0.8rem;
     border-radius: 16px;
   }
+  .what-head h1 { font-size: clamp(1.55rem, 6vw, 1.9rem); }
   .scene-frame { height: 200px; }
-  .caption { height: 12rem; }
-  .caption .body { -webkit-line-clamp: 4; font-size: 0.92rem; min-height: 5.2rem; }
+  .caption { height: 13.5rem; }
+  .caption h2 { font-size: clamp(1.3rem, 5vw, 1.55rem); min-height: 2rem; }
+  .caption .body { -webkit-line-clamp: 4; font-size: 1.05rem; min-height: 5.5rem; }
   .caption .foot { height: 3rem; }
   .dots { margin-left: 0; width: 100%; }
   .controls { min-height: 5.5rem; align-content: center; }
-  .controls .btn { flex: 1 1 auto; }
+  .controls .btn { flex: 1 1 auto; font-size: 1rem; }
 }
 </style>

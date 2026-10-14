@@ -13,6 +13,7 @@ import { RouterLink, RouterView } from 'vue-router'
         </span>
       </RouterLink>
       <nav>
+        <RouterLink to="/what">What it does</RouterLink>
         <RouterLink to="/story">The story</RouterLink>
         <RouterLink to="/words">Words</RouterLink>
         <RouterLink to="/sources">Sources</RouterLink>

@@ -13,7 +13,8 @@ import { personas } from '../content/personas'
       a policymaker, a developer, a manager, a clinician — and tells it in that language.
     </p>
     <div class="actions">
-      <RouterLink class="btn" to="/story">Start with the story</RouterLink>
+      <RouterLink class="btn" to="/what">Watch what KERI does</RouterLink>
+      <RouterLink class="btn ghost" to="/story">Start with the story</RouterLink>
       <RouterLink class="btn ghost" to="/words">Browse the words</RouterLink>
     </div>
   </section>

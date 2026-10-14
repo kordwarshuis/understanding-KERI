@@ -8,7 +8,7 @@ KERI is hard to adopt because it is hard to explain. This repo keeps an English 
 
 The app lives at the repository root. You sit down as a parent, a lawyer, a policymaker, a developer, a business leader, or a clinician. Each path is a short sequence: why it matters, what KERI is, how it works, and what to do next.
 
-There is also a shared story (“A name that can change its locks”), a glossary, and a sources page. Lesson progress is stored in the browser.
+There is also an animated explainer of what KERI does (`/what`, nine short scenes about outcomes rather than mechanics), a shared story (“A name that can change its locks”), a glossary, and a sources page. Lesson progress is stored in the browser. The explainer shows still frames when the system asks for reduced motion.
 
 The writing is a reading of the English texts in `txt/`. It is not the specification, not legal advice, and it does not issue identifiers or hold keys.
 
@@ -52,7 +52,8 @@ The app does not load those files at runtime. Edited explanations live in `src/c
 ```
 txt/                 English source texts
 src/                 Vue 3 + Vue Router app
-  content/           Personas, glossary, and the shared story
+  content/           Personas, glossary, the shared story, and explainer scenes
+  components/scene/  SVG figures used by the explainer
   views/             Pages
 index.html
 vite.config.js

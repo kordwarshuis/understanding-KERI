@@ -5,6 +5,7 @@ import GlossaryView from './views/GlossaryView.vue'
 import ConceptView from './views/ConceptView.vue'
 import StoryView from './views/StoryView.vue'
 import SourcesView from './views/SourcesView.vue'
+import WhatView from './views/WhatView.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,7 @@ export const router = createRouter({
   },
   routes: [
     { path: '/', name: 'home', component: HomeView },
+    { path: '/what', name: 'what', component: WhatView },
     { path: '/path/:persona/:lesson?', name: 'path', component: PathView },
     { path: '/words', name: 'words', component: GlossaryView },
     { path: '/words/:id', name: 'concept', component: ConceptView },

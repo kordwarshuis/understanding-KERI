@@ -127,9 +127,9 @@ export const scenes = [
       { text: 'Checkable by anyone', x: 640, y: 80 },
       { text: 'Survives a lost key', x: 130, y: 190 },
       { text: 'Catches two-faced stories', x: 670, y: 190 },
-      { text: 'Shares only what is needed', x: 170, y: 300 },
-      { text: 'Lend it, take it back', x: 630, y: 300 },
-      { text: 'Goes where you go', x: 400, y: 350 },
+      { text: 'Shares only what is needed', x: 170, y: 280 },
+      { text: 'Lend it, take it back', x: 630, y: 280 },
+      { text: 'Goes where you go', x: 400, y: 330 },
     ],
   },
 ]

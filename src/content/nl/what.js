@@ -128,9 +128,9 @@ export const scenes = [
       { text: 'Door iedereen te checken', x: 640, y: 80 },
       { text: 'Overleeft sleutelverlies', x: 130, y: 190 },
       { text: 'Vangt twee verhalen', x: 670, y: 190 },
-      { text: 'Deelt alleen het nodige', x: 170, y: 300 },
-      { text: 'Uitlenen, terugnemen', x: 630, y: 300 },
-      { text: 'Gaat waar jij gaat', x: 400, y: 350 },
+      { text: 'Deelt alleen het nodige', x: 170, y: 280 },
+      { text: 'Uitlenen, terugnemen', x: 630, y: 280 },
+      { text: 'Gaat waar jij gaat', x: 400, y: 330 },
     ],
   },
 ]

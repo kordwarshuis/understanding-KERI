@@ -143,7 +143,15 @@ onBeforeUnmount(() => {
         </header>
 
         <div class="stage" :class="{ paused: !playing, settled }">
-      <svg class="scene" viewBox="0 0 800 400" role="img" :aria-label="scene.title">
+      <div class="scene-frame">
+      <div class="scene-fit">
+      <svg
+        class="scene"
+        viewBox="0 0 800 400"
+        role="img"
+        :aria-label="scene.title"
+        preserveAspectRatio="xMidYMid meet"
+      >
         <g :key="sceneKey">
           <template v-if="scene.id === 'borrowed'">
             <path class="flow" style="--d: 4.4s" d="M 168 262 C 230 220, 290 214, 334 226" />
@@ -356,7 +364,7 @@ onBeforeUnmount(() => {
           <template v-else>
             <circle class="ripple" style="--d: 0.8s" cx="400" cy="190" r="70" />
             <g class="pop" style="--d: 0.2s">
-              <g transform="translate(400 190) scale(1.5)"><NameTag text="E7f…q2" /></g>
+              <g transform="translate(400 190) scale(1.25)"><NameTag text="E7f…q2" /></g>
             </g>
             <g v-for="(p, i) in scene.pills" :key="p.text" class="pop" :style="{ '--d': 0.9 + i * 0.45 + 's' }">
               <g :transform="`translate(${p.x} ${p.y})`">
@@ -367,21 +375,25 @@ onBeforeUnmount(() => {
           </template>
         </g>
       </svg>
+      </div>
+      </div>
 
       <div class="bar" aria-hidden="true">
         <span :key="sceneKey" :style="{ '--dur': scene.dur + 'ms' }" @animationend.self="onSceneDone"></span>
       </div>
 
-      <div :key="sceneKey + '-caption'" class="caption" aria-live="polite">
+      <div class="caption" aria-live="polite">
         <p class="kicker">{{ tf('whatOf', { n: index + 1, total: scenes.length }) }} · {{ scene.kicker }}</p>
         <h2 class="serif">{{ scene.title }}</h2>
         <p class="body">{{ scene.body }}</p>
-        <RouterLink v-if="scene.word" class="word-chip" :to="`/words/${scene.word.id}`">
-          {{ tf('whatWord', { label: scene.word.label }) }}
-        </RouterLink>
-        <div v-if="scene.final" class="actions">
-          <RouterLink class="btn" to="/story">{{ t.whatStory }}</RouterLink>
-          <RouterLink class="btn ghost" to="/">{{ t.whatSeat }}</RouterLink>
+        <div class="foot">
+          <RouterLink v-if="scene.word" class="word-chip" :to="`/words/${scene.word.id}`">
+            {{ tf('whatWord', { label: scene.word.label }) }}
+          </RouterLink>
+          <template v-if="scene.final">
+            <RouterLink class="btn" to="/story">{{ t.whatStory }}</RouterLink>
+            <RouterLink class="btn ghost" to="/">{{ t.whatSeat }}</RouterLink>
+          </template>
         </div>
       </div>
 
@@ -442,8 +454,11 @@ onBeforeUnmount(() => {
 }
 
 .what-modal {
+  --modal-h: min(620px, calc(100dvh - 24px));
   width: min(920px, 100%);
-  max-height: calc(100dvh - 24px);
+  height: var(--modal-h);
+  min-height: var(--modal-h);
+  max-height: var(--modal-h);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -485,19 +500,32 @@ onBeforeUnmount(() => {
 .what-close:hover { background: #ead9c8; }
 
 .stage {
+  flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
+.scene-frame {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 260px;
+  position: relative;
+  z-index: 0;
+  flex-shrink: 0;
+}
+.scene-fit {
+  position: absolute;
+  inset: 0;
+}
 .scene {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: min(38vh, 280px);
+  height: 100%;
   color: #c4623a;
   overflow: visible;
+  pointer-events: none;
 }
 .scene text { font-family: var(--sans); }
 
@@ -507,6 +535,8 @@ onBeforeUnmount(() => {
   border-radius: 4px;
   background: #f1e6da;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 .bar span {
   display: block;
@@ -518,29 +548,43 @@ onBeforeUnmount(() => {
 
 .caption {
   flex: 0 0 auto;
-  animation: rise 0.6s ease both;
+  height: 11.25rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  overflow: hidden;
 }
 .caption h2 {
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   margin: 0.1rem 0 0.25rem;
   line-height: 1.2;
+  min-height: 1.85rem;
 }
 .caption .body {
   font-size: 0.98rem;
   line-height: 1.4;
   max-width: 46rem;
-  margin: 0 0 0.45rem;
+  margin: 0;
+  flex: 1 1 auto;
+  min-height: 4.2rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
-.caption .actions {
+.caption .foot {
+  flex: 0 0 auto;
+  height: 2.75rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 0.5rem;
-  margin-top: 0.45rem;
+  margin-top: 0.35rem;
+  overflow: hidden;
 }
+.caption .foot .btn { padding: 8px 14px; }
 .caption .kicker { margin: 0; }
 
 .word-chip {
@@ -561,7 +605,11 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.5rem;
   flex: 0 0 auto;
+  min-height: 2.75rem;
   padding-top: 0.15rem;
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
 }
 .controls .btn { padding: 9px 14px; }
 .dots { display: flex; gap: 0.4rem; margin-left: auto; }
@@ -680,25 +728,29 @@ onBeforeUnmount(() => {
 @keyframes snap { from { opacity: 1; } to { opacity: 0; } }
 
 .paused .scene *,
-.paused .caption,
 .paused .bar span { animation-play-state: paused !important; }
 
 .settled .scene *,
-.settled .caption,
 .settled .bar span { animation: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .scene *,
-  .caption,
   .bar span { animation: none !important; }
   .bar { display: none; }
 }
 
 @media (max-width: 720px) {
-  .what-modal { max-height: calc(100dvh - 16px); padding: 0.7rem 0.75rem 0.65rem; border-radius: 16px; }
-  .scene { max-height: min(30vh, 220px); }
-  .caption .body { -webkit-line-clamp: 4; font-size: 0.92rem; }
+  .what-modal {
+    --modal-h: min(640px, calc(100dvh - 16px));
+    padding: 0.7rem 0.75rem 0.65rem;
+    border-radius: 16px;
+  }
+  .scene-frame { height: 200px; }
+  .caption { height: 12rem; }
+  .caption .body { -webkit-line-clamp: 4; font-size: 0.92rem; min-height: 5.2rem; }
+  .caption .foot { height: 3rem; }
   .dots { margin-left: 0; width: 100%; }
+  .controls { min-height: 5.5rem; align-content: center; }
   .controls .btn { flex: 1 1 auto; }
 }
 </style>

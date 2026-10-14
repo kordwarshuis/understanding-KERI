@@ -1,12 +1,13 @@
 <script setup>
 import { computed, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { findLesson, findPersona } from '../content/personas'
+import { useI18n } from '../i18n'
 import { completedLessons, markComplete } from '../progress'
 import LessonBody from '../components/LessonBody.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t, tf, findPersona, findLesson } = useI18n()
 
 const persona = computed(() => findPersona(route.params.persona))
 const lesson = computed(() => {
@@ -51,18 +52,18 @@ function go(id) {
       </a>
     </div>
     <article class="paper">
-      <p class="kicker">About {{ lesson.minutes }} minutes</p>
+      <p class="kicker">{{ tf('pathMinutes', { n: lesson.minutes }) }}</p>
       <h2 class="serif" style="margin-top: 6px">{{ lesson.title }}</h2>
       <LessonBody :blocks="lesson.blocks" />
       <div class="navrow">
-        <button class="btn ghost" type="button" :disabled="!prev" @click="prev && go(prev.id)">Back</button>
-        <button v-if="next" class="btn" type="button" @click="go(next.id)">Continue</button>
-        <RouterLink v-else class="btn" to="/story">Walk the shared story</RouterLink>
+        <button class="btn ghost" type="button" :disabled="!prev" @click="prev && go(prev.id)">{{ t.pathBack }}</button>
+        <button v-if="next" class="btn" type="button" @click="go(next.id)">{{ t.pathContinue }}</button>
+        <RouterLink v-else class="btn" to="/story">{{ t.pathStory }}</RouterLink>
       </div>
     </article>
   </section>
   <section v-else class="paper">
-    <h2 class="serif">That seat isn’t here</h2>
-    <RouterLink class="btn" to="/">Choose another</RouterLink>
+    <h2 class="serif">{{ t.pathMissing }}</h2>
+    <RouterLink class="btn" to="/">{{ t.pathChoose }}</RouterLink>
   </section>
 </template>

@@ -1,16 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
-import { concepts } from '../content/glossary'
+import { useI18n } from '../i18n'
 
-defineProps({
+const props = defineProps({
   blocks: { type: Array, required: true },
 })
 
+const { concepts } = useI18n()
 const picked = ref(null)
 
+watch(
+  () => props.blocks,
+  () => {
+    picked.value = null
+  },
+)
+
 function concept(id) {
-  return concepts.find((c) => c.id === id)
+  return concepts.value.find((c) => c.id === id)
 }
 
 function choose(blockIndex, optionIndex, ok) {

@@ -5,6 +5,12 @@ export const scenes = [
     title: 'Your name online is borrowed',
     body: 'Accounts, logins and website certificates all run through a company in the middle. If it changes the rules, gets breached or shuts down, the name it lent you goes with it.',
     dur: 9000,
+    art: {
+      company: 'the company in the middle',
+      you: 'you',
+      friend: 'a friend',
+      closed: 'Closed',
+    },
   },
   {
     id: 'own',
@@ -13,6 +19,10 @@ export const scenes = [
     body: 'It is made from secret keys that only you hold. Nobody issued it, so nobody can take it back, sell it or switch it off.',
     word: { id: 'aid', label: 'autonomic identifier' },
     dur: 8000,
+    art: {
+      you: 'you',
+      note: 'made from your own keys',
+    },
   },
   {
     id: 'check',
@@ -21,6 +31,12 @@ export const scenes = [
     body: 'Anywhere, at any time, without asking a central office for permission. The proof travels with the name.',
     word: { id: 'end', label: 'end-verifiability' },
     dur: 8500,
+    art: {
+      you: 'you',
+      bank: 'a bank',
+      clinic: 'a clinic',
+      stranger: 'a stranger',
+    },
   },
   {
     id: 'recover',
@@ -29,6 +45,11 @@ export const scenes = [
     body: 'If a key is lost or stolen, you replace it. The old key stops counting, and your name, with everything already attached to it, carries on.',
     word: { id: 'prerotation', label: 'pre-rotation' },
     dur: 9500,
+    art: {
+      you: 'you',
+      thief: 'a thief',
+      note: 'same name',
+    },
   },
   {
     id: 'lies',
@@ -37,6 +58,14 @@ export const scenes = [
     body: 'What is said under a name stays on the record. If someone tells two different versions, the contradiction itself is the proof, for anyone who looks.',
     word: { id: 'duplicity', label: 'duplicity' },
     dur: 9500,
+    art: {
+      someone: 'someone',
+      claimA: '“Sold to Ann.”',
+      claimB: '“Sold to Ben.”',
+      signed: 'signed E7f…q2',
+      checker: 'anyone checking',
+      flag: 'Two stories, one name: caught',
+    },
   },
   {
     id: 'minimal',
@@ -45,6 +74,19 @@ export const scenes = [
     body: 'Show that you are over 18, licensed or employed here, without handing over your birth date, your address or the rest of your file.',
     word: { id: 'ipex', label: 'graduated disclosure' },
     dur: 9000,
+    art: {
+      idTitle: 'Your ID',
+      nameK: 'Name',
+      nameV: 'Maya Rivera',
+      bornK: 'Born',
+      bornV: '4 June 1991',
+      livesK: 'Lives',
+      livesV: '12 Elm Street',
+      overK: 'Over 18',
+      overV: 'yes',
+      shop: 'a shop',
+      proof: 'Over 18 ✓',
+    },
   },
   {
     id: 'lend',
@@ -53,6 +95,12 @@ export const scenes = [
     body: 'A parent for a child, a colleague for a company, an assistant for you: they act within limits you set, until you end it.',
     word: { id: 'delegation', label: 'delegation' },
     dur: 9000,
+    art: {
+      you: 'you',
+      helper: 'your helper',
+      forYou: 'for you',
+      note: 'ended, by you',
+    },
   },
   {
     id: 'portable',
@@ -60,6 +108,12 @@ export const scenes = [
     title: 'Your name goes where you go',
     body: 'It is not tied to one app, one company or one blockchain. Change providers, and your name and its history come with you.',
     dur: 9500,
+    art: {
+      tile1: 'Today’s app',
+      tile2: 'A new provider',
+      tile3: 'Another network',
+      note: 'still the same name',
+    },
   },
   {
     id: 'sum',

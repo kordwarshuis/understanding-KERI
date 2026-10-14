@@ -1,15 +1,22 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   text: { type: String, required: true },
 })
+
+const width = computed(() => Math.max(96, String(props.text).length * 8.2 + 52))
+const left = computed(() => -width.value / 2)
+const sealX = computed(() => left.value + 17)
+const textX = computed(() => left.value + 38 + (width.value - 52) / 2)
 </script>
 
 <template>
   <g>
-    <rect x="-48" y="-16" width="96" height="32" rx="16" class="tag" />
-    <circle cx="-31" cy="0" r="7" class="seal" />
-    <path d="M -34 0 L -31.5 2.5 L -27.5 -2.5" class="tick" />
-    <text x="8" y="5" text-anchor="middle" class="text">{{ text }}</text>
+    <rect :x="left" y="-16" :width="width" height="32" rx="16" class="tag" />
+    <circle :cx="sealX" cy="0" r="7" class="seal" />
+    <path :d="`M ${sealX - 3} 0 L ${sealX - 0.5} 2.5 L ${sealX + 3.5} -2.5`" class="tick" />
+    <text :x="textX" y="5" text-anchor="middle" class="text">{{ text }}</text>
   </g>
 </template>
 

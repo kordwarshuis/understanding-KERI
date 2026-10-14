@@ -1,10 +1,11 @@
 <script setup>
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { concepts } from '../content/glossary'
+import { useI18n } from '../i18n'
 
 const route = useRoute()
-const concept = computed(() => concepts.find((c) => c.id === route.params.id))
+const { t, concepts } = useI18n()
+const concept = computed(() => concepts.value.find((c) => c.id === route.params.id))
 </script>
 
 <template>
@@ -13,15 +14,15 @@ const concept = computed(() => concepts.find((c) => c.id === route.params.id))
     <h2 class="serif" style="font-size: 2.4rem; margin: 6px 0">{{ concept.term }}</h2>
     <p class="lead">{{ concept.plain }}</p>
     <aside class="note">
-      <strong>Why it matters</strong>
+      <strong>{{ t.conceptWhy }}</strong>
       {{ concept.why }}
     </aside>
-    <p class="kicker">From the library</p>
+    <p class="kicker">{{ t.conceptFrom }}</p>
     <p>{{ concept.source }}</p>
-    <RouterLink class="btn ghost" to="/words">All words</RouterLink>
+    <RouterLink class="btn ghost" to="/words">{{ t.conceptAll }}</RouterLink>
   </article>
   <article v-else class="paper">
-    <h2 class="serif">That word isn’t in the hearth yet</h2>
-    <RouterLink class="btn" to="/words">Back to the words</RouterLink>
+    <h2 class="serif">{{ t.conceptMissing }}</h2>
+    <RouterLink class="btn" to="/words">{{ t.conceptBack }}</RouterLink>
   </article>
 </template>

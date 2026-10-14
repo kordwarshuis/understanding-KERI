@@ -1,25 +1,23 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { personas } from '../content/personas'
+import { useI18n } from '../i18n'
+
+const { t, personas } = useI18n()
 </script>
 
 <template>
   <section class="hero">
-    <p class="kicker">Key Event Receipt Infrastructure</p>
-    <h1>KERI is easier to trust once someone explains it kindly.</h1>
-    <p class="lede">
-      Not many people can say what it is, how it works, or why it matters.
-      This hearth sits you down as the person you actually are — a parent, a lawyer,
-      a policymaker, a developer, a manager, a clinician — and tells it in that language.
-    </p>
+    <p class="kicker">{{ t.homeKicker }}</p>
+    <h1>{{ t.homeTitle }}</h1>
+    <p class="lede">{{ t.homeLede }}</p>
     <div class="actions">
-      <RouterLink class="btn" to="/what">Watch what KERI does</RouterLink>
-      <RouterLink class="btn ghost" to="/story">Start with the story</RouterLink>
-      <RouterLink class="btn ghost" to="/words">Browse the words</RouterLink>
+      <RouterLink class="btn" to="/what">{{ t.homeWatch }}</RouterLink>
+      <RouterLink class="btn ghost" to="/story">{{ t.homeStory }}</RouterLink>
+      <RouterLink class="btn ghost" to="/words">{{ t.homeWords }}</RouterLink>
     </div>
   </section>
 
-  <p class="section-label">Choose a seat</p>
+  <p class="section-label">{{ t.homeSeats }}</p>
   <div class="grid">
     <RouterLink
       v-for="persona in personas"

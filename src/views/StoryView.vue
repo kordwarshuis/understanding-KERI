@@ -1,52 +1,54 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
-import { story } from '../content/story'
-import { personas } from '../content/personas'
+import { useI18n } from '../i18n'
+
+const { t, tf, story, personas } = useI18n()
 
 const step = ref(0)
-const beat = computed(() => story.beats[step.value])
+const beat = computed(() => story.value.beats[step.value])
 const rotated = ref(false)
 
 watch(step, () => {
+  rotated.value = false
+})
+
+watch(story, () => {
+  if (step.value >= story.value.beats.length) step.value = 0
   rotated.value = false
 })
 </script>
 
 <template>
   <section>
-    <p class="kicker">Shared by every seat</p>
+    <p class="kicker">{{ t.storyKicker }}</p>
     <h2 class="serif" style="font-size: clamp(2rem, 4vw, 2.8rem); margin-top: 6px">{{ story.title }}</h2>
     <p class="lede">{{ story.lede }}</p>
     <article class="paper">
-      <p class="kicker">{{ step + 1 }} of {{ story.beats.length }} · {{ beat.kicker }}</p>
+      <p class="kicker">{{ tf('storyOf', { n: step + 1, total: story.beats.length }) }} · {{ beat.kicker }}</p>
       <h2 class="serif">{{ beat.title }}</h2>
       <p class="lead">{{ beat.body }}</p>
       <div v-if="beat.interactive === 'locks'" class="locks">
         <div class="lock">
-          <em>Current key</em>
-          Signs today’s messages. A thief can use it only by publishing an event. Then you retire it. The name stays.
+          <em>{{ t.storyCurrentKey }}</em>
+          {{ t.storyCurrentBody }}
         </div>
         <div class="lock" :class="{ hidden: !rotated }">
-          <em>{{ rotated ? 'Spare, now revealed' : 'Spare key, still a hash' }}</em>
-          {{
-            rotated
-              ? 'The spare signed the rotation. It is now the current key. A new spare is committed as a hash, ideally kept somewhere else. The AID did not change.'
-              : 'The public log shows only a digest. The spare itself can live off the everyday device until you need it.'
-          }}
+          <em>{{ rotated ? t.storySpareShown : t.storySpareHidden }}</em>
+          {{ rotated ? t.storySpareShownBody : t.storySpareHiddenBody }}
         </div>
         <button class="btn" type="button" @click="rotated = !rotated">
-          {{ rotated ? 'Hide the spare again' : 'Rotate the lock' }}
+          {{ rotated ? t.storyHide : t.storyRotate }}
         </button>
       </div>
       <div class="navrow beat-nav">
-        <button class="btn ghost" type="button" :disabled="step === 0" @click="step--">Previous</button>
+        <button class="btn ghost" type="button" :disabled="step === 0" @click="step--">{{ t.storyPrev }}</button>
         <button class="btn" type="button" :disabled="step === story.beats.length - 1" @click="step++">
-          Next beat
+          {{ t.storyNext }}
         </button>
       </div>
     </article>
-    <p class="section-label">Sit down as someone</p>
+    <p class="section-label">{{ t.storySit }}</p>
     <div class="grid">
       <RouterLink v-for="persona in personas" :key="persona.id" class="card" :to="`/path/${persona.id}`">
         <p class="who">{{ persona.name }}</p>

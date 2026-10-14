@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useI18n } from './i18n'
+
+const { t, locale, locales, setLocale } = useI18n()
 </script>
 
 <template>
@@ -8,25 +11,37 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink class="brand" to="/">
         <span class="flame" aria-hidden="true"></span>
         <span>
-          <strong>The KERI Hearth</strong>
-          <small>A warm way in</small>
+          <strong>{{ t.brand }}</strong>
+          <small>{{ t.brandTag }}</small>
         </span>
       </RouterLink>
-      <nav>
-        <RouterLink to="/what">What it does</RouterLink>
-        <RouterLink to="/story">The story</RouterLink>
-        <RouterLink to="/words">Words</RouterLink>
-        <RouterLink to="/sources">Sources</RouterLink>
-      </nav>
+      <div class="top-tools">
+        <nav>
+          <RouterLink to="/what">{{ t.navWhat }}</RouterLink>
+          <RouterLink to="/story">{{ t.navStory }}</RouterLink>
+          <RouterLink to="/words">{{ t.navWords }}</RouterLink>
+          <RouterLink to="/sources">{{ t.navSources }}</RouterLink>
+        </nav>
+        <div class="lang" role="group" :aria-label="t.langLabel">
+          <button
+            v-for="item in locales"
+            :key="item.id"
+            type="button"
+            :class="{ on: locale === item.id }"
+            :aria-pressed="locale === item.id"
+            :title="item.label"
+            @click="setLocale(item.id)"
+          >
+            {{ item.short }}
+          </button>
+        </div>
+      </div>
     </header>
     <main>
       <RouterView />
     </main>
     <footer>
-      <p>
-        English explanations only, drawn from the texts in this project.
-        KERI is said like the name Carrie.
-      </p>
+      <p>{{ t.footer }}</p>
     </footer>
   </div>
 </template>

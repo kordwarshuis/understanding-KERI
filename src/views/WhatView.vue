@@ -1,11 +1,13 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
-import { scenes } from '../content/what'
+import { useI18n } from '../i18n'
 import Figure from '../components/scene/Figure.vue'
 import NameTag from '../components/scene/NameTag.vue'
 import KeyIcon from '../components/scene/KeyIcon.vue'
 import Building from '../components/scene/Building.vue'
+
+const { t, tf, scenes, locale } = useI18n()
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -15,35 +17,38 @@ const playing = ref(!reduced)
 const settled = ref(reduced)
 const ended = ref(false)
 
-const scene = computed(() => scenes[index.value])
-const sceneKey = computed(() => `${scene.value.id}-${run.value}`)
-const isLast = computed(() => index.value === scenes.length - 1)
+const scene = computed(() => scenes.value[index.value])
+const art = computed(() => scene.value.art || {})
+const sceneKey = computed(() => `${locale.value}-${scene.value.id}-${run.value}`)
+const isLast = computed(() => index.value === scenes.value.length - 1)
 
-const verifiers = [
-  { x: 470, label: 'a bank', color: '#3d6e8a' },
-  { x: 600, label: 'a clinic', color: '#3f6f62' },
-  { x: 730, label: 'a stranger', color: '#6d5a7a' },
-]
-const claims = [
-  { y: 150, text: '“Sold to Ann.”' },
-  { y: 270, text: '“Sold to Ben.”' },
-]
-const idRows = [
-  { k: 'Name', v: 'Maya Rivera', y: 150 },
-  { k: 'Born', v: '4 June 1991', y: 192 },
-  { k: 'Lives', v: '12 Elm Street', y: 234 },
-  { k: 'Over 18', v: 'yes', y: 276, keep: true },
-]
-const tiles = [
-  { x: 150, label: 'Today’s app', lit: 0.8 },
-  { x: 400, label: 'A new provider', lit: 4 },
-  { x: 650, label: 'Another network', lit: 6 },
-]
+const verifiers = computed(() => [
+  { x: 470, label: art.value.bank, color: '#3d6e8a' },
+  { x: 600, label: art.value.clinic, color: '#3f6f62' },
+  { x: 730, label: art.value.stranger, color: '#6d5a7a' },
+])
+const claims = computed(() => [
+  { y: 150, text: art.value.claimA },
+  { y: 270, text: art.value.claimB },
+])
+const idRows = computed(() => [
+  { k: art.value.nameK, v: art.value.nameV, y: 150 },
+  { k: art.value.bornK, v: art.value.bornV, y: 192 },
+  { k: art.value.livesK, v: art.value.livesV, y: 234 },
+  { k: art.value.overK, v: art.value.overV, y: 276, keep: true },
+])
+const tiles = computed(() => [
+  { x: 150, label: art.value.tile1, lit: 0.8 },
+  { x: 400, label: art.value.tile2, lit: 4 },
+  { x: 650, label: art.value.tile3, lit: 6 },
+])
 
-const pillWidth = (text) => text.length * 7.4 + 30
+const pillWidth = (text) => Math.max(90, String(text || '').length * 7.4 + 30)
+const flagWidth = computed(() => Math.max(260, pillWidth(art.value.flag) + 20))
+const proofWidth = computed(() => Math.max(96, pillWidth(art.value.proof)))
 
 function go(i) {
-  index.value = Math.max(0, Math.min(scenes.length - 1, i))
+  index.value = Math.max(0, Math.min(scenes.value.length - 1, i))
   ended.value = false
   if (!playing.value) settled.value = true
   run.value++
@@ -76,17 +81,20 @@ function onKey(e) {
   if (e.key === 'ArrowLeft') go(index.value - 1)
 }
 
+watch(locale, () => {
+  if (index.value >= scenes.value.length) index.value = 0
+  run.value++
+})
+
 onMounted(() => window.addEventListener('keydown', onKey))
 onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 </script>
 
 <template>
   <section class="what">
-    <p class="kicker">About ninety seconds, no jargon</p>
-    <h1 class="serif">What KERI does</h1>
-    <p class="lede">
-      Not how it works. Just what changes for you, and for everyone you deal with online.
-    </p>
+    <p class="kicker">{{ t.whatKicker }}</p>
+    <h1 class="serif">{{ t.whatTitle }}</h1>
+    <p class="lede">{{ t.whatLede }}</p>
 
     <div class="stage paper" :class="{ paused: !playing, settled }">
       <svg class="scene" viewBox="0 0 800 400" role="img" :aria-label="scene.title">
@@ -95,7 +103,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
             <path class="flow" style="--d: 4.4s" d="M 168 262 C 230 220, 290 214, 334 226" />
             <path class="flow" style="--d: 4.4s" d="M 466 226 C 510 214, 570 220, 632 262" />
             <g class="rise" style="--d: 0.1s">
-              <g transform="translate(400 330)"><Building label="the company in the middle" /></g>
+              <g transform="translate(400 330)"><Building :label="art.company" /></g>
             </g>
             <g class="pop" style="--d: 1s">
               <g transform="translate(400 215)">
@@ -103,15 +111,15 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
               </g>
             </g>
             <g class="rise" style="--d: 0.3s">
-              <g transform="translate(130 330)"><Figure label="you" /></g>
+              <g transform="translate(130 330)"><Figure :label="art.you" /></g>
             </g>
             <g class="rise" style="--d: 0.5s">
-              <g transform="translate(670 330)"><Figure label="a friend" color="#6d5a7a" /></g>
+              <g transform="translate(670 330)"><Figure :label="art.friend" color="#6d5a7a" /></g>
             </g>
             <g class="pop" style="--d: 4.4s">
               <g transform="translate(400 266)">
                 <rect x="-50" y="-17" width="100" height="34" rx="17" class="closed" />
-                <text y="6" text-anchor="middle" class="closed-text">Closed</text>
+                <text y="6" text-anchor="middle" class="closed-text">{{ art.closed }}</text>
               </g>
             </g>
           </template>
@@ -120,7 +128,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
             <g class="fade-out" style="--d: 0.4s">
               <g transform="translate(620 330)"><Building /></g>
             </g>
-            <g transform="translate(300 330)"><Figure label="you" /></g>
+            <g transform="translate(300 330)"><Figure :label="art.you" /></g>
             <circle class="ripple" style="--d: 2.6s" cx="300" cy="212" r="48" />
             <path class="draw warm" style="--d: 1.4s" pathLength="1" d="M 338 292 C 380 266, 372 236, 348 220" />
             <g class="pop" style="--d: 0.8s">
@@ -130,12 +138,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
               <g transform="translate(300 212)"><NameTag text="E7f…q2" /></g>
             </g>
             <g class="rise" style="--d: 3.2s">
-              <text x="300" y="170" text-anchor="middle" class="note-text">made from your own keys</text>
+              <text x="300" y="170" text-anchor="middle" class="note-text">{{ art.note }}</text>
             </g>
           </template>
 
           <template v-else-if="scene.id === 'check'">
-            <g transform="translate(180 330)"><Figure label="you" /></g>
+            <g transform="translate(180 330)"><Figure :label="art.you" /></g>
             <g transform="translate(180 212)"><NameTag text="E7f…q2" /></g>
             <g v-for="(v, i) in verifiers" :key="v.label">
               <path
@@ -157,12 +165,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
           </template>
 
           <template v-else-if="scene.id === 'recover'">
-            <g transform="translate(200 330)"><Figure label="you" /></g>
+            <g transform="translate(200 330)"><Figure :label="art.you" /></g>
             <circle class="ripple" style="--d: 6.4s" cx="200" cy="212" r="48" />
             <g transform="translate(200 212)"><NameTag text="E7f…q2" /></g>
             <g class="rise" style="--d: 0.6s">
               <g transform="translate(560 330)">
-                <g class="fade-to" style="--d: 4.8s"><Figure label="a thief" color="#4a3f38" /></g>
+                <g class="fade-to" style="--d: 4.8s"><Figure :label="art.thief" color="#4a3f38" /></g>
               </g>
             </g>
             <g transform="translate(500 302)">
@@ -184,12 +192,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
               </g>
             </g>
             <g class="rise" style="--d: 6.4s">
-              <text x="200" y="170" text-anchor="middle" class="note-text">same name</text>
+              <text x="200" y="170" text-anchor="middle" class="note-text">{{ art.note }}</text>
             </g>
           </template>
 
           <template v-else-if="scene.id === 'lies'">
-            <g transform="translate(130 330)"><Figure label="someone" color="#4a3f38" /></g>
+            <g transform="translate(130 330)"><Figure :label="art.someone" color="#4a3f38" /></g>
             <g transform="translate(130 212)"><NameTag text="E7f…q2" /></g>
             <path class="draw thin" style="--d: 3.4s" pathLength="1" d="M 522 150 Q 640 160 678 248" />
             <path class="draw thin" style="--d: 3.6s" pathLength="1" d="M 522 270 Q 620 272 668 264" />
@@ -202,17 +210,17 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
               <g :transform="`translate(420 ${c.y})`">
                 <rect x="-100" y="-32" width="200" height="64" rx="16" class="claim" style="--d: 5s" />
                 <text y="-4" text-anchor="middle" class="claim-text">{{ c.text }}</text>
-                <text y="18" text-anchor="middle" class="claim-sign">signed E7f…q2</text>
+                <text y="18" text-anchor="middle" class="claim-sign">{{ art.signed }}</text>
               </g>
             </g>
             <path class="draw red-line" style="--d: 4.6s" pathLength="1" d="M 312 150 H 298 V 270 H 312" />
             <g class="rise" style="--d: 0.4s">
-              <g transform="translate(690 330)"><Figure label="anyone checking" color="#3f6f62" /></g>
+              <g transform="translate(690 330)"><Figure :label="art.checker" color="#3f6f62" /></g>
             </g>
             <g class="pop" style="--d: 5.4s">
               <g transform="translate(420 352)">
-                <rect x="-130" y="-18" width="260" height="36" rx="18" class="flag" />
-                <text y="6" text-anchor="middle" class="flag-text">Two stories, one name: caught</text>
+                <rect :x="-flagWidth / 2" y="-18" :width="flagWidth" height="36" rx="18" class="flag" />
+                <text y="6" text-anchor="middle" class="flag-text">{{ art.flag }}</text>
               </g>
             </g>
           </template>
@@ -220,7 +228,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
           <template v-else-if="scene.id === 'minimal'">
             <g class="rise" style="--d: 0.1s">
               <rect x="80" y="70" width="300" height="250" rx="22" class="id-card" />
-              <text x="104" y="110" class="id-title">Your ID</text>
+              <text x="104" y="110" class="id-title">{{ art.idTitle }}</text>
               <g v-for="(row, i) in idRows" :key="row.k">
                 <rect
                   v-if="row.keep"
@@ -247,12 +255,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
               </g>
             </g>
             <g class="rise" style="--d: 0.3s">
-              <g transform="translate(660 330)"><Figure label="a shop" color="#3d6e8a" /></g>
+              <g transform="translate(660 330)"><Figure :label="art.shop" color="#3d6e8a" /></g>
             </g>
             <g transform="translate(640 212)">
               <g class="slide" style="--d: 3.4s; --fx: -372px; --fy: 66px">
-                <rect x="-56" y="-17" width="112" height="34" rx="17" class="proof" />
-                <text y="6" text-anchor="middle" class="proof-text">Over 18 ✓</text>
+                <rect :x="-proofWidth / 2" y="-17" :width="proofWidth" height="34" rx="17" class="proof" />
+                <text y="6" text-anchor="middle" class="proof-text">{{ art.proof }}</text>
               </g>
             </g>
             <g class="pop" style="--d: 4.8s">
@@ -264,15 +272,15 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
           </template>
 
           <template v-else-if="scene.id === 'lend'">
-            <g transform="translate(190 330)"><Figure label="you" /></g>
+            <g transform="translate(190 330)"><Figure :label="art.you" /></g>
             <g transform="translate(190 212)"><NameTag text="E7f…q2" /></g>
             <g class="rise" style="--d: 0.3s">
-              <g transform="translate(590 330)"><Figure label="your helper" color="#b86b3d" /></g>
+              <g transform="translate(590 330)"><Figure :label="art.helper" color="#b86b3d" /></g>
             </g>
             <path class="rope" style="--d: 1s; --d2: 5.6s" pathLength="1" d="M 238 206 Q 390 100 542 206" />
             <g class="pop" style="--d: 2.2s">
               <g transform="translate(590 212)">
-                <g class="fade-to" style="--d: 5.9s"><NameTag text="for you" /></g>
+                <g class="fade-to" style="--d: 5.9s"><NameTag :text="art.forYou" /></g>
               </g>
             </g>
             <g class="pop" style="--d: 5.6s">
@@ -281,21 +289,21 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
               </g>
             </g>
             <g class="rise" style="--d: 6.4s">
-              <text x="590" y="170" text-anchor="middle" class="note-text">ended, by you</text>
+              <text x="590" y="170" text-anchor="middle" class="note-text">{{ art.note }}</text>
             </g>
           </template>
 
           <template v-else-if="scene.id === 'portable'">
             <path class="road" d="M 150 180 H 650" />
-            <g v-for="(t, i) in tiles" :key="t.label" class="rise" :style="{ '--d': 0.1 + i * 0.15 + 's' }">
-              <rect :x="t.x - 92" y="230" width="184" height="110" rx="20" class="tile" :style="{ '--d': t.lit + 's' }" />
-              <text :x="t.x" y="292" text-anchor="middle" class="tile-text">{{ t.label }}</text>
+            <g v-for="(tile, i) in tiles" :key="tile.label" class="rise" :style="{ '--d': 0.1 + i * 0.15 + 's' }">
+              <rect :x="tile.x - 92" y="230" width="184" height="110" rx="20" class="tile" :style="{ '--d': tile.lit + 's' }" />
+              <text :x="tile.x" y="292" text-anchor="middle" class="tile-text">{{ tile.label }}</text>
             </g>
             <g transform="translate(650 180)">
               <g class="travel" style="--d: 0.8s"><NameTag text="E7f…q2" /></g>
             </g>
             <g class="rise" style="--d: 7s">
-              <text x="650" y="140" text-anchor="middle" class="note-text">still the same name</text>
+              <text x="650" y="140" text-anchor="middle" class="note-text">{{ art.note }}</text>
             </g>
           </template>
 
@@ -319,30 +327,30 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
       </div>
 
       <div :key="sceneKey + '-caption'" class="caption" aria-live="polite">
-        <p class="kicker">{{ index + 1 }} of {{ scenes.length }} · {{ scene.kicker }}</p>
+        <p class="kicker">{{ tf('whatOf', { n: index + 1, total: scenes.length }) }} · {{ scene.kicker }}</p>
         <h2 class="serif">{{ scene.title }}</h2>
         <p class="body">{{ scene.body }}</p>
         <RouterLink v-if="scene.word" class="word-chip" :to="`/words/${scene.word.id}`">
-          KERI’s word for this: {{ scene.word.label }}
+          {{ tf('whatWord', { label: scene.word.label }) }}
         </RouterLink>
         <div v-if="scene.final" class="actions">
-          <RouterLink class="btn" to="/story">Now see how it works</RouterLink>
-          <RouterLink class="btn ghost" to="/">Choose your seat</RouterLink>
+          <RouterLink class="btn" to="/story">{{ t.whatStory }}</RouterLink>
+          <RouterLink class="btn ghost" to="/">{{ t.whatSeat }}</RouterLink>
         </div>
       </div>
 
       <div class="controls">
-        <button class="btn ghost" :disabled="index === 0" @click="go(index - 1)">Back</button>
+        <button class="btn ghost" :disabled="index === 0" @click="go(index - 1)">{{ t.whatBack }}</button>
         <button v-if="!reduced" class="btn" @click="toggle">
-          {{ playing ? 'Pause' : ended ? 'Play again' : 'Play' }}
+          {{ playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay }}
         </button>
-        <button class="btn ghost" :disabled="isLast" @click="go(index + 1)">Next</button>
+        <button class="btn ghost" :disabled="isLast" @click="go(index + 1)">{{ t.whatNext }}</button>
         <div class="dots">
           <button
             v-for="(s, i) in scenes"
             :key="s.id"
             :class="{ on: i === index }"
-            :aria-label="`Scene ${i + 1}: ${s.title}`"
+            :aria-label="tf('whatScene', { n: i + 1, title: s.title })"
             @click="go(i)"
           ></button>
         </div>
@@ -397,7 +405,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 }
 .dots button.on { background: var(--terracotta); transform: scale(1.25); }
 
-/* Scene parts */
 .note-text { font-weight: 800; font-size: 15px; fill: #9a4528; }
 .closed { fill: #b4472f; }
 .closed-text { font-weight: 800; font-size: 15px; fill: #fff; }
@@ -425,7 +432,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 .pill { fill: #fff; stroke: #e8d9c8; stroke-width: 1.5; }
 .pill-text { font-weight: 700; font-size: 14px; fill: #2b241c; }
 
-/* Base styles are each element's final frame; animations only describe how it gets there. */
 .rise { animation: rise 0.7s ease var(--d, 0s) both; }
 .pop {
   transform-box: fill-box;

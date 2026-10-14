@@ -10,7 +10,7 @@ The app lives at the repository root. You sit down as a parent, a lawyer, a poli
 
 There is also an animated explainer of what KERI does (`/what`, nine short scenes about outcomes rather than mechanics), a shared story (“A name that can change its locks”), a glossary, and a sources page. Lesson progress is stored in the browser. The explainer shows still frames when the system asks for reduced motion.
 
-The writing is a reading of the English texts in `txt/`. It is not the specification, not legal advice, and it does not issue identifiers or hold keys.
+The writing is a reading of the English texts in `txt/`. The app itself is available in English and Dutch (EN / NL in the header). It is not the specification, not legal advice, and it does not issue identifiers or hold keys.
 
 ### Run it
 
@@ -52,7 +52,9 @@ The app does not load those files at runtime. Edited explanations live in `src/c
 ```
 txt/                 English source texts
 src/                 Vue 3 + Vue Router app
-  content/           Personas, glossary, the shared story, and explainer scenes
+  content/           English personas, glossary, story, explainer, sources
+  content/nl/        Dutch translations of that content
+  i18n/              Locale switch and UI chrome strings
   components/scene/  SVG figures used by the explainer
   views/             Pages
 index.html

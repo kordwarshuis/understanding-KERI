@@ -2,6 +2,10 @@
 
 A plain-language way into [KERI](https://keri.foundation) (Key Event Receipt Infrastructure), pronounced like the name Carrie.
 
+**Live site:** [The KERI Hearth](https://kordwarshuis.github.io/understanding-KERI/)
+
+![The KERI Hearth — a warm way into KERI](public/og.jpg)
+
 KERI is hard to adopt because it is hard to explain. This repo keeps an English reading library and a small web app that retells those ideas for different people.
 
 ## The KERI Hearth

@@ -8,6 +8,8 @@ import { story as storyEn } from '../content/story'
 import { story as storyNl } from '../content/nl/story'
 import { scenes as scenesEn } from '../content/what'
 import { scenes as scenesNl } from '../content/nl/what'
+import { scenes as preScenesEn } from '../content/prerotation'
+import { scenes as preScenesNl } from '../content/nl/prerotation'
 import { sources as sourcesEn } from '../content/sources'
 import { sources as sourcesNl } from '../content/nl/sources'
 
@@ -21,6 +23,7 @@ const packs = {
     concepts: conceptsEn,
     story: storyEn,
     scenes: scenesEn,
+    preScenes: preScenesEn,
     sources: sourcesEn,
   },
   nl: {
@@ -29,6 +32,7 @@ const packs = {
     concepts: conceptsNl,
     story: storyNl,
     scenes: scenesNl,
+    preScenes: preScenesNl,
     sources: sourcesNl,
   },
 }
@@ -122,6 +126,7 @@ export function useI18n() {
   const concepts = computed(() => pack.value.concepts)
   const story = computed(() => pack.value.story)
   const scenes = computed(() => pack.value.scenes)
+  const preScenes = computed(() => pack.value.preScenes)
   const sources = computed(() => pack.value.sources)
 
   function tf(key, vars) {
@@ -142,6 +147,7 @@ export function useI18n() {
     concepts,
     story,
     scenes,
+    preScenes,
     sources,
     findPersona,
     findLesson,

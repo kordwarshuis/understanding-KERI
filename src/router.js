@@ -6,11 +6,12 @@ import ConceptView from './views/ConceptView.vue'
 import StoryView from './views/StoryView.vue'
 import SourcesView from './views/SourcesView.vue'
 import WhatView from './views/WhatView.vue'
+import PreRotationView from './views/PreRotationView.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to) {
-    if (to.name === 'what') return false
+    if (to.name === 'what' || to.name === 'pre-rotation') return false
     return { top: 0 }
   },
   routes: [
@@ -21,6 +22,14 @@ export const router = createRouter({
       components: {
         default: HomeView,
         modal: WhatView,
+      },
+    },
+    {
+      path: '/pre-rotation',
+      name: 'pre-rotation',
+      components: {
+        default: HomeView,
+        modal: PreRotationView,
       },
     },
     { path: '/path/:persona/:lesson?', name: 'path', component: PathView },

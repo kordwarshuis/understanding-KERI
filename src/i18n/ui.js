@@ -3,6 +3,7 @@ export const ui = {
     brand: 'The KERI Hearth',
     brandTag: 'A warm way in',
     navWhat: 'What it does',
+    navPre: 'Pre-rotation',
     navStory: 'The story',
     navWords: 'Words',
     navSources: 'Sources',
@@ -13,6 +14,7 @@ export const ui = {
     homeLede:
       'Not many people can say what it is, how it works, or why it matters. This hearth sits you down as the person you actually are — a parent, a lawyer, a policymaker, a developer, a manager, a clinician — and tells it in that language.',
     homeWatch: 'Watch what KERI does',
+    homePre: 'See the spare key',
     homeStory: 'Start with the story',
     homeWords: 'Browse the words',
     homeSeats: 'Choose a seat',
@@ -63,11 +65,14 @@ export const ui = {
     whatNext: 'Next',
     whatScene: 'Scene {n}: {title}',
     whatClose: 'Close',
+    preKicker: 'About a minute, in pictures',
+    preTitle: 'How a spare key stays ahead',
   },
   nl: {
     brand: 'De KERI-haard',
     brandTag: 'Een warme weg naar binnen',
     navWhat: 'Wat het doet',
+    navPre: 'Pre-rotatie',
     navStory: 'Het verhaal',
     navWords: 'Woorden',
     navSources: 'Bronnen',
@@ -78,6 +83,7 @@ export const ui = {
     homeLede:
       'Niet veel mensen kunnen zeggen wat het is, hoe het werkt, of waarom het ertoe doet. Deze haard zet je neer als de persoon die je bent — ouder, jurist, beleidsmaker, ontwikkelaar, manager, zorgverlener — en vertelt het in die taal.',
     homeWatch: 'Bekijk wat KERI doet',
+    homePre: 'Bekijk de reservedubbel',
     homeStory: 'Begin met het verhaal',
     homeWords: 'Bekijk de woorden',
     homeSeats: 'Kies een stoel',
@@ -128,6 +134,8 @@ export const ui = {
     whatNext: 'Volgende',
     whatScene: 'Scène {n}: {title}',
     whatClose: 'Sluiten',
+    preKicker: 'Ongeveer een minuut, in beeld',
+    preTitle: 'Hoe een reservedubbel vooruitloopt',
   },
 }
 

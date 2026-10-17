@@ -18,6 +18,7 @@ const index = ref(0)
 const run = ref(0)
 const playing = ref(!reduced)
 const settled = ref(reduced)
+const finished = ref(false)
 const ended = ref(false)
 
 function close() {
@@ -150,18 +151,17 @@ function tileLineY(label, index) {
 function go(i) {
   index.value = Math.max(0, Math.min(scenes.value.length - 1, i))
   ended.value = false
-  if (!playing.value) settled.value = true
+  finished.value = false
+  settled.value = reduced
+  playing.value = !reduced
   run.value++
 }
 
 function onSceneDone() {
-  if (!playing.value) return
-  if (isLast.value) {
-    playing.value = false
-    ended.value = true
-    return
-  }
-  index.value++
+  if (!playing.value || finished.value) return
+  playing.value = false
+  finished.value = true
+  ended.value = isLast.value
 }
 
 function toggle() {
@@ -169,9 +169,9 @@ function toggle() {
     playing.value = false
     return
   }
-  if (ended.value) index.value = 0
-  if (settled.value || ended.value) run.value++
+  if (settled.value || finished.value || ended.value) run.value++
   settled.value = false
+  finished.value = false
   ended.value = false
   playing.value = true
 }
@@ -510,10 +510,10 @@ onBeforeUnmount(() => {
               v-if="!reduced"
               class="btn"
               type="button"
-              :title="`${playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay} (Space)`"
+              :title="`${playing ? t.whatPause : finished || ended ? t.whatAgain : t.whatPlay} (Space)`"
               @click="toggle"
             >
-              {{ playing ? t.whatPause : ended ? t.whatAgain : t.whatPlay }}
+              {{ playing ? t.whatPause : finished || ended ? t.whatAgain : t.whatPlay }}
             </button>
             <button
               class="btn ghost"

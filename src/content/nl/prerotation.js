@@ -36,7 +36,7 @@ export const scenes = [
     id: 'copy',
     kicker: 'Als een dief hem kopieert',
     title: 'Een dief kopieert de sleutel, niet de reservedubbel',
-    body: 'De kopie van de dief kan nog ondertekenen, en die handtekening is zichtbaar. Wat de dief niet kan, is een andere sleutel verzinnen die overeenkomt met de hash die jij al publiceerde. Alleen de reservedubbel die jij achterhield past.',
+    body: 'De kopie van de dief kan nog ondertekenen, en die handtekening is zichtbaar. De hash van de sleutel die ze verzinnen verschilt van de hash die jij al publiceerde. Alleen de reservedubbel die jij achterhield past.',
     dur: 9800,
     art: {
       you: 'jij',
@@ -45,9 +45,12 @@ export const scenes = [
       copied: 'D4a…k8',
       copiedLines: ['openbare sleutel', 'van vandaag'],
       hash: '9f3a…c1',
+      hashLabel: 'gepubliceerde hash',
       invented: 'b71c…00',
       inventedLabel: 'verzonnen sleutel',
-      nomatch: 'komt niet overeen',
+      inventedHash: '4b19…e7',
+      inventedHashLabel: 'hash van b71c…00',
+      nomatch: 'andere hash',
     },
   },
   {

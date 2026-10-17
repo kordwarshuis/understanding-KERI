@@ -237,20 +237,21 @@ onBeforeUnmount(() => {
                   </template>
 
                   <template v-else-if="scene.id === 'copy'">
-                    <g transform="translate(140 330)"><Figure :label="art.you" /></g>
+                    <g transform="translate(130 345)"><Figure :label="art.you" /></g>
                     <g class="pop" style="--d: 0.3s">
-                      <g transform="translate(140 188)">
+                      <g transform="translate(155 175)">
                         <rect :x="-hashWidth(art.hash) / 2" y="-22" :width="hashWidth(art.hash)" height="44" rx="22" class="seal-pill" />
                         <circle :cx="-hashWidth(art.hash) / 2 + 22" cy="0" r="9" class="wax" />
                         <text y="6" text-anchor="middle" class="pill-text">{{ art.hash }}</text>
+                        <text y="44" text-anchor="middle" class="tiny">{{ art.hashLabel }}</text>
                       </g>
                     </g>
                     <g class="rise" style="--d: 0.35s">
-                      <g transform="translate(660 330)"><Figure :label="art.thief" color="#4a3f38" /></g>
+                      <g transform="translate(700 345)"><Figure :label="art.thief" color="#4a3f38" /></g>
                     </g>
-                    <g transform="translate(540 305)">
+                    <g transform="translate(455 312)">
                       <g class="fade-in" style="--d: 0.5s">
-                        <g class="move" style="--d: 1.4s; --fx: -280px; --fy: 20px">
+                        <g class="move" style="--d: 1.4s; --fx: -220px; --fy: 16px">
                           <text y="-26" text-anchor="middle" class="row-v">{{ art.copied }}</text>
                           <KeyIcon />
                           <text y="28" text-anchor="middle" class="tiny">{{ art.copy }}</text>
@@ -265,19 +266,28 @@ onBeforeUnmount(() => {
                         </g>
                       </g>
                     </g>
-                    <g class="pop" style="--d: 3.4s">
-                      <g transform="translate(500 132)">
+                    <g class="pop" style="--d: 3.2s">
+                      <g transform="translate(640 78)">
+                        <text y="-24" text-anchor="middle" class="row-v">{{ art.invented }}</text>
                         <g class="key-dead">
                           <KeyIcon />
                           <path d="M -16 -14 L 20 14 M 20 -14 L -16 14" class="cross" />
                         </g>
-                        <text x="36" y="-2" class="row-v">{{ art.invented }}</text>
-                        <text x="36" y="18" class="tiny">{{ art.inventedLabel }}</text>
+                        <text y="30" text-anchor="middle" class="tiny">{{ art.inventedLabel }}</text>
                       </g>
                     </g>
-                    <path class="draw red-line" style="--d: 4.4s" pathLength="1" d="M 230 188 H 470" />
-                    <g class="pop" style="--d: 5.4s">
-                      <g transform="translate(250 228)">
+                    <path class="draw red-line" style="--d: 4s" pathLength="1" d="M 640 112 V 148" />
+                    <g class="pop" style="--d: 4.3s">
+                      <g transform="translate(640 175)">
+                        <rect :x="-hashWidth(art.inventedHash) / 2" y="-22" :width="hashWidth(art.inventedHash)" height="44" rx="22" class="seal-pill" />
+                        <circle :cx="-hashWidth(art.inventedHash) / 2 + 22" cy="0" r="9" class="wax" />
+                        <text y="6" text-anchor="middle" class="pill-text">{{ art.inventedHash }}</text>
+                        <text y="44" text-anchor="middle" class="tiny">{{ art.inventedHashLabel }}</text>
+                      </g>
+                    </g>
+                    <path class="draw red-line" style="--d: 5s" pathLength="1" d="M 240 175 H 555" />
+                    <g class="pop" style="--d: 5.8s">
+                      <g transform="translate(390 175)">
                         <rect
                           :x="-hashWidth(art.nomatch) / 2"
                           y="-18"

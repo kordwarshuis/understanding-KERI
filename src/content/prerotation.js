@@ -36,7 +36,7 @@ export const scenes = [
     id: 'copy',
     kicker: 'If a thief copies it',
     title: 'A thief copies the key, not the spare',
-    body: 'The thief’s copy can still sign, and that signature is visible. What the thief cannot do is invent another key that matches the hash you already published. Only the spare you kept back will fit.',
+    body: 'The thief’s copy can still sign, and that signature is visible. Hashing the key they invent gives a different fingerprint from the hash you already published. Only the spare you kept back will fit.',
     dur: 9800,
     art: {
       you: 'you',
@@ -45,9 +45,12 @@ export const scenes = [
       copied: 'D4a…k8',
       copiedLines: ['today’s', 'public key'],
       hash: '9f3a…c1',
+      hashLabel: 'published hash',
       invented: 'b71c…00',
       inventedLabel: 'invented key',
-      nomatch: 'does not match',
+      inventedHash: '4b19…e7',
+      inventedHashLabel: 'hash of b71c…00',
+      nomatch: 'different hash',
     },
   },
   {

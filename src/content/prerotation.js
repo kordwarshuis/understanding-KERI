@@ -32,13 +32,14 @@ export const scenes = [
   },
   {
     id: 'copy',
-    kicker: 'If it is copied',
-    title: 'A thief gets the key, not the spare',
-    body: 'A copied key can still sign, and that signature is visible. What the thief cannot do is invent another key that matches the hash you already published. Only the spare you kept back will fit.',
+    kicker: 'If a thief copies it',
+    title: 'A thief copies the key, not the spare',
+    body: 'The thief’s copy can still sign, and that signature is visible. What the thief cannot do is invent another key that matches the hash you already published. Only the spare you kept back will fit.',
     dur: 9800,
     art: {
       you: 'you',
       thief: 'a thief',
+      copy: 'thief’s copy',
       hash: '9f3a…c1',
       invented: 'b71c…00',
       nomatch: 'does not match',
@@ -48,7 +49,7 @@ export const scenes = [
     id: 'reveal',
     kicker: 'When you rotate',
     title: 'You reveal the spare. The stolen key stops.',
-    body: 'You bring forward the key whose public half matches that hash. It takes over the signing. The copied key is crossed out. The name on the tag does not change.',
+    body: 'You bring forward the key whose public half matches that hash. It takes over the signing. The thief’s copy is crossed out. The name on the tag does not change.',
     dur: 9000,
     art: {
       you: 'you',
@@ -75,7 +76,7 @@ export const scenes = [
     id: 'same',
     kicker: 'In one sentence',
     title: 'Same name. New lock.',
-    body: 'The name did not move. The lock did. Anyone can check that the new key matches the hash you published before the old key was copied.',
+    body: 'The name did not move. The lock did. Anyone can check that the new key matches the hash you published before a thief copied the old key.',
     final: true,
     dur: 7500,
     art: {

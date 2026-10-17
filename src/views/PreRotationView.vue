@@ -234,6 +234,7 @@ onBeforeUnmount(() => {
                       <g class="fade-in" style="--d: 0.5s">
                         <g class="move" style="--d: 1.4s; --fx: -300px; --fy: 0px">
                           <KeyIcon />
+                          <text y="32" text-anchor="middle" class="tiny">{{ art.copy }}</text>
                         </g>
                       </g>
                     </g>

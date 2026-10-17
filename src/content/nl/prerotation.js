@@ -32,13 +32,14 @@ export const scenes = [
   },
   {
     id: 'copy',
-    kicker: 'Als hij gekopieerd wordt',
-    title: 'Een dief krijgt de sleutel, niet de reservedubbel',
-    body: 'Een gekopieerde sleutel kan nog ondertekenen, en die handtekening is zichtbaar. Wat de dief niet kan, is een andere sleutel verzinnen die overeenkomt met de hash die jij al publiceerde. Alleen de reservedubbel die jij achterhield past.',
+    kicker: 'Als een dief hem kopieert',
+    title: 'Een dief kopieert de sleutel, niet de reservedubbel',
+    body: 'De kopie van de dief kan nog ondertekenen, en die handtekening is zichtbaar. Wat de dief niet kan, is een andere sleutel verzinnen die overeenkomt met de hash die jij al publiceerde. Alleen de reservedubbel die jij achterhield past.',
     dur: 9800,
     art: {
       you: 'jij',
       thief: 'een dief',
+      copy: 'kopie van de dief',
       hash: '9f3a…c1',
       invented: 'b71c…00',
       nomatch: 'komt niet overeen',
@@ -48,7 +49,7 @@ export const scenes = [
     id: 'reveal',
     kicker: 'Als je roteert',
     title: 'Je toont de reservedubbel. De gestolen sleutel stopt.',
-    body: 'Je haalt de sleutel tevoorschijn waarvan de openbare helft bij die hash past. Die neemt het ondertekenen over. De gekopieerde sleutel wordt doorgekruist. De naam op het label verandert niet.',
+    body: 'Je haalt de sleutel tevoorschijn waarvan de openbare helft bij die hash past. Die neemt het ondertekenen over. De kopie van de dief wordt doorgekruist. De naam op het label verandert niet.',
     dur: 9000,
     art: {
       you: 'jij',
@@ -75,7 +76,7 @@ export const scenes = [
     id: 'same',
     kicker: 'In één zin',
     title: 'Dezelfde naam. Een nieuw slot.',
-    body: 'De naam is niet verhuisd. Het slot wel. Iedereen kan controleren dat de nieuwe sleutel overeenkomt met de hash die je publiceerde voordat de oude sleutel gekopieerd werd.',
+    body: 'De naam is niet verhuisd. Het slot wel. Iedereen kan controleren dat de nieuwe sleutel overeenkomt met de hash die je publiceerde voordat een dief de oude sleutel kopieerde.',
     final: true,
     dur: 7500,
     art: {

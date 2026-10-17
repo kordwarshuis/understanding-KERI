@@ -22,7 +22,7 @@ export const scenes = [
     id: 'signs',
     kicker: 'Van dag tot dag',
     title: 'De sleutel van vandaag is degene die ondertekent',
-    body: 'Gewone berichten worden ondertekend met de sleutel die iedereen al kan zien. De hash blijft daar liggen. Het is geen sleutel, en hij kan niets ondertekenen.',
+    body: 'Gewone berichten worden ondertekend met de privésleutel van vandaag. Iedereen kan de handtekening controleren met de openbare sleutel van vandaag, die al in het logboek staat. De hash blijft daar liggen. Het is geen sleutel, en hij kan niets ondertekenen.',
     dur: 8000,
     art: {
       you: 'jij',
@@ -36,7 +36,7 @@ export const scenes = [
     id: 'copy',
     kicker: 'Als een dief hem kopieert',
     title: 'Een dief kopieert de privésleutel, niet de reservedubbel',
-    body: 'De dief kopieert de privésleutel die hoort bij de openbare sleutel van vandaag, D4a…k8. Die kopie kan nog ondertekenen, en die handtekening is zichtbaar. De hash van de sleutel die ze verzinnen verschilt van de hash die jij al publiceerde. Alleen de reservedubbel die jij achterhield past.',
+    body: 'De dief kopieert de privésleutel die hoort bij de openbare sleutel van vandaag, D4a…k8. Die kopie kan nog ondertekenen, en die handtekening is zichtbaar. De hash van een openbare sleutel die ze verzinnen verschilt van de hash die jij al publiceerde. Alleen de reservedubbel die jij achterhield past.',
     dur: 9800,
     art: {
       you: 'jij',
@@ -70,7 +70,7 @@ export const scenes = [
     id: 'commit',
     kicker: 'Op hetzelfde moment',
     title: 'Een nieuwe hash wordt verzegeld',
-    body: 'De sleutel die je net toonde, ondertekent nu, en de openbare helft staat in het logboek. Je publiceert ook een hash van een nieuwe volgende openbare sleutel. Die nieuwe openbare sleutel en de privésleutel bewaar je weer niet op de telefoon.',
+    body: 'De privésleutel die je achterhield, ondertekent nu, en de openbare sleutel die je net toonde, staat in het logboek. Je publiceert ook een hash van een nieuwe volgende openbare sleutel. Die nieuwe openbare sleutel en de privésleutel bewaar je weer niet op de telefoon.',
     dur: 8500,
     art: {
       you: 'jij',

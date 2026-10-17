@@ -22,7 +22,7 @@ export const scenes = [
     id: 'signs',
     kicker: 'Day to day',
     title: 'Today’s key is the one that signs',
-    body: 'Ordinary messages are signed with the key everyone can already see. The hash just sits there. It is not a key, and it cannot sign anything.',
+    body: 'Ordinary messages are signed with today’s private key. Anyone can check the signature against today’s public key, which is already in the record. The hash just sits there. It is not a key, and it cannot sign anything.',
     dur: 8000,
     art: {
       you: 'you',
@@ -36,7 +36,7 @@ export const scenes = [
     id: 'copy',
     kicker: 'If a thief copies it',
     title: 'A thief copies the private key, not the spare',
-    body: 'The thief copies the private key that matches today’s public key, D4a…k8. That copy can still sign, and the signature is visible. Hashing the key they invent gives a different fingerprint from the hash you already published. Only the spare you kept back will fit.',
+    body: 'The thief copies the private key that matches today’s public key, D4a…k8. That copy can still sign, and the signature is visible. Hashing a public key they invent gives a different fingerprint from the hash you already published. Only the spare you kept back will fit.',
     dur: 9800,
     art: {
       you: 'you',
@@ -70,7 +70,7 @@ export const scenes = [
     id: 'commit',
     kicker: 'At the same moment',
     title: 'A new hash is sealed',
-    body: 'The key you just revealed now signs, and its public key is in the record. You also publish a hash of a new next public key. You keep that new public key and its private key off the phone again.',
+    body: 'The private key you kept back now signs, and the public key you just revealed is in the record. You also publish a hash of a new next public key. You keep that new public key and its private key off the phone again.',
     dur: 8500,
     art: {
       you: 'you',

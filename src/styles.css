@@ -131,7 +131,20 @@ footer {
   box-shadow: inset 0 0 0 1.5px #d9cbbd;
 }
 .btn.ghost:hover { background: rgba(255, 250, 244, 0.7); }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:disabled,
+.btn:disabled:hover {
+  opacity: 1;
+  cursor: not-allowed;
+  background: #efe6dc;
+  color: #a89888;
+  box-shadow: none;
+}
+.btn.ghost:disabled,
+.btn.ghost:disabled:hover {
+  background: transparent;
+  color: #c4b6a8;
+  box-shadow: inset 0 0 0 1.5px #eadfd2;
+}
 
 .section-label {
   margin: 36px 0 12px;

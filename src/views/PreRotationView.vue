@@ -92,12 +92,12 @@ function onKey(e) {
   }
   if (e.key === 'ArrowLeft') {
     e.preventDefault()
-    go(index.value - 1)
+    if (index.value > 0) go(index.value - 1)
     return
   }
   if (e.key === 'ArrowRight') {
     e.preventDefault()
-    go(index.value + 1)
+    if (!isLast.value) go(index.value + 1)
     return
   }
   if ((e.key === ' ' || e.code === 'Space') && !reduced) {

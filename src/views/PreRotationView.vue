@@ -182,15 +182,33 @@ onBeforeUnmount(() => {
                       </text>
                     </g>
                     <g class="rise" style="--d: 0.3s">
-                      <g transform="translate(150 330)"><Figure :label="art.you" /></g>
-                    </g>
-                    <g class="pop" style="--d: 0.7s">
-                      <g transform="translate(248 292)">
+                      <rect x="16" y="28" width="286" height="214" rx="18" class="log" />
+                      <text x="32" y="62" class="log-title">{{ art.keptTitle }}</text>
+                      <g transform="translate(48 112)">
                         <KeyIcon />
                       </g>
+                      <text class="row-k">
+                        <tspan
+                          v-for="(line, li) in wrapWords(art.keptPublic, 18)"
+                          :key="`pub-${li}`"
+                          x="78"
+                          :y="104 + li * 20"
+                        >{{ line }}</tspan>
+                      </text>
+                      <g transform="translate(48 176)">
+                        <KeyIcon />
+                      </g>
+                      <text class="row-k">
+                        <tspan
+                          v-for="(line, li) in wrapWords(art.keptPrivate, 18)"
+                          :key="`priv-${li}`"
+                          x="78"
+                          :y="168 + li * 20"
+                        >{{ line }}</tspan>
+                      </text>
                     </g>
-                    <g class="rise" style="--d: 2.4s">
-                      <text x="150" y="168" text-anchor="middle" class="note-text">{{ art.kept }}</text>
+                    <g class="rise" style="--d: 0.5s">
+                      <g transform="translate(150 340)"><Figure :label="art.you" /></g>
                     </g>
                   </template>
 
@@ -230,11 +248,20 @@ onBeforeUnmount(() => {
                     <g class="rise" style="--d: 0.35s">
                       <g transform="translate(660 330)"><Figure :label="art.thief" color="#4a3f38" /></g>
                     </g>
-                    <g transform="translate(560 268)">
+                    <g transform="translate(540 305)">
                       <g class="fade-in" style="--d: 0.5s">
-                        <g class="move" style="--d: 1.4s; --fx: -300px; --fy: 0px">
+                        <g class="move" style="--d: 1.4s; --fx: -280px; --fy: 20px">
+                          <text y="-26" text-anchor="middle" class="row-v">{{ art.copied }}</text>
                           <KeyIcon />
-                          <text y="32" text-anchor="middle" class="tiny">{{ art.copy }}</text>
+                          <text y="28" text-anchor="middle" class="tiny">{{ art.copy }}</text>
+                          <text text-anchor="middle" class="tiny">
+                            <tspan
+                              v-for="(line, li) in art.copiedLines"
+                              :key="`copied-${li}`"
+                              x="0"
+                              :y="46 + li * 16"
+                            >{{ line }}</tspan>
+                          </text>
                         </g>
                       </g>
                     </g>
@@ -244,12 +271,13 @@ onBeforeUnmount(() => {
                           <KeyIcon />
                           <path d="M -16 -14 L 20 14 M 20 -14 L -16 14" class="cross" />
                         </g>
-                        <text x="34" y="6" class="row-v">{{ art.invented }}</text>
+                        <text x="36" y="-2" class="row-v">{{ art.invented }}</text>
+                        <text x="36" y="18" class="tiny">{{ art.inventedLabel }}</text>
                       </g>
                     </g>
                     <path class="draw red-line" style="--d: 4.4s" pathLength="1" d="M 230 188 H 470" />
                     <g class="pop" style="--d: 5.4s">
-                      <g transform="translate(400 228)">
+                      <g transform="translate(250 228)">
                         <rect
                           :x="-hashWidth(art.nomatch) / 2"
                           y="-18"
@@ -298,32 +326,57 @@ onBeforeUnmount(() => {
                   </template>
 
                   <template v-else-if="scene.id === 'commit'">
-                    <g transform="translate(170 330)"><Figure :label="art.you" /></g>
-                    <g class="pop" style="--d: 0.3s">
-                      <g transform="translate(300 200)">
+                    <g class="rise" style="--d: 0.15s">
+                      <rect x="16" y="28" width="286" height="214" rx="18" class="log" />
+                      <text x="32" y="62" class="log-title">{{ art.keptTitle }}</text>
+                      <g transform="translate(48 112)">
+                        <KeyIcon />
+                      </g>
+                      <text class="row-k">
+                        <tspan
+                          v-for="(line, li) in wrapWords(art.keptPublic, 18)"
+                          :key="`pub-${li}`"
+                          x="78"
+                          :y="104 + li * 20"
+                        >{{ line }}</tspan>
+                      </text>
+                      <g transform="translate(48 176)">
+                        <KeyIcon />
+                      </g>
+                      <text class="row-k">
+                        <tspan
+                          v-for="(line, li) in wrapWords(art.keptPrivate, 18)"
+                          :key="`priv-${li}`"
+                          x="78"
+                          :y="168 + li * 20"
+                        >{{ line }}</tspan>
+                      </text>
+                    </g>
+                    <g transform="translate(150 340)"><Figure :label="art.you" /></g>
+                    <g class="pop" style="--d: 0.4s">
+                      <g transform="translate(400 150)">
                         <circle r="26" class="glow" />
                         <KeyIcon />
                       </g>
-                      <text x="300" y="248" text-anchor="middle" class="tiny">{{ art.now }}</text>
+                      <text x="400" y="198" text-anchor="middle" class="tiny">{{ art.now }}</text>
                     </g>
-                    <path class="draw warm" style="--d: 1.6s" pathLength="1" d="M 340 190 C 420 140, 480 140, 530 190" />
-                    <g class="pop" style="--d: 2.6s">
-                      <g transform="translate(600 190)">
+                    <path class="draw warm" style="--d: 1.4s" pathLength="1" d="M 430 140 C 490 90, 540 90, 590 120" />
+                    <g class="pop" style="--d: 2.2s">
+                      <rect x="500" y="28" width="284" height="214" rx="18" class="log" />
+                      <text x="516" y="62" class="log-title">{{ art.record }}</text>
+                      <g transform="translate(642 118)">
                         <rect :x="-hashWidth(art.hash) / 2" y="-22" :width="hashWidth(art.hash)" height="44" rx="22" class="seal-pill" />
                         <circle :cx="-hashWidth(art.hash) / 2 + 22" cy="0" r="9" class="wax" />
                         <text y="6" text-anchor="middle" class="pill-text">{{ art.hash }}</text>
                       </g>
-                      <text x="600" text-anchor="middle" class="row-k">
+                      <text text-anchor="middle" class="row-k">
                         <tspan
                           v-for="(line, li) in linesOf(art)"
-                          :key="line"
-                          x="600"
-                          :y="232 + li * 22"
+                          :key="`hash-${li}`"
+                          x="642"
+                          :y="160 + li * 22"
                         >{{ line }}</tspan>
                       </text>
-                    </g>
-                    <g class="rise" style="--d: 3.6s">
-                      <text x="600" y="300" text-anchor="middle" class="note-text">{{ art.kept }}</text>
                     </g>
                   </template>
 

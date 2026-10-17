@@ -5,6 +5,7 @@ import { useI18n } from '../i18n'
 import Figure from '../components/scene/Figure.vue'
 import NameTag from '../components/scene/NameTag.vue'
 import KeyIcon from '../components/scene/KeyIcon.vue'
+import { measureSceneEnd } from '../sceneTiming'
 
 const route = useRoute()
 const router = useRouter()
@@ -12,6 +13,8 @@ const { t, tf, preScenes, locale } = useI18n()
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const panel = ref(null)
+const sceneEl = ref(null)
+const barMs = ref(0)
 
 const index = ref(0)
 const run = ref(0)
@@ -111,10 +114,21 @@ watch(locale, () => {
   run.value++
 })
 
+function syncBar() {
+  barMs.value = measureSceneEnd(sceneEl.value)
+}
+
+watch(sceneKey, () => {
+  barMs.value = 0
+})
+
+watch(sceneKey, syncBar, { flush: 'post' })
+
 onMounted(() => {
   document.body.classList.add('modal-open')
   window.addEventListener('keydown', onKey)
   panel.value?.focus()
+  syncBar()
 })
 onBeforeUnmount(() => {
   document.body.classList.remove('modal-open')
@@ -147,6 +161,7 @@ onBeforeUnmount(() => {
           <div class="scene-frame">
             <div class="scene-fit">
               <svg
+                ref="sceneEl"
                 class="scene"
                 viewBox="0 0 800 400"
                 role="img"
@@ -414,7 +429,7 @@ onBeforeUnmount(() => {
           </div>
 
           <div class="bar" aria-hidden="true">
-            <span :key="sceneKey" :style="{ '--dur': scene.dur + 'ms' }" @animationend.self="onSceneDone"></span>
+            <span v-if="barMs" :key="sceneKey" :style="{ '--dur': barMs + 'ms' }" @animationend.self="onSceneDone"></span>
           </div>
 
           <div class="caption" aria-live="polite">

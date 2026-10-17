@@ -137,7 +137,7 @@ export const ui = {
     whatScene: 'Scène {n}: {title}',
     whatClose: 'Sluiten',
     preKicker: 'Ongeveer een minuut, in beeld',
-    preTitle: 'Hoe een reservedubbel vooruitloopt',
+    preTitle: 'Hoe een reservesleutel vooruitloopt',
   },
 }
 

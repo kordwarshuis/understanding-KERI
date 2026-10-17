@@ -31,7 +31,7 @@ export const concepts = [
     term: 'Pre-rotation',
     say: 'Commit the next key before you need it',
     plain:
-      'Signing authority and rotation authority are different keys. The current key is public and signs ordinary acts. The next key is committed only as a hash, and it can live somewhere else — not on the phone that signs every day. Rotation reveals that key once, retires the current key, and commits a new hidden next key. Only the pre-committed key can become the next signing key.',
+      'Signing authority and rotation authority are different keys. The current public key is published, and its private key signs ordinary acts. The next key is committed only as a hash of its public key, and the pair can live somewhere else — not on the phone that signs every day. Rotation reveals that public key once, retires the current key, and commits a new hidden next key. Only the pre-committed key can become the next signing key.',
     why: 'A stale key cannot invent a new history: a forged log will not match the hash chain, and the contradiction is duplicity. A stolen current key can sign until you notice, because using it means publishing an event your own witnesses can see. Hashes, unlike today’s signatures, are the recovery path against a quantum break of the current key.',
     source: 'Hitchhiker’s Guide, Part 2; Security in KERI/ACDC; Smith interview',
   },

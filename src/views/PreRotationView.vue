@@ -251,22 +251,14 @@ onBeforeUnmount(() => {
                     </g>
                   </template>
 
-                  <template v-else-if="scene.id === 'copy'">
+                  <template v-else-if="scene.id === 'stolen'">
                     <g transform="translate(130 345)"><Figure :label="art.you" /></g>
-                    <g class="pop" style="--d: 0.3s">
-                      <g transform="translate(155 175)">
-                        <rect :x="-hashWidth(art.hash) / 2" y="-22" :width="hashWidth(art.hash)" height="44" rx="22" class="seal-pill" />
-                        <circle :cx="-hashWidth(art.hash) / 2 + 22" cy="0" r="9" class="wax" />
-                        <text y="6" text-anchor="middle" class="pill-text">{{ art.hash }}</text>
-                        <text y="44" text-anchor="middle" class="tiny">{{ art.hashLabel }}</text>
-                      </g>
-                    </g>
                     <g class="rise" style="--d: 0.35s">
                       <g transform="translate(700 345)"><Figure :label="art.thief" color="#4a3f38" /></g>
                     </g>
-                    <g transform="translate(455 312)">
+                    <g transform="translate(590 300)">
                       <g class="fade-in" style="--d: 0.5s">
-                        <g class="move" style="--d: 1.4s; --fx: -220px; --fy: 16px">
+                        <g class="move" style="--d: 1.4s; --fx: -355px; --fy: 28px">
                           <text y="-26" text-anchor="middle" class="row-v">{{ art.copied }}</text>
                           <KeyIcon />
                           <text y="28" text-anchor="middle" class="tiny">{{ art.copy }}</text>
@@ -281,18 +273,49 @@ onBeforeUnmount(() => {
                         </g>
                       </g>
                     </g>
-                    <g class="pop" style="--d: 3.2s">
+                    <path class="draw warm" style="--d: 2.6s" pathLength="1" d="M 590 252 C 590 205, 565 168, 524 158" />
+                    <g class="slide" style="--d: 3.2s; --fx: 80px; --fy: 20px">
+                      <g transform="translate(400 158)">
+                        <rect x="-118" y="-24" width="236" height="48" rx="16" class="claim" />
+                        <text y="6" text-anchor="middle" class="claim-text">{{ art.note }}</text>
+                      </g>
+                    </g>
+                    <g class="pop" style="--d: 4.4s">
+                      <g transform="translate(400 64)">
+                        <rect :x="-hashWidth(art.pub) / 2" y="-20" :width="hashWidth(art.pub)" height="40" rx="20" class="seal-pill" />
+                        <text y="6" text-anchor="middle" class="pill-text">{{ art.pub }}</text>
+                      </g>
+                    </g>
+                    <g class="rise" style="--d: 4.8s">
+                      <text x="400" y="208" text-anchor="middle" class="tiny">{{ art.valid }}</text>
+                    </g>
+                  </template>
+
+                  <template v-else-if="scene.id === 'forge'">
+                    <g transform="translate(130 345)"><Figure :label="art.you" /></g>
+                    <g class="pop" style="--d: 0.3s">
+                      <g transform="translate(155 175)">
+                        <rect :x="-hashWidth(art.hash) / 2" y="-22" :width="hashWidth(art.hash)" height="44" rx="22" class="seal-pill" />
+                        <circle :cx="-hashWidth(art.hash) / 2 + 22" cy="0" r="9" class="wax" />
+                        <text y="6" text-anchor="middle" class="pill-text">{{ art.hash }}</text>
+                        <text y="44" text-anchor="middle" class="tiny">{{ art.hashLabel }}</text>
+                      </g>
+                    </g>
+                    <g transform="translate(700 345)"><Figure :label="art.thief" color="#4a3f38" /></g>
+                    <g class="pop" style="--d: 1s">
                       <g transform="translate(640 78)">
                         <text y="-24" text-anchor="middle" class="row-v">{{ art.invented }}</text>
-                        <g class="key-dead">
+                        <g class="key-dead" style="--d: 4.2s">
                           <KeyIcon />
-                          <path d="M -16 -14 L 20 14 M 20 -14 L -16 14" class="cross" />
+                          <g class="pop" style="--d: 4.4s">
+                            <path d="M -16 -14 L 20 14 M 20 -14 L -16 14" class="cross" />
+                          </g>
                         </g>
                         <text y="30" text-anchor="middle" class="tiny">{{ art.inventedLabel }}</text>
                       </g>
                     </g>
-                    <path class="draw red-line" style="--d: 4s" pathLength="1" d="M 640 112 V 148" />
-                    <g class="pop" style="--d: 4.3s">
+                    <path class="draw red-line" style="--d: 1.8s" pathLength="1" d="M 640 112 V 148" />
+                    <g class="pop" style="--d: 2.1s">
                       <g transform="translate(640 175)">
                         <rect :x="-hashWidth(art.inventedHash) / 2" y="-22" :width="hashWidth(art.inventedHash)" height="44" rx="22" class="seal-pill" />
                         <circle :cx="-hashWidth(art.inventedHash) / 2 + 22" cy="0" r="9" class="wax" />
@@ -300,8 +323,8 @@ onBeforeUnmount(() => {
                         <text y="44" text-anchor="middle" class="tiny">{{ art.inventedHashLabel }}</text>
                       </g>
                     </g>
-                    <path class="draw red-line" style="--d: 5s" pathLength="1" d="M 240 175 H 555" />
-                    <g class="pop" style="--d: 5.8s">
+                    <path class="draw red-line" style="--d: 2.8s" pathLength="1" d="M 240 175 H 555" />
+                    <g class="pop" style="--d: 3.6s">
                       <g transform="translate(390 175)">
                         <rect
                           :x="-hashWidth(art.nomatch) / 2"

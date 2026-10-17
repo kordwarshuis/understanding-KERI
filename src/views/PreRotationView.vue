@@ -464,6 +464,7 @@ onBeforeUnmount(() => {
                 {{ tf('whatWord', { label: scene.word.label }) }}
               </RouterLink>
               <template v-if="scene.final">
+                <button class="btn ghost" type="button" @click="go(0)">{{ t.whatStartOver }}</button>
                 <RouterLink class="btn" to="/story">{{ t.whatStory }}</RouterLink>
                 <RouterLink class="btn ghost" to="/">{{ t.whatSeat }}</RouterLink>
               </template>

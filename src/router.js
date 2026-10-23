@@ -7,11 +7,12 @@ import StoryView from './views/StoryView.vue'
 import SourcesView from './views/SourcesView.vue'
 import WhatView from './views/WhatView.vue'
 import PreRotationView from './views/PreRotationView.vue'
+import KeysView from './views/KeysView.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to) {
-    if (to.name === 'what' || to.name === 'pre-rotation') return false
+    if (to.name === 'what' || to.name === 'pre-rotation' || to.name === 'keys') return false
     return { top: 0 }
   },
   routes: [
@@ -22,6 +23,14 @@ export const router = createRouter({
       components: {
         default: HomeView,
         modal: WhatView,
+      },
+    },
+    {
+      path: '/keys',
+      name: 'keys',
+      components: {
+        default: HomeView,
+        modal: KeysView,
       },
     },
     {

@@ -12,6 +12,7 @@ const { t, personas } = useI18n()
     <p class="lede">{{ t.homeLede }}</p>
     <div class="actions">
       <RouterLink class="btn" to="/what">{{ t.homeWatch }}</RouterLink>
+      <RouterLink class="btn ghost" to="/keys">{{ t.homeKeys }}</RouterLink>
       <RouterLink class="btn ghost" to="/pre-rotation">{{ t.homePre }}</RouterLink>
       <RouterLink class="btn ghost" to="/story">{{ t.homeStory }}</RouterLink>
       <RouterLink class="btn ghost" to="/words">{{ t.homeWords }}</RouterLink>

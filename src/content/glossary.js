@@ -27,6 +27,15 @@ export const concepts = [
     source: 'KERI jargon, Part 1; Smith interview',
   },
   {
+    id: 'keypair',
+    term: 'Key pair',
+    say: 'One public key, one private key',
+    plain:
+      'Two keys made together. The public key can be shown to anyone. It locks a message — that locking is encryption — and it checks a signature. The private key stays with you. It opens what the public key locked, and it makes the signature. They are not copies of each other.',
+    why: 'KERI identifiers are controlled with key pairs. Ordinary acts are signatures: the private key signs, and anyone checks with the public key. The same pair can hide a message by locking it with the public key. Pre-rotation is how a stolen private key does not have to end the name.',
+    source: '2024 Videos — Smith: a public-private key pair is how you prove control of an identifier',
+  },
+  {
     id: 'prerotation',
     term: 'Pre-rotation',
     say: 'Commit the next key before you need it',

@@ -3,6 +3,7 @@ export const ui = {
     brand: 'The KERI Hearth',
     brandTag: 'A warm way in',
     navWhat: 'What it does',
+    navKeys: 'Key pair',
     navPre: 'Pre-rotation',
     navStory: 'The story',
     navWords: 'Words',
@@ -14,6 +15,7 @@ export const ui = {
     homeLede:
       'Not many people can say what it is, how it works, or why it matters. This hearth sits you down as the person you actually are — a parent, a lawyer, a policymaker, a developer, a manager, a clinician — and tells it in that language.',
     homeWatch: 'Watch what KERI does',
+    homeKeys: 'See the key pair',
     homePre: 'See the spare key',
     homeStory: 'Start with the story',
     homeWords: 'Browse the words',
@@ -68,11 +70,15 @@ export const ui = {
     whatClose: 'Close',
     preKicker: 'About a minute, in pictures',
     preTitle: 'How a spare key stays ahead',
+    keyKicker: 'Public-key encryption, in pictures',
+    keyTitle: 'How a public key locks a message',
+    keyNext: 'Now see the spare key',
   },
   nl: {
     brand: 'De KERI-haard',
     brandTag: 'Een warme weg naar binnen',
     navWhat: 'Wat het doet',
+    navKeys: 'Sleutelpaar',
     navPre: 'Pre-rotatie',
     navStory: 'Het verhaal',
     navWords: 'Woorden',
@@ -84,6 +90,7 @@ export const ui = {
     homeLede:
       'Niet veel mensen kunnen zeggen wat het is, hoe het werkt, of waarom het ertoe doet. Deze haard zet je neer als de persoon die je bent — ouder, jurist, beleidsmaker, ontwikkelaar, manager, zorgverlener — en vertelt het in die taal.',
     homeWatch: 'Bekijk wat KERI doet',
+    homeKeys: 'Bekijk het sleutelpaar',
     homePre: 'Bekijk de reservedubbel',
     homeStory: 'Begin met het verhaal',
     homeWords: 'Bekijk de woorden',
@@ -138,6 +145,9 @@ export const ui = {
     whatClose: 'Sluiten',
     preKicker: 'Ongeveer een minuut, in beeld',
     preTitle: 'Hoe een reservesleutel vooruitloopt',
+    keyKicker: 'Versleutelen, in beeld',
+    keyTitle: 'Hoe een openbare sleutel een bericht op slot doet',
+    keyNext: 'Bekijk nu de reservesleutel',
   },
 }
 

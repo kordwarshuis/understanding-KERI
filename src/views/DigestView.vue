@@ -3,7 +3,6 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useI18n } from '../i18n'
 import Figure from '../components/scene/Figure.vue'
-import KeyIcon from '../components/scene/KeyIcon.vue'
 import DigestSeal from '../components/scene/DigestSeal.vue'
 import Press from '../components/scene/Press.vue'
 import { fitSceneFrame, measureSceneEnd } from '../sceneTiming'
@@ -181,6 +180,7 @@ onBeforeUnmount(() => {
                 <g :key="sceneKey">
                   <template v-if="scene.id === 'length'">
                     <g class="rise" style="--d: 0.15s">
+                      <text x="176" :y="cardTop(1, 100) - 12" text-anchor="middle" class="tiny">{{ art.shortLabel }}</text>
                       <rect
                         x="24"
                         :y="cardTop(1, 100)"
@@ -192,6 +192,12 @@ onBeforeUnmount(() => {
                       <text x="176" :y="lineY(1, 100, 0)" text-anchor="middle" class="note-line">{{ art.short }}</text>
                     </g>
                     <g class="rise" style="--d: 0.4s">
+                      <text
+                        x="176"
+                        :y="cardTop(art.longLines.length, 268) - 12"
+                        text-anchor="middle"
+                        class="tiny"
+                      >{{ art.longLabel }}</text>
                       <rect
                         x="24"
                         :y="cardTop(art.longLines.length, 268)"
@@ -200,7 +206,7 @@ onBeforeUnmount(() => {
                         rx="16"
                         class="note"
                       />
-                      <text text-anchor="middle" class="note-line">
+                      <text text-anchor="middle" class="note-small">
                         <tspan
                           v-for="(line, li) in art.longLines"
                           :key="`long-${li}`"
@@ -400,18 +406,26 @@ onBeforeUnmount(() => {
                   <template v-else-if="scene.id === 'commit'">
                     <g class="rise" style="--d: 0.15s">
                       <rect x="16" y="28" width="268" height="220" rx="18" class="log" />
-                      <text x="150" y="62" text-anchor="middle" class="log-title">{{ art.kept }}</text>
-                      <g transform="translate(58 118)"><KeyIcon /></g>
-                      <text x="96" y="112" class="row-v">{{ art.key }}</text>
-                      <text x="96" y="136" class="row-k">{{ art.exact }}</text>
-                      <text class="row-k">
+                      <text text-anchor="middle" class="log-title">
                         <tspan
-                          v-for="(line, li) in wrapWords(art.keyName, 20)"
-                          :key="`key-${li}`"
-                          x="96"
-                          :y="164 + li * 20"
+                          v-for="(line, li) in wrapWords(art.kept, 18)"
+                          :key="`kept-${li}`"
+                          x="150"
+                          :y="58 + li * 26"
                         >{{ line }}</tspan>
                       </text>
+                      <text
+                        x="150"
+                        :y="58 + wrapWords(art.kept, 18).length * 26 + 28"
+                        text-anchor="middle"
+                        class="row-v"
+                      >{{ art.key }}</text>
+                      <text
+                        x="150"
+                        :y="58 + wrapWords(art.kept, 18).length * 26 + 58"
+                        text-anchor="middle"
+                        class="row-k"
+                      >{{ art.keepLine }}</text>
                     </g>
                     <g class="rise" style="--d: 0.35s">
                       <g transform="translate(140 348)"><Figure :label="art.you" /></g>
@@ -425,40 +439,49 @@ onBeforeUnmount(() => {
                       <rect x="516" y="28" width="268" height="220" rx="18" class="log" />
                       <text x="650" y="62" text-anchor="middle" class="log-title">{{ art.record }}</text>
                       <g transform="translate(650 132)"><DigestSeal :text="art.digest" /></g>
-                      <text x="650" y="186" text-anchor="middle" class="row-k">{{ art.only }}</text>
+                      <text text-anchor="middle" class="row-k">
+                        <tspan
+                          v-for="(line, li) in wrapWords(art.only, 22)"
+                          :key="`only-${li}`"
+                          x="650"
+                          :y="178 + li * 20"
+                        >{{ line }}</tspan>
+                      </text>
                     </g>
                   </template>
 
                   <template v-else>
                     <rect x="0" y="0" width="800" height="400" fill="none" />
                     <g class="pop" style="--d: 0.15s">
-                      <g transform="translate(150 150)">
-                        <rect x="-78" y="-78" width="156" height="48" rx="14" class="note" />
-                        <text y="-48" text-anchor="middle" class="note-line">{{ art.oak }}</text>
-                        <rect x="-78" y="-16" width="156" height="48" rx="14" class="note" />
-                        <text y="14" text-anchor="middle" class="note-line">{{ art.oak }}</text>
-                        <text y="78" text-anchor="middle" class="measure">{{ art.same }}</text>
+                      <g transform="translate(175 175)">
+                        <text y="-108" text-anchor="middle" class="tiny">{{ art.sameTitle }}</text>
+                        <rect x="-112" y="-78" width="224" height="46" rx="14" class="note" />
+                        <text y="-48" text-anchor="middle" class="note-small">{{ art.note }}</text>
+                        <rect x="-112" y="-20" width="224" height="46" rx="14" class="note" />
+                        <text y="10" text-anchor="middle" class="note-small">{{ art.note }}</text>
+                        <text y="62" text-anchor="middle" class="measure">{{ art.same }}</text>
                       </g>
                     </g>
                     <g class="pop" style="--d: 0.85s">
-                      <g transform="translate(400 150)">
-                        <rect x="-78" y="-78" width="156" height="48" rx="14" class="note" />
-                        <text y="-48" text-anchor="middle" class="note-line">{{ art.oak }}</text>
-                        <rect x="-78" y="-16" width="156" height="48" rx="14" class="note" />
-                        <text y="14" text-anchor="middle" class="note-line">
-                          <tspan>{{ art.oak.replace(/\.$/, '') }}</tspan><tspan class="mark">!</tspan>
+                      <g transform="translate(455 175)">
+                        <text y="-108" text-anchor="middle" class="tiny">{{ art.changedTitle }}</text>
+                        <rect x="-112" y="-78" width="224" height="46" rx="14" class="note" />
+                        <text y="-48" text-anchor="middle" class="note-small">{{ art.note }}</text>
+                        <rect x="-112" y="-20" width="224" height="46" rx="14" class="note" />
+                        <text y="10" text-anchor="middle" class="note-small">
+                          <tspan>{{ art.before }}</tspan><tspan class="mark">{{ art.mark }}</tspan>
                         </text>
-                        <text y="78" text-anchor="middle" class="warn">{{ art.unlike }}</text>
+                        <text y="62" text-anchor="middle" class="warn">{{ art.unlike }}</text>
                       </g>
                     </g>
                     <g class="pop" style="--d: 1.55s">
-                      <g transform="translate(640 118)">
+                      <g transform="translate(680 130)">
                         <DigestSeal :text="art.seal" />
                       </g>
-                      <g transform="translate(640 186)">
+                      <g transform="translate(680 190)">
                         <path d="M -16 -12 L 16 12 M 16 -12 L -16 12" class="cross" />
                       </g>
-                      <text x="640" y="228" text-anchor="middle" class="warn">{{ art.hidden }}</text>
+                      <text x="680" y="228" text-anchor="middle" class="warn">{{ art.hidden }}</text>
                     </g>
                     <g class="rise" style="--d: 2.3s">
                       <text x="400" y="330" text-anchor="middle" class="note-text">{{ art.line }}</text>
@@ -706,6 +729,7 @@ onBeforeUnmount(() => {
 .measure { font-weight: 800; font-size: 16px; fill: #9a4528; }
 .note { fill: #fff; stroke: #eadfd2; stroke-width: 2; }
 .note-line { font-weight: 750; font-size: 18px; fill: #2b241c; }
+.note-small { font-weight: 750; font-size: 16px; fill: #2b241c; }
 .mark { fill: #c4623a; font-weight: 800; font-size: 22px; }
 .blank { fill: #fff; stroke: #c9b8a8; stroke-width: 2; stroke-dasharray: 7 6; }
 .log { fill: #fff; stroke: #eadfd2; stroke-width: 2; }

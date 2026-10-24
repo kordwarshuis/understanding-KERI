@@ -4,8 +4,8 @@
 //   2da3e8acbf450ec3ea83ff65ce9ef9cafe72e5a6609097701a1dc514c53c00d1
 // "Kom naar de eik!"
 //   bc13afc77944f562cce08e58336dc5a8bd6761cb7f1d2a014da7b10a2222a8e0
-// "De reservesleutel blijft in de la. De telefoon heeft alleen de sleutel van vandaag."
-//   f52301f13d382c4c3c26f127407dd01b1363bbb9fd6794099dbc8cfd560bccbd
+// "Kom naar de eik achter de school. Neem het blauwe schrift mee."
+//   bc94d9c3aa35fd8606073f441bf9bb341e897592a93ab2082a25af79a8adb902
 // "E7f2q2"
 //   c770f4e1c1e36aba883628aea3dbb1ea5c7e6bbbfaa8331a6ddba84551f69bdc
 
@@ -14,18 +14,15 @@ export const scenes = [
     id: 'length',
     kicker: 'Altijd even lang',
     title: 'Elke lengte erin. Eén korte digest eruit.',
-    body: 'SHA-256 neemt de exacte bytes van een zin en geeft 256 bits terug — 64 hex-tekens. Het plaatje houdt de eerste vier en de laatste vier. Een korte notitie en een lange zin komen er even lang uit. Lees elke kaart als één regel. De afbrekingen zijn er alleen om de kaart te laten passen.',
+    body: 'De kaarten zijn notities: de bytes die erin gaan. Een korte notitie en een langere komen er allebei uit als 256 bits, 64 hex-tekens. Het plaatje houdt de eerste vier en de laatste vier.',
     word: { id: 'digest', label: 'digest' },
     art: {
+      shortLabel: 'een korte notitie',
+      longLabel: 'een langere notitie',
       short: 'Kom naar de eik.',
-      longLines: [
-        'De reservesleutel',
-        'blijft in de la.',
-        'De telefoon heeft alleen',
-        'de sleutel van vandaag.',
-      ],
+      longLines: ['Kom naar de eik', 'achter de school.', 'Neem het blauwe schrift mee.'],
       shortDigest: '2da3…00d1',
-      longDigest: 'f523…ccbd',
+      longDigest: 'bc94…b902',
       sameLength: 'even lang',
     },
   },
@@ -33,15 +30,12 @@ export const scenes = [
     id: 'blocks',
     kicker: 'Hoe hij gemaakt wordt',
     title: 'De zin gaat erin als blokken',
-    body: 'SHA-256 vult de zin aan tot blokken van 64 bytes en neemt die blokken op volgorde. Elk blok werkt een totaal van 256 bits bij, en het totaal na het laatste blok is de digest. Deze zin heeft twee blokken. Het plaatje geeft ze een naam en laat de aanvulling buiten beeld.',
+    body: 'SHA-256 vult die langere notitie aan tot blokken van 64 bytes en neemt die blokken op volgorde. Elk blok werkt een totaal van 256 bits bij, en het totaal na het laatste blok is de digest. Deze notitie heeft twee blokken. Het plaatje geeft ze een naam en laat de aanvulling buiten beeld.',
     art: {
-      wideLines: [
-        'De reservesleutel blijft in de la.',
-        'De telefoon heeft alleen de sleutel van vandaag.',
-      ],
+      wideLines: ['Kom naar de eik achter de school.', 'Neem het blauwe schrift mee.'],
       block1: 'blok 1',
       block2: 'blok 2',
-      digest: 'f523…ccbd',
+      digest: 'bc94…b902',
     },
   },
   {
@@ -99,17 +93,16 @@ export const scenes = [
     id: 'commit',
     kicker: 'Waarom KERI er een opschrijft',
     title: 'Publiceer de digest. Bewaar de bytes.',
-    body: 'De volgende openbare sleutel is hier de exacte tekens E7f2q2, en SHA-256 van die tekens is c770\u2060…\u20609bdc. De digest kan in het openbare logboek staan terwijl de sleutel van de telefoon af blijft. Wie later E7f2q2 ziet, draait SHA-256 en zoekt naar c770\u2060…\u20609bdc. Zo legt KERI een reservesleutel vast. Een SAID is hetzelfde idee voor een document: zijn naam is een digest van zijn eigen bytes.',
+    body: 'E7f2q2 is een volgende openbare sleutel. Die tekens bewaar je. Het openbare logboek krijgt alleen hun vingerafdruk, c770\u2060…\u20609bdc. Als je later E7f2q2 laat zien, kan iedereen die hashen en naar die vingerafdruk zoeken. Zo legt KERI een reservesleutel vast. Een SAID geeft een document op dezelfde manier een naam: de naam is een digest van de eigen bytes van het document.',
     word: { id: 'prerotation', label: 'pre-rotatie' },
     art: {
       you: 'jij',
-      kept: 'apart gehouden',
+      kept: 'volgende sleutel',
       key: 'E7f2q2',
-      exact: 'deze tekens',
-      keyName: 'volgende openbare sleutel',
+      keepLine: 'die bewaar je',
       record: 'openbaar logboek',
       digest: 'c770…9bdc',
-      only: 'alleen de digest',
+      only: 'alleen de vingerafdruk',
     },
   },
   {
@@ -119,8 +112,11 @@ export const scenes = [
     body: 'Dezelfde bytes, dezelfde digest. Verander je iets, dan komt de nieuwe digest niet overeen. De digest geeft de bytes niet terug. Je kunt iemand de vingerafdruk geven voordat je de bytes geeft.',
     final: true,
     art: {
-      oak: 'eik.',
-      oakBang: 'eik!',
+      sameTitle: 'dezelfde notitie',
+      changedTitle: 'één letter anders',
+      note: 'Kom naar de eik.',
+      before: 'Kom naar de eik',
+      mark: '!',
       same: 'zelfde digest',
       unlike: 'geen match',
       hidden: 'geen weg terug',

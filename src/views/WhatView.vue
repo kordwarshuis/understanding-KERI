@@ -6,7 +6,7 @@ import Figure from '../components/scene/Figure.vue'
 import NameTag from '../components/scene/NameTag.vue'
 import KeyIcon from '../components/scene/KeyIcon.vue'
 import Building from '../components/scene/Building.vue'
-import { measureSceneEnd } from '../sceneTiming'
+import { fitSceneFrame, measureSceneEnd } from '../sceneTiming'
 
 const route = useRoute()
 const router = useRouter()
@@ -208,6 +208,7 @@ watch(locale, () => {
 
 function syncBar() {
   barMs.value = measureSceneEnd(sceneEl.value)
+  fitSceneFrame(sceneEl.value)
 }
 
 watch(sceneKey, () => {
@@ -221,6 +222,7 @@ onMounted(() => {
   window.addEventListener('keydown', onKey)
   panel.value?.focus()
   syncBar()
+  document.fonts?.ready.then(() => fitSceneFrame(sceneEl.value))
 })
 onBeforeUnmount(() => {
   document.body.classList.remove('modal-open')
@@ -859,17 +861,20 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 720px) {
+  .what-backdrop { padding: 8px; }
   .what-modal {
     --modal-h: calc(100dvh - 16px);
-    padding: 0.85rem 0.9rem 0.8rem;
+    padding: 0.75rem 0.75rem 0.7rem;
     border-radius: 16px;
   }
   .what-head h1 { font-size: clamp(1.55rem, 6vw, 1.9rem); }
   .scene-frame {
     flex: 0 0 auto;
-    /* Keep the paragraph and buttons clear of each other as the phone gets shorter. */
-    height: clamp(84px, calc(100dvh - 642px), 172px);
-    min-height: 0;
+    width: calc(100% + 1.5rem);
+    margin-inline: -0.75rem;
+    height: auto;
+    aspect-ratio: 800 / 400;
+    max-height: min(280px, calc(100dvh - 380px));
     overflow: hidden;
   }
   .caption {

@@ -30,3 +30,42 @@ export function measureSceneEnd(root) {
   }
   return Math.round(end)
 }
+
+/**
+ * Zoom the scene so its artwork fills the 2:1 frame.
+ * Scenes that already use the full canvas stay put, so wide layouts do not crop.
+ */
+export function fitSceneFrame(svg) {
+  if (!svg) return
+  const group = svg.querySelector('g')
+  if (!group) return
+  let box
+  try {
+    box = group.getBBox()
+  } catch {
+    return
+  }
+  if (!box.width || !box.height) return
+  const travelers = svg.querySelectorAll('.move, .slide')
+  for (const el of travelers) {
+    const fx = Math.abs(parseFloat(el.style.getPropertyValue('--fx')) || 0)
+    const fy = Math.abs(parseFloat(el.style.getPropertyValue('--fy')) || 0)
+    if (fx > 24 || fy > 24) {
+      svg.setAttribute('viewBox', '0 0 800 400')
+      return
+    }
+  }
+  const pad = 32
+  let width = box.width + pad * 2
+  let height = box.height + pad * 2
+  if (width / height > 2) height = width / 2
+  else width = height * 2
+  if (width > 760 || height > 380) {
+    svg.setAttribute('viewBox', '0 0 800 400')
+    return
+  }
+  const x = box.x + box.width / 2 - width / 2
+  const y = box.y + box.height / 2 - height / 2
+  const n = (value) => Math.round(value * 10) / 10
+  svg.setAttribute('viewBox', `${n(x)} ${n(y)} ${n(width)} ${n(height)}`)
+}

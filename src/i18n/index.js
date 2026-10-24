@@ -14,6 +14,8 @@ import { scenes as keyScenesEn } from '../content/keys'
 import { scenes as keyScenesNl } from '../content/nl/keys'
 import { scenes as digestScenesEn } from '../content/digest'
 import { scenes as digestScenesNl } from '../content/nl/digest'
+import { scenes as logScenesEn } from '../content/log'
+import { scenes as logScenesNl } from '../content/nl/log'
 import { sources as sourcesEn } from '../content/sources'
 import { sources as sourcesNl } from '../content/nl/sources'
 
@@ -30,6 +32,7 @@ const packs = {
     preScenes: preScenesEn,
     keyScenes: keyScenesEn,
     digestScenes: digestScenesEn,
+    logScenes: logScenesEn,
     sources: sourcesEn,
   },
   nl: {
@@ -41,6 +44,7 @@ const packs = {
     preScenes: preScenesNl,
     keyScenes: keyScenesNl,
     digestScenes: digestScenesNl,
+    logScenes: logScenesNl,
     sources: sourcesNl,
   },
 }
@@ -137,6 +141,7 @@ export function useI18n() {
   const preScenes = computed(() => pack.value.preScenes)
   const keyScenes = computed(() => pack.value.keyScenes)
   const digestScenes = computed(() => pack.value.digestScenes)
+  const logScenes = computed(() => pack.value.logScenes)
   const sources = computed(() => pack.value.sources)
 
   function tf(key, vars) {
@@ -160,6 +165,7 @@ export function useI18n() {
     preScenes,
     keyScenes,
     digestScenes,
+    logScenes,
     sources,
     findPersona,
     findLesson,

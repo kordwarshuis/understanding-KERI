@@ -10,7 +10,7 @@ export const scenes = [
       publicTitle: 'openbare sleutel',
       privateTitle: 'privésleutel',
       pub: 'A9c…p2',
-      secret: 'geheim',
+      secret: '••••••',
       publicHint: 'iedereen mag dit zien',
       privateHint: 'alleen jij bewaart dit',
       pair: 'samen gemaakt',
@@ -39,7 +39,7 @@ export const scenes = [
     art: {
       you: 'jij',
       friend: 'een vriend',
-      note: '“Poortcode is 4.”',
+      note: '“Poortcode: 4812”',
       pub: 'A9c…p2',
       publicKey: 'jouw openbare sleutel',
       locked: 'op slot',
@@ -54,7 +54,7 @@ export const scenes = [
     art: {
       you: 'jij',
       friend: 'een vriend',
-      note: '“Poortcode is 4.”',
+      note: '“Poortcode: 4812”',
       privateKey: 'privésleutel',
       locked: 'op slot',
       opened: 'open',
@@ -63,7 +63,7 @@ export const scenes = [
   {
     id: 'caught',
     kicker: 'Als iemand het onderschept',
-    title: 'Een kopie van de openbare sleutel leest het nog steeds niet',
+    title: 'Een kopie van de openbare sleutel opent het nog steeds niet',
     body: 'Een vreemde kan het gesloten bericht meenemen, en kan ook jouw openbare sleutel hebben. Dat is dezelfde sleutel die je vriend gebruikte, A9c…p2. Dat is niet genoeg. De openbare sleutel sluit. Die opent niet. Zonder de privésleutel blijven de woorden verborgen.',
     art: {
       you: 'jij',
@@ -78,8 +78,8 @@ export const scenes = [
   {
     id: 'sign',
     kicker: 'De andere kant op',
-    title: 'Hetzelfde paar kan ook ondertekenen',
-    body: 'Gebruik je de sleutels andersom, dan wordt er niets verborgen. Jij zet een merk op een bericht met de privésleutel, en iedereen kan het nog lezen. Je vriend controleert het merk met de openbare sleutel. Past het, dan komt het bericht van wie de privésleutel heeft. KERI gebruikt het paar zo: het merk laat zien wie tekende, en de woorden blijven zichtbaar.',
+    title: 'Een sleutelpaar kan ook ondertekenen',
+    body: 'Gebruik je een sleutelpaar andersom, dan wordt er niets verborgen. Jij zet een merk op een bericht met de privésleutel, en iedereen kan het nog lezen. Je vriend controleert het merk met de openbare sleutel. Past het, dan komt het bericht van wie de privésleutel heeft. KERI gebruikt het paar zo: het merk laat zien wie tekende, en de woorden blijven zichtbaar.',
     art: {
       you: 'jij',
       friend: 'een vriend',
@@ -96,7 +96,7 @@ export const scenes = [
     id: 'keep',
     kicker: 'In één zin',
     title: 'Deel de ene. Bewaar de andere.',
-    body: 'Geef de openbare sleutel aan iedereen die een bericht voor jou op slot moet kunnen doen, of een bericht van jou moet kunnen controleren. Bewaar de privésleutel. Wie de privésleutel heeft, kan openen wat voor jou op slot zat, en kan als jou tekenen.',
+    body: 'Geef de openbare sleutel aan iedereen die een bericht voor jou op slot moet kunnen doen, of een bericht van jou moet kunnen controleren. Bewaar de privésleutel. Wie de privésleutel heeft, kan openen wat voor jou op slot zat, en kan als jij tekenen.',
     final: true,
     art: {
       pub: 'A9c…p2',
@@ -105,7 +105,7 @@ export const scenes = [
       locks: 'doet een bericht voor jou op slot',
       checks: 'controleert een handtekening',
       opens: 'opent wat op slot zat',
-      signs: 'tekent als jou',
+      signs: 'tekent als jij',
       line: 'De ene sluit. De andere opent.',
     },
   },

@@ -12,7 +12,7 @@ KERI is hard to adopt because it is hard to explain. This repo keeps an English 
 
 The app lives at the repository root. You sit down as a parent, a lawyer, a policymaker, a developer, a business leader, or a clinician. Each path is a short sequence: why it matters, what KERI is, how it works, and what to do next.
 
-There is also an animated explainer of what KERI does (`/what`, nine short scenes about outcomes rather than mechanics), a shared story (“A name that can change its locks”), a glossary, and a sources page. Lesson progress is stored in the browser. The explainer shows still frames when the system asks for reduced motion.
+There are also animated explainers: what KERI does (`/what`, nine short scenes about outcomes rather than mechanics), how a public key locks a message (`/keys`, seven scenes on key pairs), and how a spare key stays ahead (`/pre-rotation`). There is a shared story (“A name that can change its locks”), a glossary, and a sources page. Lesson progress is stored in the browser. The explainers show still frames when the system asks for reduced motion.
 
 The writing is a reading of the English texts in `txt/`. The app itself is available in English and Dutch (EN / NL in the header, or `?lang=en` / `?lang=nl` in the URL). It is not the specification, not legal advice, and it does not issue identifiers or hold keys.
 

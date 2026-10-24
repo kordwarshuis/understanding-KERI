@@ -10,7 +10,7 @@ export const scenes = [
       publicTitle: 'public key',
       privateTitle: 'private key',
       pub: 'A9c…p2',
-      secret: 'kept',
+      secret: '••••••',
       publicHint: 'anyone may see this',
       privateHint: 'only you keep this',
       pair: 'made as a pair',
@@ -39,7 +39,7 @@ export const scenes = [
     art: {
       you: 'you',
       friend: 'a friend',
-      note: '“Gate code is 4.”',
+      note: '“Gate code: 4812”',
       pub: 'A9c…p2',
       publicKey: 'your public key',
       locked: 'locked',
@@ -54,7 +54,7 @@ export const scenes = [
     art: {
       you: 'you',
       friend: 'a friend',
-      note: '“Gate code is 4.”',
+      note: '“Gate code: 4812”',
       privateKey: 'private key',
       locked: 'locked',
       opened: 'open',
@@ -63,7 +63,7 @@ export const scenes = [
   {
     id: 'caught',
     kicker: 'If someone intercepts it',
-    title: 'A copy of the public key still cannot read it',
+    title: 'A copy of the public key still cannot open it',
     body: 'A stranger can take the locked message, and can have your public key as well. That is the same key your friend used, A9c…p2. It is not enough. The public key locks. It does not open. Without the private key, the words stay hidden.',
     art: {
       you: 'you',
@@ -78,8 +78,8 @@ export const scenes = [
   {
     id: 'sign',
     kicker: 'The other way around',
-    title: 'The same pair can sign instead',
-    body: 'Use the keys the other way and nothing is hidden. You mark a message with the private key, and everyone can still read it. Your friend checks the mark with the public key. If it fits, the message came from whoever has the private key. KERI uses the pair this way: the mark shows who signed, and the words stay visible.',
+    title: 'A key pair can also sign',
+    body: 'Use a key pair the other way and nothing is hidden. You mark a message with the private key, and everyone can still read it. Your friend checks the mark with the public key. If it fits, the message came from whoever has the private key. KERI uses the pair this way: the mark shows who signed, and the words stay visible.',
     art: {
       you: 'you',
       friend: 'a friend',

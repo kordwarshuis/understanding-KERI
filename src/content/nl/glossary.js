@@ -32,7 +32,7 @@ export const concepts = [
     say: 'Eén openbare sleutel, één privésleutel',
     plain:
       'Twee sleutels die samen gemaakt worden. De openbare sleutel mag je aan iedereen laten zien. Die doet een bericht op slot — dat op slot doen is versleutelen — en die controleert een handtekening. De privésleutel blijft bij jou. Die opent wat de openbare sleutel sloot, en die maakt de handtekening. Het zijn geen kopieën van elkaar.',
-    why: 'KERI-identificatiecodes worden beheerd met sleutelparen. Gewone handelingen zijn handtekeningen: de privésleutel ondertekent, en iedereen controleert met de openbare sleutel. Hetzelfde paar kan een bericht verbergen door het op slot te doen met de openbare sleutel. Pre-rotatie zorgt ervoor dat een gestolen privésleutel niet het einde van de naam hoeft te zijn.',
+    why: 'KERI-identificatiecodes worden beheerd met sleutelparen, en KERI gebruikt die vooral om te ondertekenen: de privésleutel ondertekent, en iedereen controleert met de openbare sleutel. Een bericht verbergen is een aparte taak. Bewijzen wie een naam beheert, hangt daar niet van af. Pre-rotatie zorgt ervoor dat een gestolen privésleutel niet het einde van de naam hoeft te zijn.',
     source: 'Video’s 2024 — Smith: met een publiek-privaat sleutelpaar bewijs je wie een identificatiecode beheerst',
   },
   {

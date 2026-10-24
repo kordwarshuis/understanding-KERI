@@ -365,7 +365,7 @@ onBeforeUnmount(() => {
                   <template v-else-if="scene.id === 'caught'">
                     <g transform="translate(120 348)"><Figure :label="art.you" /></g>
                     <g class="rise" style="--d: 0.2s">
-                      <g transform="translate(560 348)"><Figure :label="art.stranger" color="#4a3f38" /></g>
+                      <g transform="translate(710 348)"><Figure :label="art.stranger" color="#4a3f38" /></g>
                     </g>
                     <g class="pop" style="--d: 0.25s">
                       <g transform="translate(120 128)">
@@ -380,27 +380,27 @@ onBeforeUnmount(() => {
                       </g>
                     </g>
                     <g class="pop" style="--d: 0.35s">
-                      <g transform="translate(560 150)">
+                      <g transform="translate(430 150)">
                         <Envelope />
                       </g>
                     </g>
-                    <g transform="translate(560 86)">
+                    <g transform="translate(430 86)">
                       <g class="fade-in" style="--d: 0.55s">
-                        <g class="move" style="--d: 1.25s; --fx: 0px; --fy: 150px">
+                        <g class="move" style="--d: 1.25s; --fx: 260px; --fy: 0px">
                           <text y="-50" text-anchor="middle" class="row-k">{{ art.publicKey }}</text>
                           <text y="-28" text-anchor="middle" class="row-v">{{ art.pub }}</text>
                           <g transform="scale(1.2)"><KeyIcon /></g>
                         </g>
                       </g>
                     </g>
-                    <path class="draw red-line" style="--d: 2.45s" pathLength="1" d="M 560 112 V 136" />
+                    <path class="draw red-line" style="--d: 2.45s" pathLength="1" d="M 430 112 V 136" />
                     <g class="pop" style="--d: 3.05s">
-                      <g transform="translate(560 150)">
+                      <g transform="translate(430 150)">
                         <path d="M -34 -26 L 34 26 M 34 -26 L -34 26" class="cross" />
                       </g>
                     </g>
                     <g class="pop" style="--d: 3.35s">
-                      <g transform="translate(560 228)">
+                      <g transform="translate(430 228)">
                         <rect
                           :x="-pillWidth(art.still) / 2"
                           y="-16"

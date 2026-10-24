@@ -31,6 +31,15 @@ const routes = [
       'About a minute, in pictures. Today’s key signs; the next key stays sealed as a hash until you need it. That is pre-rotation.',
   },
   {
+    path: '/keys/',
+    title: 'How a public key locks a message — The KERI Hearth',
+    description:
+      'Public-key encryption, in pictures: one key you share, one key you keep, and why a copy of the public key cannot open what it locked.',
+    ogTitle: 'How a public key locks a message — The KERI Hearth',
+    ogDescription:
+      'In pictures. The public key locks; only the private key opens. Turn the pair around and it signs. Share one, keep the other.',
+  },
+  {
     path: '/what/',
     title: 'What KERI does — The KERI Hearth',
     description:

@@ -405,48 +405,38 @@ onBeforeUnmount(() => {
 
                   <template v-else-if="scene.id === 'commit'">
                     <g class="rise" style="--d: 0.15s">
-                      <rect x="16" y="28" width="268" height="220" rx="18" class="log" />
-                      <text text-anchor="middle" class="log-title">
-                        <tspan
-                          v-for="(line, li) in wrapWords(art.kept, 18)"
-                          :key="`kept-${li}`"
-                          x="150"
-                          :y="58 + li * 26"
-                        >{{ line }}</tspan>
-                      </text>
-                      <text
-                        x="150"
-                        :y="58 + wrapWords(art.kept, 18).length * 26 + 28"
-                        text-anchor="middle"
-                        class="row-v"
-                      >{{ art.key }}</text>
-                      <text
-                        x="150"
-                        :y="58 + wrapWords(art.kept, 18).length * 26 + 58"
-                        text-anchor="middle"
-                        class="row-k"
-                      >{{ art.keepLine }}</text>
+                      <text x="140" y="42" text-anchor="middle" class="tiny">{{ art.noteLabel }}</text>
+                      <rect x="24" y="54" width="232" height="56" rx="16" class="note" />
+                      <text x="140" y="88" text-anchor="middle" class="note-small">{{ art.sentence }}</text>
                     </g>
-                    <g class="rise" style="--d: 0.35s">
-                      <g transform="translate(140 348)"><Figure :label="art.you" /></g>
+                    <g class="pop" style="--d: 0.45s">
+                      <g transform="translate(390 82)"><Press /></g>
                     </g>
-                    <g class="pop" style="--d: 0.55s">
-                      <g transform="translate(400 138)"><Press /></g>
+                    <path class="draw warm" style="--d: 0.7s" pathLength="1" d="M 256 82 H 328" />
+                    <path class="draw warm" style="--d: 0.95s" pathLength="1" d="M 452 82 H 545" />
+                    <g class="pop" style="--d: 1.35s">
+                      <g transform="translate(640 82)"><DigestSeal :text="art.noteDigest" /></g>
                     </g>
-                    <path class="draw warm" style="--d: 1.05s" pathLength="1" d="M 284 138 H 338" />
-                    <path class="draw warm" style="--d: 1.55s" pathLength="1" d="M 462 138 H 516" />
-                    <g class="pop" style="--d: 2.15s">
-                      <rect x="516" y="28" width="268" height="220" rx="18" class="log" />
-                      <text x="650" y="62" text-anchor="middle" class="log-title">{{ art.record }}</text>
-                      <g transform="translate(650 132)"><DigestSeal :text="art.digest" /></g>
-                      <text text-anchor="middle" class="row-k">
-                        <tspan
-                          v-for="(line, li) in wrapWords(art.only, 22)"
-                          :key="`only-${li}`"
-                          x="650"
-                          :y="178 + li * 20"
-                        >{{ line }}</tspan>
-                      </text>
+                    <g class="rise" style="--d: 1.7s">
+                      <text x="400" y="162" text-anchor="middle" class="measure">{{ art.same }}</text>
+                    </g>
+                    <g class="rise" style="--d: 2.05s">
+                      <text x="140" y="196" text-anchor="middle" class="tiny">{{ art.keyLabel }}</text>
+                      <rect x="24" y="208" width="232" height="108" rx="16" class="note" />
+                      <text x="140" y="238" text-anchor="middle" class="row-k">{{ art.keyRole }}</text>
+                      <text x="140" y="268" text-anchor="middle" class="row-v">{{ art.key }}</text>
+                      <text x="140" y="296" text-anchor="middle" class="reassurance">{{ art.keepLine }}</text>
+                    </g>
+                    <g class="pop" style="--d: 2.35s">
+                      <g transform="translate(390 262)"><Press /></g>
+                    </g>
+                    <path class="draw warm" style="--d: 2.6s" pathLength="1" d="M 256 262 H 328" />
+                    <path class="draw warm" style="--d: 2.85s" pathLength="1" d="M 452 262 H 545" />
+                    <g class="pop" style="--d: 3.25s">
+                      <g transform="translate(640 262)"><DigestSeal :text="art.keyDigest" /></g>
+                    </g>
+                    <g class="rise" style="--d: 3.7s">
+                      <text x="640" y="312" text-anchor="middle" class="row-k">{{ art.only }}</text>
                     </g>
                   </template>
 

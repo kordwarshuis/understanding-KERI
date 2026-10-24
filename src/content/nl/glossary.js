@@ -13,7 +13,7 @@ export const concepts = [
     term: 'AID',
     say: 'Autonomic Identifier',
     plain:
-      'Een zelfcertificerende identificatiecode die langer meegaat dan welke sleutel dan ook. Deze is afgeleid van de aanmaakgebeurtenis en wordt niet uitgegeven door een beheerder. „Autonomisch“ betekent zelfbesturend: de beheerder van de sleutels bepaalt de identiteitscode. Het is niet de persoon. Het is de naam waarnaar verklaringen kunnen verwijzen.',
+      'Een zelfcertificerende identificatiecode die langer meegaat dan welke sleutel dan ook. Deze is afgeleid van de aanmaakgebeurtenis en wordt niet uitgegeven door een beheerder. „Autonomisch“ betekent zelfbesturend: de controller van de sleutels bepaalt de identificatiecode. Het is niet de persoon. Het is de naam waarnaar verklaringen kunnen verwijzen.',
     why: 'Een standaard zelfcertificerende identiteitscode verdwijnt samen met zijn sleutel. Een AID blijft bestaan omdat de volgende sleutel, als hash, al was vastgelegd voordat deze ooit werd gebruikt.',
     source: 'KERI-jargon, deel 1; “Je hebt de controle, dus je bestaat”',
   },
@@ -50,7 +50,7 @@ export const concepts = [
     say: 'Leg de volgende sleutel vast voordat je hem nodig hebt',
     plain:
       'De ondertekeningsbevoegdheid en de rotatiebevoegdheid zijn verschillende sleutels. De huidige openbare sleutel is gepubliceerd, en de bijbehorende privésleutel ondertekent gewone handelingen. De volgende sleutel wordt alleen vastgelegd als hash van de openbare sleutel, en het sleutelpaar kan ergens anders worden bewaard — niet op de telefoon die dagelijks ondertekent. Bij rotatie wordt die openbare sleutel eenmalig onthuld, wordt de huidige sleutel buiten gebruik gesteld en wordt een nieuwe, verborgen volgende sleutel vastgelegd. Alleen de vooraf vastgelegde sleutel kan de volgende ondertekeningssleutel worden.',
-    why: 'Een verouderde sleutel kan geen nieuwe geschiedenis verzinnen: een vervalst logboek komt niet overeen met de hashketen, en die tegenstrijdigheid is dubbelzinnigheid. Een gestolen huidige sleutel kan blijven ondertekenen totdat je het merkt, omdat het gebruik ervan betekent dat er een gebeurtenis wordt gepubliceerd die je eigen getuigen kunnen zien. Hashes zijn, in tegenstelling tot de huidige handtekeningen, het herstelpad tegen een kwantumbreuk van de huidige sleutel.',
+    why: 'Een verouderde sleutel kan geen nieuwe geschiedenis verzinnen: een vervalst logboek komt niet overeen met de hashketen, en die tegenstrijdigheid is dupliciteit. Een gestolen huidige sleutel kan blijven ondertekenen totdat je het merkt, omdat het gebruik ervan betekent dat er een gebeurtenis wordt gepubliceerd die je eigen getuigen kunnen zien. Hashes zijn, in tegenstelling tot de huidige handtekeningen, het herstelpad tegen een kwantumbreuk van de huidige sleutel.',
     source: 'Hitchhiker’s Guide, deel 2; Beveiliging in KERI/ACDC; Interview met Smith',
   },
   {
@@ -64,19 +64,19 @@ export const concepts = [
   },
   {
     id: 'receipt',
-    term: 'Ontvangstbewijs van een belangrijke gebeurtenis',
+    term: 'Ontvangstbewijs van een sleutelgebeurtenis',
     say: 'Een ondertekende verklaring „Ik heb deze versie gezien“',
     plain:
-      'Een handtekening bij een belangrijke gebeurtenis door iemand die deze heeft ontvangen. De beheerder kan die handtekening bewaren. Later kan de getuige niet ontkennen dat hij die versie heeft gezien, en kan hij niet stilletjes de voorkeur geven aan een andere geschiedenis. Een logboek plus de bijbehorende consistente ontvangstbewijzen vormt een KERL.',
+      'Een handtekening over een sleutelgebeurtenis, door iemand die de gebeurtenis heeft ontvangen. De controller kan die handtekening bewaren. Later kan de getuige niet ontkennen dat hij die versie heeft gezien, en kan hij niet stilletjes de voorkeur geven aan een andere geschiedenis. Een logboek plus de bijbehorende consistente ontvangstbewijzen vormt een KERL.',
     why: 'Smiths reden voor het middelste woord van KERI: overeenkomsten hebben ontvangstbewijzen nodig, zodat beide partijen iets hebben om te kunnen laten zien. Een ontvangstbewijs is geen beleefdheid. Het is het rechtsmiddel.',
     source: 'Hitchhiker’s Guide, deel 2; interview met Smith',
   },
   {
     id: 'duplicity',
-    term: 'Dubbelzinnigheid',
-    say: 'Twee ondertekende verslagen die met elkaar in tegenspraak zijn',
+    term: 'Dupliciteit',
+    say: 'Twee ondertekende geschiedenissen die elkaar tegenspreken',
     plain:
-      'Als twee versies van dezelfde gebeurtenis beide ondertekend zijn en onderling tegenstrijdig, vormt dat conflict het bewijs. Een logboek dat louter korter is en niet in tegenspraak is met het langere, is onvolledig — niet dubbelzinnig. KERI belooft niet dat een leugenaar nooit zal spreken. Het belooft dat het tweede verhaal niet als dezelfde geschiedenis zal worden geverifieerd.',
+      'Als twee versies van dezelfde gebeurtenis allebei ondertekend zijn en elkaar tegenspreken, is dat conflict het bewijs. Een logboek dat alleen korter is, en het langere niet tegenspreekt, is onvolledig — geen dupliciteit. KERI belooft niet dat een leugenaar nooit zal spreken. Het belooft dat het tweede verhaal de controle niet doorstaat als dezelfde geschiedenis.',
     why: 'Beveiliging in KERI/ACDC: elke succesvolle aanval op door KEL ondersteunde gegevens begint met een gestolen privésleutel, en een dergelijke aanval is detecteerbaar als dupliciteit.',
     source: 'KERI-jargon, deel 1; Beveiliging in KERI/ACDC',
   },
@@ -85,8 +85,8 @@ export const concepts = [
     term: 'Getuige',
     say: 'Iedereen die het logboek kan opslaan en ervoor kan ondertekenen',
     plain:
-      'De controller wijst getuigen aan bij een instellingsgebeurtenis. Zij bewaren het logboek, ondertekenen ontvangstbewijzen en geven antwoord wanneer de controller offline is. Een getuige kan een ander logboek, een database, een bestand of een blockchain zijn. Omdat de beheerder hen heeft gekozen, kan een verificateur ook waarnemers inzetten, en juryleden die conflicten vastleggen voor een rechter.',
-    why: 'De getuige is niet de basis van vertrouwen. Dat is de AID. Getuigen zorgen ervoor dat de geschiedenis vindbaar blijft. Een tegenstrijdige geschiedenis die zij ondertekenen, is bewijs tegen de beheerder of tegen een gestolen sleutel.',
+      'De controller wijst getuigen aan bij een instellingsgebeurtenis. Zij bewaren het logboek, ondertekenen ontvangstbewijzen en geven antwoord wanneer de controller offline is. Een getuige kan een ander logboek, een database, een bestand of een blockchain zijn. Omdat de controller hen heeft gekozen, kan een verificateur ook waarnemers inzetten, en juryleden die conflicten vastleggen voor een rechter.',
+    why: 'De getuige is niet de basis van vertrouwen. Dat is de AID. Getuigen zorgen ervoor dat de geschiedenis vindbaar blijft. Een tegenstrijdige geschiedenis die zij ondertekenen, is bewijs tegen de controller, of tegen een gestolen sleutel.',
     source: 'Hitchhiker’s Guide, deel 2; interview met Smith',
   },
   {
@@ -95,7 +95,7 @@ export const concepts = [
     say: 'Authentic Chained Data Container',
     plain:
       'Een verifieerbare referentie voor KERI. Claims worden gebundeld, aan elkaar gekoppeld en verzegeld aan de sleutelstatus van de uitgever via een transactielogboek dat is verankerd in het sleutelgebeurtenislogboek. De referentie wordt niet verwijderd wanneer sleutels worden vernieuwd. Intrekking is een afzonderlijke, verankerde gebeurtenis. Er zijn compacte veldnamen beschikbaar, zodat ook kleine apparaten er een kunnen bevatten.',
-    why: 'Verankering behoort tot de hoge beveiligingsklasse: de handtekening is gebonden aan de sleutelstatus op dat moment in het logboek. Een verouderde sleutel kan een nieuwe referentie niet met terugwerkende kracht dateren zonder duplicatie te veroorzaken.',
+    why: 'Verankering behoort tot de hoge beveiligingsklasse: de handtekening is gebonden aan de sleutelstatus op dat moment in het logboek. Een verouderde sleutel kan een nieuwe referentie niet met terugwerkende kracht dateren zonder dupliciteit te veroorzaken.',
     source: 'KERI-jargon, deel 2; Beveiliging in KERI/ACDC; „KERI vereenvoudigt”',
   },
   {
@@ -154,7 +154,7 @@ export const concepts = [
   },
   {
     id: 'end',
-    term: 'Verifieerbaarheid aan het einde',
+    term: 'Eindverifieerbaarheid',
     say: 'Controleer de bytes. Vertrouw de boodschapper niet.',
     plain:
       'De sleutelstatus kan door iedereen, overal en op elk moment worden geverifieerd aan de hand van het logboek zelf. De host, de resolver en de URL maken geen deel uit van het bewijs. Als een tussenpersoon gegevens kan invoegen zonder een sleutel te bezitten, vormen die gegevens geen KERI-bewijs.',

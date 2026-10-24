@@ -126,7 +126,7 @@ export const scenes = [
       { text: 'Van jou om te houden', x: 160, y: 80 },
       { text: 'Door iedereen te controleren', x: 640, y: 80 },
       { text: 'Blijft bestaan als een sleutel verloren gaat', x: 130, y: 190 },
-      { text: 'Ontmaskert dubbelzinnige verhalen', x: 670, y: 190 },
+      { text: 'Ontmaskert dubbelhartige verhalen', x: 670, y: 190 },
       { text: 'Deelt alleen wat nodig is', x: 170, y: 280 },
       { text: 'Leen het uit, neem het terug', x: 630, y: 280 },
       { text: 'Gaat mee waar je ook gaat', x: 400, y: 330 },

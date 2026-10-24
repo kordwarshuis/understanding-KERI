@@ -19,6 +19,7 @@ const { t, locale, locales, setLocale } = useI18n()
         <nav>
           <RouterLink to="/what">{{ t.navWhat }}</RouterLink>
           <RouterLink to="/keys">{{ t.navKeys }}</RouterLink>
+          <RouterLink to="/digest">{{ t.navDigest }}</RouterLink>
           <RouterLink to="/pre-rotation">{{ t.navPre }}</RouterLink>
           <RouterLink to="/story">{{ t.navStory }}</RouterLink>
           <RouterLink to="/words">{{ t.navWords }}</RouterLink>

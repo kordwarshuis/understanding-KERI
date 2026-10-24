@@ -22,6 +22,15 @@ const routes = [
       'KERI is easier to trust once someone explains it kindly. Sit down as a parent, lawyer, policymaker, developer, manager, or clinician — and hear it in that language.',
   },
   {
+    path: '/digest/',
+    title: 'How a digest is made — The KERI Hearth',
+    description:
+      'SHA-256, in pictures: any length in, one short fingerprint out, and why that fingerprint can be published before the bytes.',
+    ogTitle: 'How a digest is made — The KERI Hearth',
+    ogDescription:
+      'In pictures. SHA-256 turns any sentence into a 256-bit digest. Same bytes, same digest. Change one character, and it will not match.',
+  },
+  {
     path: '/pre-rotation/',
     title: 'How a spare key stays ahead — The KERI Hearth',
     description:

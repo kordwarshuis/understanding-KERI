@@ -36,6 +36,15 @@ export const concepts = [
     source: '2024 Videos — Smith: a public-private key pair is how you prove control of an identifier',
   },
   {
+    id: 'digest',
+    term: 'Digest',
+    say: 'A fingerprint of the bytes',
+    plain:
+      'A fixed-size fingerprint of some bytes. SHA-256 is one recipe: any length goes in, and 256 bits come out. In hex, that is 64 characters. The same bytes always make the same digest. Change one bit and the digest no longer matches. The bytes cannot be rebuilt from the digest. Anyone can run the recipe. It uses no secret key. The digest of “Meet at the oak.” starts with 5b80 and ends with f43f.',
+    why: 'KERI can publish a digest before it publishes the bytes. The next key is committed that way, the key event log is chained that way, and a SAID is a digest of the data it names. Showing the bytes later is checked by running the recipe again.',
+    source: 'KERI jargon, Part 2',
+  },
+  {
     id: 'prerotation',
     term: 'Pre-rotation',
     say: 'Commit the next key before you need it',

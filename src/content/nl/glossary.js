@@ -36,6 +36,15 @@ export const concepts = [
     source: 'Video’s 2024 — Smith: met een publiek-privaat sleutelpaar bewijs je wie een identificatiecode beheerst',
   },
   {
+    id: 'digest',
+    term: 'Digest',
+    say: 'Een vingerafdruk van de bytes',
+    plain:
+      'Een vingerafdruk van vaste lengte van een reeks bytes. SHA-256 is één recept: elke lengte gaat erin, en er komen 256 bits uit. In hex is dat 64 tekens. Dezelfde bytes geven altijd dezelfde digest. Verander één bit en de digest komt niet meer overeen. Uit de digest kun je de bytes niet terugbouwen. Iedereen kan het recept draaien. Er komt geen geheime sleutel aan te pas. De digest van “Kom naar de eik.” begint met 2da3 en eindigt op 00d1.',
+    why: 'KERI kan een digest publiceren voordat het de bytes publiceert. De volgende sleutel wordt zo vastgelegd, het logboek van sleutelgebeurtenissen wordt zo geketend, en een SAID is een digest van de gegevens die hij benoemt. De bytes later tonen controleer je door het recept nog eens te draaien.',
+    source: 'KERI-jargon, deel 2',
+  },
+  {
     id: 'prerotation',
     term: 'Pre-rotatie',
     say: 'Leg de volgende sleutel vast voordat je hem nodig hebt',

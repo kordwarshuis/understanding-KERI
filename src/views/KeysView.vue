@@ -565,7 +565,7 @@ onBeforeUnmount(() => {
               </RouterLink>
               <template v-if="scene.final">
                 <button class="btn ghost" type="button" @click="go(0)">{{ t.whatStartOver }}</button>
-                <RouterLink class="btn" to="/pre-rotation">{{ t.keyNext }}</RouterLink>
+                <RouterLink class="btn" to="/digest">{{ t.keyNext }}</RouterLink>
                 <RouterLink class="btn ghost" to="/">{{ t.whatSeat }}</RouterLink>
               </template>
             </div>

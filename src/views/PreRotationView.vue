@@ -753,14 +753,30 @@ onBeforeUnmount(() => {
 }
 @media (max-width: 720px) {
   .what-modal {
-    --modal-h: min(700px, calc(100dvh - 16px));
+    --modal-h: calc(100dvh - 16px);
     padding: 0.85rem 0.9rem 0.8rem;
     border-radius: 16px;
   }
   .what-head h1 { font-size: clamp(1.55rem, 6vw, 1.9rem); }
-  .scene-frame { height: 220px; }
+  .scene-frame {
+    flex: 0 0 auto;
+    /* Keep the paragraph and buttons clear of each other as the phone gets shorter. */
+    height: clamp(84px, calc(100dvh - 642px), 172px);
+    min-height: 0;
+    overflow: hidden;
+  }
+  .caption {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
   .caption h2 { font-size: clamp(1.3rem, 5vw, 1.55rem); }
-  .caption .body { font-size: 1.05rem; }
+  .caption .body {
+    flex: 0 0 auto;
+    overflow: visible;
+    font-size: 1.05rem;
+  }
   .dots { margin-left: 0; width: 100%; }
   .controls { min-height: 5.5rem; align-content: center; }
   .controls .btn { flex: 1 1 auto; font-size: 1rem; }
